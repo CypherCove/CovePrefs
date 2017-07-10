@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 Cypher Cove, LLC
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+
+    <attr name="coveprefs_selectorColor" format="color"/>
+    <attr name="coveprefs_headerTextAppearance" format="reference"/>
+    <attr name="coveprefs_tintMode">
+        <enum name="src_over" value="3"/>
+        <enum name="src_in" value="5"/>
+        <enum name="src_atop" value="9"/>
+        <enum name="multiply" value="14"/>
+        <enum name="screen" value="15"/>
+        <enum name="add" value="16"/>
+    </attr>
+
+    <declare-styleable name="CovePrefs_RotaryPicker">
+        <attr name="coveprefs_headerTextAppearance"/>
+        <attr name="coveprefs_headerBackgroundColor" format="color"/>
+        <attr name="coveprefs_headerTextColor" format="color"/>
+        <attr name="coveprefs_rotaryCircleBackgroundColor" format="color"/>
+        <attr name="coveprefs_selectorColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="CovePrefs_RotaryPreferenceWidget">
+            <attr name="coveprefs_rotaryWidgetColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="CovePrefs_ColorPicker">
+        <attr name="coveprefs_selectorColor"/>
+        <attr name="coveprefs_colorPickerCornerRadii" format="dimension"/>
+        <attr name="coveprefs_headerTextAppearance"/>
+        <attr name="coveprefs_multiColorPickerHeaderDisabledColor" format="color"/>
+        <attr name="coveprefs_headerIconButtonColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="CovePrefs_PreferenceImageView">
+        <attr name="android:maxWidth"/>
+        <attr name="android:maxHeight"/>
+    </declare-styleable>
+
+    <declare-styleable name="CovePrefs_ThemeOptions">
+        <attr name="coveprefs_rotaryPickerStyle" format="reference"/>
+        <attr name="coveprefs_colorPickerStyle" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="CovePrefs_ColorPreference">
+        <attr name="coveprefs_colorPickerWidgets">
+            <flag name="hsv" value="0x01"/>
+            <flag name="hex" value="0x02"/>
+            <flag name="recent" value="0x04"/>
+        </attr>
+        <attr name="coveprefs_multiColorDefinition" format="reference"/>
+        <attr name="coveprefs_multiColorDisabledLabel" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="CovePrefs_BannerLinkPreference">
+        <attr name="coveprefs_uri" format="string"/>
+        <attr name="coveprefs_banner" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="CovePrefs_SeekBarPreference">
+        <attr name="coveprefs_min" format="integer" />
+        <attr name="android:max"/>
+        <attr name="coveprefs_seekBarIncrement" format="integer" />
+        <attr name="coveprefs_adjustable" format="boolean"/>
+        <attr name="coveprefs_showSeekBarValue" format="boolean"/>
+        <attr name="coveprefs_leftLabel" format="string"/>
+        <attr name="coveprefs_rightLabel" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="CovePrefs_ImageListPreference">
+        <attr name="android:entries"/>
+        <attr name="android:entryValues"/>
+        <attr name="android:tint"/>
+        <attr name="coveprefs_tintMode"/>
+        <attr name="coveprefs_dialogColumnWidth" format="dimension"/>
+        <attr name="coveprefs_dialogRowHeight" format="dimension"/>
+        <attr name="coveprefs_smallWidget" format="boolean"/>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 Cypher Cove, LLC
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+
+    <dimen name="coveprefs_header_label_size">60dp</dimen>
+    <dimen name="coveprefs_inset_round_button">6dp</dimen>
+    <dimen name="coveprefs_padding_round_button">6dp</dimen>
+    <dimen name="coveprefs_header_label_size_multicolor">14dp</dimen>
+
+    <dimen name="coveprefs_message_margin">16dp</dimen>
+
+    <dimen name="coveprefs_image_list_button_elevation">2dp</dimen>
+    <dimen name="coveprefs_image_list_default_column_width">64dp</dimen>
+    <dimen name="coveprefs_image_list_default_row_height">64dp</dimen>
+
+    <dimen name="coveprefs_rotary_natural_size">180dp</dimen>
+    <dimen name="coveprefs_rotary_header_height">96dp</dimen>
+    <dimen name="coveprefs_rotary_lead_column_width">110dp</dimen>
+    <dimen name="coveprefs_rotary_margin">16dp</dimen>
+    <dimen name="coveprefs_rotary_selector_width">32dp</dimen>
+    <dimen name="coveprefs_rotary_selector_height">48dp</dimen>
+    <dimen name="coveprefs_rotary_selector_stroke">2dp</dimen>
+    <dimen name="coveprefs_rotary_center_dot_radius">3dp</dimen>
+    <dimen name="coveprefs_rotary_radial_padding">4dp</dimen>
+
+    <dimen name="coveprefs_colorpicker_margin">16dp</dimen>
+    <dimen name="coveprefs_colorpicker_header_height">96dp</dimen>
+    <dimen name="coveprefs_colorpicker_lead_column_width">120dp</dimen>
+    <dimen name="coveprefs_swatch_header_label_padding">16dp</dimen>
+    <dimen name="coveprefs_hsv_natural_height">240dp</dimen>
+    <dimen name="coveprefs_svview_natural_width">360dp</dimen>
+    <dimen name="coveprefs_hue_selector_width">44dp</dimen>
+    <dimen name="coveprefs_recent_color_button_width">52dp</dimen>
+    <dimen name="coveprefs_hsv_selector_radius">4dp</dimen>
+    <dimen name="coveprefs_hsv_selector_stroke_width">3dp</dimen>
+    <dimen name="coveprefs_hex_textedit_width">76sp</dimen>
+    <dimen name="coveprefs_colorpicker_corner_radii">2sp</dimen>
+
+    <dimen name="coveprefs_preference_widget_small">26dp</dimen>
+    <dimen name="coveprefs_seekbar_preference_value_width">36dp</dimen>
+</resources>

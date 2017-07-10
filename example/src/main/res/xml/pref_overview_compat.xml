@@ -1,0 +1,66 @@
+<!-- Copyright (C) 2017 Cypher Cove, LLC
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.cyphercove.coveprefs.support.SeekBarPreference
+            android:title="@string/seekbar"
+            android:key="someInteger"
+            android:defaultValue="2"
+            app:coveprefs_min="0"
+            android:max="20"
+            app:coveprefs_leftLabel="Small"
+            app:coveprefs_rightLabel="Big"
+            android:summary="This is a summary."/>
+    <com.cyphercove.coveprefs.support.BannerLinkPreference
+            android:title="@string/bannerlink"
+            android:summary="This is a summary."
+            app:coveprefs_uri="https://github.com/cyphercove"
+            app:coveprefs_banner="@drawable/banner"/>
+    <com.cyphercove.coveprefs.support.RotaryPreference
+            android:title="@string/rotary"
+            android:key="someAngle"
+            android:defaultValue="15"/>
+    <com.cyphercove.coveprefs.support.ImageListPreference
+            android:title="@string/imagelist"
+            android:key="someImage"
+            android:defaultValue="Hexagon"
+            android:entries="@array/image_list_preference_entries"
+            android:entryValues="@array/image_list_preference_values"
+            android:tint="@color/colorControlActivated"
+            app:coveprefs_tintMode="multiply"/>
+    <com.cyphercove.coveprefs.support.ColorPreference
+            android:title="@string/color"
+            android:key="someColor"
+            android:defaultValue="@color/defaultColorPrefValue"/>
+    <com.cyphercove.coveprefs.support.ColorPreference
+            android:title="@string/color_no_hex"
+            android:key="someColor2"
+            android:defaultValue="@color/defaultColorPrefValue"
+            android:dialogMessage="@string/color_suggest"
+            app:coveprefs_colorPickerWidgets="hsv|recent"/>
+    <com.cyphercove.coveprefs.support.MultiColorPreference
+            android:title="@string/multicolor"
+            android:key="someMultiColor"
+            android:defaultValue="1 #FF0080FF"
+            android:dialogMessage="@string/color_suggest"
+            app:coveprefs_multiColorDefinition="@array/multicolor_pref_all_options"
+            app:coveprefs_multiColorDisabledLabel="@string/disabled"/>
+    <com.cyphercove.coveprefs.support.AboutPreference
+            android:title="@string/about"
+            android:dialogTitle="@string/format_version"
+            android:dialogMessage="@string/about_message"
+            android:dialogIcon="@mipmap/ic_launcher"/>
+
+</PreferenceScreen>
