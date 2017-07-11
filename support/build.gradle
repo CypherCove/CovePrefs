@@ -19,3 +19,5 @@ dependencies {
     compile project(':library')
     compile "com.android.support:preference-v14:${rootProject.ext.supportLibVersion}"
 }
+
+apply from: '../bintray-setup.gradle'
