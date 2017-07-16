@@ -13,6 +13,7 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal()
         jcenter()
         maven {
             url "https://maven.google.com"
@@ -25,6 +26,22 @@ allprojects {
         minSdkVersion = 15
         targetSdkVersion = 25
         supportLibVersion = '25.4.0'
+
+        // library publishing
+        bintrayOrg = 'cyphercove'
+        bintrayRepo = 'maven'
+        bintrayName = 'CovePrefs'
+        groupId = 'com.cyphercove.coveprefs'
+        libraryName = 'CovePrefs'
+        siteUrl = 'https://github.com/cyphercove/coveprefs'
+        gitUrl = 'https://github.com/cyphercove/coveprefs.git'
+        libraryVersion = '1.0.0'
+        developerId = 'cypherdare'
+        developerName = 'Darren'
+        developerEmail = 'contact@cyphercove.com'
+        licenseName = 'The Apache Software License, Version 2.0'
+        licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        allLicenses = ["Apache-2.0"]
     }
 }
 

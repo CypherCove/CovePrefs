@@ -1,27 +1,6 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'coveprefs'
-
-    groupId = 'com.cyphercove.coveprefs'
-    libraryName = 'CovePrefs'
-
-    siteUrl = 'https://github.com/cyphercove/coveprefs'
-    gitUrl = 'https://github.com/cyphercove/coveprefs.git'
-
-    libraryVersion = '1.0.0-SNAPSHOT'
-
-    developerId = 'cypherdare'
-    developerName = 'Darren'
-    developerEmail = 'contact@cyphercove.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
 group = groupId
 version = libraryVersion
 project.archivesBaseName = artifactId
@@ -97,6 +76,7 @@ bintray {
     pkg {
         repo = bintrayRepo
         name = bintrayName
+        userOrg = bintrayOrg;
         desc = artifactDesc
         websiteUrl = siteUrl
         vcsUrl = gitUrl

@@ -23,11 +23,13 @@
             app:coveprefs_leftLabel="Small"
             app:coveprefs_rightLabel="Big"
             android:summary="This is a summary."/>
+    <com.cyphercove.coveprefs.DividerHider />
     <com.cyphercove.coveprefs.BannerLinkPreference
             android:title="@string/bannerlink"
             android:summary="This is a summary."
             app:coveprefs_uri="https://github.com/cyphercove"
             app:coveprefs_banner="@drawable/banner"/>
+    <com.cyphercove.coveprefs.DividerHider />
     <com.cyphercove.coveprefs.RotaryPreference
             android:title="@string/rotary"
             android:key="someAngle"

@@ -34,7 +34,7 @@ public class SummaryUpdater {
     }
 
     /** Sets the given Preference's OnPreferenceChangeListener to automatically update its summary to show its selected
-     * value. This only applies to ListPreference and RotaryPreference.
+     * value. This only applies to ListPreference.
      * @param preference
      * @param formatted If true and the preference's current summary exists, the current summary will be treated as a
      *                  format String, into which the summary's value will be placed;
