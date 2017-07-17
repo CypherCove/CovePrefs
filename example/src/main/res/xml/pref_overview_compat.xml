@@ -23,6 +23,13 @@
             app:coveprefs_leftLabel="Small"
             app:coveprefs_rightLabel="Big"
             android:summary="This is a summary."/>
+    <com.cyphercove.coveprefs.support.SeekBarPreference
+            android:title="@string/seekbar"
+            android:key="someInteger2"
+            android:defaultValue="2"
+            app:coveprefs_min="0"
+            android:max="20"
+            android:summary="This is a summary."/>
     <com.cyphercove.coveprefs.support.BannerLinkPreference
             android:title="@string/bannerlink"
             android:summary="This is a summary."

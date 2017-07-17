@@ -79,22 +79,26 @@ public class HSVSelectorView extends FrameLayout {
         svView.setOnSaturationValueChangedListener(onSaturationValueChangedListener);
 
         if (Build.VERSION.SDK_INT > 21) {
-            ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
-                @TargetApi(21)
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), cornerRadii);
-                }
-            };
-            hueView.setOutlineProvider(viewOutlineProvider);
-            svView.setOutlineProvider(viewOutlineProvider);
-            ViewUtils.clearAncestorOutlineClipping(hueView, this);
-            ViewUtils.clearAncestorOutlineClipping(svView, this);
+            applyOutlineProviders(cornerRadii);
         }
 
         if (isInEditMode()) {
             setColor(0xff33c7af, false);
         }
+    }
+
+    @TargetApi(21)
+    private void applyOutlineProviders (final int cornerRadii){
+        ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), cornerRadii);
+            }
+        };
+        hueView.setOutlineProvider(viewOutlineProvider);
+        svView.setOutlineProvider(viewOutlineProvider);
+        ViewUtils.clearAncestorOutlineClipping(hueView, this);
+        ViewUtils.clearAncestorOutlineClipping(svView, this);
     }
 
     @Override

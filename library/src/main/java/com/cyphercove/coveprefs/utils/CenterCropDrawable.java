@@ -35,6 +35,7 @@ package com.cyphercove.coveprefs.utils;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -60,14 +61,11 @@ public class CenterCropDrawable extends Drawable {
         final int drawableHeight = drawable.getIntrinsicHeight();
         final int viewWidth = right - left;
         final int viewHeight = bottom - top;
-        float dx = 0, dy = 0;
         float scale;
         if (drawableWidth * viewHeight > viewWidth * drawableHeight) {
             scale = (float) viewHeight / (float) drawableHeight;
-            dy = (drawableHeight - viewHeight) * 0.5f;
         } else {
             scale = (float) viewWidth / (float) drawableWidth;
-            dx = (drawableWidth - viewWidth) * 0.5f;
         }
 
         if (scale != 1f && drawable instanceof BitmapDrawable){
@@ -77,7 +75,7 @@ public class CenterCropDrawable extends Drawable {
             bitmapDrawable.setFilterBitmap(true);
         }
 
-        matrix.setTranslate(Math.round(dx), Math.round(dy));
+        matrix.setTranslate(Math.round((drawableWidth - viewWidth) * 0.5f), Math.round((drawableHeight - viewHeight) * 0.5f));
         matrix.postScale(scale, scale);
     }
 

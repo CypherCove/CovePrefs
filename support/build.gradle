@@ -16,8 +16,7 @@ android {
 }
 
 dependencies {
-    //compile project(':library')
-    compile "com.cyphercove.coveprefs:coveprefs:${rootProject.ext.libraryVersion}"
+    compile project(':library')
     compile "com.android.support:preference-v14:${rootProject.ext.supportLibVersion}"
 }
 

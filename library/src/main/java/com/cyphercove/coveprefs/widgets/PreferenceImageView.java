@@ -63,7 +63,7 @@ public class PreferenceImageView extends AppCompatImageView {
         super.setMaxWidth(maxWidth);
     }
 
-    public int getMaxWidth() {
+    public int getMaxWidthCompat() {
         return mMaxWidth;
     }
 
@@ -73,7 +73,7 @@ public class PreferenceImageView extends AppCompatImageView {
         super.setMaxHeight(maxHeight);
     }
 
-    public int getMaxHeight() {
+    public int getMaxHeightCompat() {
         return mMaxHeight;
     }
 
@@ -82,7 +82,7 @@ public class PreferenceImageView extends AppCompatImageView {
         final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         if (widthMode == MeasureSpec.AT_MOST || widthMode == MeasureSpec.UNSPECIFIED) {
             final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-            final int maxWidth = getMaxWidth();
+            final int maxWidth = getMaxWidthCompat();
             if (maxWidth != Integer.MAX_VALUE
                     && (maxWidth < widthSize || widthMode == MeasureSpec.UNSPECIFIED)) {
                 widthMeasureSpec = MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.AT_MOST);
@@ -92,7 +92,7 @@ public class PreferenceImageView extends AppCompatImageView {
         final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         if (heightMode == MeasureSpec.AT_MOST || heightMode == MeasureSpec.UNSPECIFIED) {
             final int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-            final int maxHeight = getMaxHeight();
+            final int maxHeight = getMaxHeightCompat();
             if (maxHeight != Integer.MAX_VALUE
                     && (maxHeight < heightSize || heightMode == MeasureSpec.UNSPECIFIED)) {
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.AT_MOST);

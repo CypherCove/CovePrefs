@@ -148,6 +148,9 @@ public class MultiColor {
     public MultiColor(Definition definition){
         this.definition = definition;
         values = new int[definition.getMaxColors()];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = Color.BLACK;
+        }
     }
 
     public MultiColor(Definition definition, int type, int[] values) {

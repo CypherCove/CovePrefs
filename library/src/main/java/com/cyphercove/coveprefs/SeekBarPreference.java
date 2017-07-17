@@ -63,7 +63,7 @@ public class SeekBarPreference extends BaseInlinePreference<Integer> {
             if (fromUser) {
                 int potentialNewValue = min + seekBar.getProgress();
                 if (trackingTouch) // v7.preference fully rejects changes during touch tracking, but it's more user friendly to show the value as it changes
-                    seekBarValueTextView.setText(String.valueOf(potentialNewValue));
+                    if (seekBarValueTextView != null) seekBarValueTextView.setText(String.valueOf(potentialNewValue));
                 else
                     syncValueFromWidgetChange(potentialNewValue);
             }

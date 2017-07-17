@@ -35,7 +35,7 @@ import java.util.HashMap;
 /**
  */
 public class ColorCacheView extends FrameLayout {
-    private HashMap<Button, Integer> buttonsToColors;
+    private HashMap<Button, Integer> buttonsToColors = new HashMap<>();
     private OnColorSelectedListener listener;
 
     interface OnColorSelectedListener {
@@ -71,8 +71,8 @@ public class ColorCacheView extends FrameLayout {
         };
 
         ArrayList<Integer> colors = ColorCache.getCachedColors(getContext());
+        buttonsToColors.clear();
         if (colors.size() > 0) {
-            buttonsToColors = new HashMap<>(colors.size());
             for (Integer color : colors){
                 color |= 0xFF000000;
                 AppCompatButton button = new AppCompatButton(getContext(), attrs, android.R.attr.buttonStyle);
