@@ -30,6 +30,8 @@ public class AboutPreference extends BaseDialogPreference<String> {
     public AboutPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        setDialogLayoutResource(R.layout.coveprefs_about_dialog);
+
         Locale locale;
         try {
             locale = context.getResources().getConfiguration().locale;
@@ -43,12 +45,13 @@ public class AboutPreference extends BaseDialogPreference<String> {
         if (getKey() == null)
             setKey(KEY); // A key is required so the dialog will restore state after a configuration change
         if (getDialogMessage() != null) {
-            if (Build.VERSION.SDK_INT <24)
+            if (Build.VERSION.SDK_INT < 24)
                 setDialogMessage(Html.fromHtml(getDialogMessage().toString()));
             else
                 setDialogMessage(Html.fromHtml(getDialogMessage().toString(), 0));
         }
 
+        setNegativeButtonText(null);
     }
 
     @Override

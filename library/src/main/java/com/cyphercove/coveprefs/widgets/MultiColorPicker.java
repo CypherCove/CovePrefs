@@ -26,6 +26,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageButton;
 import android.text.*;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.cyphercove.coveprefs.R;
+import com.cyphercove.coveprefs.utils.ColorUtils;
 import com.cyphercove.coveprefs.utils.MultiColor;
 import com.cyphercove.coveprefs.utils.ViewUtils;
 
@@ -63,6 +65,7 @@ public class MultiColorPicker extends FrameLayout {
     private OnMultiColorChangedListener listener;
     private OnActiveIndexChangedListener indexListener;
     private int currentWidgetsColor;
+    private float headerShadowRadius;
 
     private MultiColor multiColor;
     private int activeIndex;
@@ -119,6 +122,7 @@ public class MultiColorPicker extends FrameLayout {
                     listener.onColorChanged(multiColor);
                 prevButton.setEnabled(position != 0);
                 nextButton.setEnabled(position != headerAdapter.getCount() - 1);
+                updateImageButtonShadows();
             }
 
             @Override
@@ -201,6 +205,8 @@ public class MultiColorPicker extends FrameLayout {
         colorCacheView.setOnColorSelectedListener(onColorCacheSelectedListener);
         ViewUtils.clearAncestorOutlineClipping(colorCacheView, this);
 
+        headerShadowRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f,
+                getContext().getResources().getDisplayMetrics());
     }
 
     private void setHexEditTextColorWithoutPropagation (int color){
@@ -266,7 +272,9 @@ public class MultiColorPicker extends FrameLayout {
                 for (HeaderItem[] headerItemsByType : headerItems) {
                     for (int i = 0; i < headerItemsByType.length; i++) {
                         if (i == activeIndex) {
-                            ColorSwatch colorSwatch = headerItemsByType[i].colorSwatch;
+                            HeaderItem headerItem = headerItemsByType[i];
+                            ColorSwatch colorSwatch = headerItem.colorSwatch;
+                            TextView textView = headerItem.textView;
                             if (colorSwatch != null) {
                                 if (animated)
                                     colorSwatch.setColorAnimated(
@@ -276,6 +284,10 @@ public class MultiColorPicker extends FrameLayout {
                                 else
                                     colorSwatch.setColor(color | 0xff000000);
                             }
+                            if (textView != null) {
+                                ColorUtils.setShadow(textView, Color.BLACK, needTextShadow(color) ? headerShadowRadius : 0);
+                            }
+                            updateImageButtonShadows();
                         }
                     }
                 }
@@ -297,6 +309,21 @@ public class MultiColorPicker extends FrameLayout {
         if (listener != null && !isFromActivatedIndex){
             listener.onColorChanged(multiColor);
         }
+    }
+
+    private boolean needTextShadow (int color){
+        return ColorUtils.calculateGrayScaleValue(color) > 0.9f;
+    }
+
+    private void updateImageButtonShadows (){
+//        int type = multiColor.getType();
+//        boolean disabled = multiColor.definition.getValueCount(type) == 0;
+//        boolean landscape = getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+//        boolean paleFirstColor = ColorUtils.calculateGrayScaleValue(multiColor.getValues()[0]) > 0.9f;
+//        boolean prevNeedShadow = !disabled && paleFirstColor;
+//        boolean nextNeedShadow =  !disabled && (landscape ? paleFirstColor :
+//                ColorUtils.calculateGrayScaleValue(multiColor.getValues()[multiColor.getValueCount() - 1]) > 0.9f);
+        //TODO swap drawable to one with shadow or outline
     }
 
     public int getColor() {

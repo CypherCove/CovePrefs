@@ -26,7 +26,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.Preference;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -110,10 +109,10 @@ public class BannerLinkPreference extends Preference {
                     getContext().getResources().getDisplayMetrics());
             TextView titleTextView = (TextView) view.findViewById(android.R.id.title);
             if (titleTextView != null)
-                ColorUtils.addContrastingShadow(titleTextView, shadowRadius);
+                ColorUtils.setContrastingShadow(titleTextView, shadowRadius);
             TextView summaryTextView = (TextView) view.findViewById(android.R.id.summary);
             if (summaryTextView != null)
-                ColorUtils.addContrastingShadow(summaryTextView, shadowRadius);
+                ColorUtils.setContrastingShadow(summaryTextView, shadowRadius);
         }
         if (titleColor != null){
             TextView titleTextView = (TextView) view.findViewById(android.R.id.title);

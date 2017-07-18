@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import static android.text.Html.*;
+
 /**
  * A DialogPreference intended for use to show information about_message the application. The {@code android:dialogTitle}
  * is passed through {@link String#format(Locale, String, Object...)} using the {@code versionName} from the manifest,
@@ -22,6 +24,7 @@ public class AboutPreference extends BaseDialogPreference<String> {
 
     private static final String KEY = "com.cyphercove.coveprefs.AboutPreferences";
 
+
     @Override
     public Class getDataType() {
         return String.class; //Arbitrary
@@ -29,6 +32,8 @@ public class AboutPreference extends BaseDialogPreference<String> {
 
     public AboutPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        setDialogLayoutResource(R.layout.coveprefs_about_dialog);
 
         Locale locale;
         try {
@@ -43,12 +48,13 @@ public class AboutPreference extends BaseDialogPreference<String> {
         if (getKey() == null)
             setKey(KEY); // A key is required so the dialog will restore state after a configuration change
         if (getDialogMessage() != null) {
-            if (Build.VERSION.SDK_INT <24)
+            if (Build.VERSION.SDK_INT < 24)
                 setDialogMessage(Html.fromHtml(getDialogMessage().toString()));
             else
-                setDialogMessage(Html.fromHtml(getDialogMessage().toString(), 0));
+                setDialogMessage(Html.fromHtml(getDialogMessage().toString(), FROM_HTML_MODE_LEGACY));
         }
 
+        setNegativeButtonText(null);
     }
 
     @Override

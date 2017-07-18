@@ -28,7 +28,6 @@ import android.support.v7.preference.PreferenceViewHolder;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.TextView;
 import com.cyphercove.coveprefs.utils.CenterCropDrawable;
 import com.cyphercove.coveprefs.utils.ColorUtils;
@@ -99,10 +98,10 @@ public class BannerLinkPreference extends Preference {
                     getContext().getResources().getDisplayMetrics());
             TextView titleTextView = (TextView) holder.itemView.findViewById(android.R.id.title);
             if (titleTextView != null)
-                ColorUtils.addContrastingShadow(titleTextView, shadowRadius);
+                ColorUtils.setContrastingShadow(titleTextView, shadowRadius);
             TextView summaryTextView = (TextView) holder.itemView.findViewById(android.R.id.summary);
             if (summaryTextView != null)
-                ColorUtils.addContrastingShadow(summaryTextView, shadowRadius);
+                ColorUtils.setContrastingShadow(summaryTextView, shadowRadius);
 
             holder.setDividerAllowedAbove(false);
             holder.setDividerAllowedBelow(false);

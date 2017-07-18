@@ -13,11 +13,12 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
-    <color name="colorPrimary">#AE0C0C</color>
-    <color name="colorPrimaryDark">#7E0909</color>
-    <color name="colorAccent">#29b6f6</color>
-    <color name="colorControlActivated">#ffbc7e</color>
-    <color name="defaultColorPrefValue">#56ba71</color>
-    <color name="colorBackground">#1a222d</color>
-</resources>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@android:id/message"
+          style="@style/TextAppearance.AppCompat.Medium"
+          android:layout_gravity="center_horizontal"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingTop="?attr/dialogPreferredPadding"
+          android:paddingLeft="?attr/dialogPreferredPadding"
+          android:paddingRight="?attr/dialogPreferredPadding"/>

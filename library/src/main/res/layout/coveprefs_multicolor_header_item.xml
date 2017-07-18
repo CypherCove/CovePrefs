@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/coveprefs_swatch_header_label_padding"
             android:layout_gravity="center|bottom"
-            android:textAppearance="@style/CovePrefs.TextAppearance.DialogHeader.MultiColor"/>
+            android:textAppearance="@style/CovePrefs.TextAppearance.DialogHeader.MultiColor"
+            android:background="@null"/>
 </FrameLayout>
 
