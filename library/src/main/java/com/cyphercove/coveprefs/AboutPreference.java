@@ -55,6 +55,7 @@ public class AboutPreference extends BaseDialogPreference<String> {
         }
 
         setNegativeButtonText(null);
+        setPositiveButtonText(null);
     }
 
     @Override

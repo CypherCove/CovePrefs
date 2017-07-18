@@ -31,6 +31,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:elevation="1dp"
-            android:textAppearance="@style/CovePrefs.TextAppearance.DialogHeader.MultiColor"/>
+            android:textAppearance="@style/CovePrefs.TextAppearance.DialogHeader.MultiColor"
+            android:background="@null"/>
 </FrameLayout>
 

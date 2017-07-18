@@ -47,4 +47,6 @@
         <item name="coveprefs_headerIconButtonColor">@color/coveprefs_color_picker_header_icon</item>
     </style>
 
+    <style name="CovePrefs.ImageListButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored"/>
+
 </resources>

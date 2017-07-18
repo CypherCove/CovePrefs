@@ -29,10 +29,12 @@ import android.os.Build;
 import android.support.annotation.ArrayRes;
 import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
 import com.cyphercove.coveprefs.utils.ViewUtils;
@@ -52,6 +54,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     private PorterDuff.Mode imageTintMode;
     private int buttonElevation, rowHeight, columnWidth;
     private boolean smallWidget;
+    private LayoutInflater inflater;
 
     public ImageListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -71,6 +74,8 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         rowHeight = a.getDimensionPixelSize(R.styleable.CovePrefs_ImageListPreference_coveprefs_dialogRowHeight, 0);
         smallWidget = a.getBoolean(R.styleable.CovePrefs_ImageListPreference_coveprefs_smallWidget, false);
         a.recycle();
+
+        inflater = LayoutInflater.from(context);
 
         final Resources res = context.getResources();
         if (columnWidth == 0)
@@ -283,7 +288,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         public View getView(int position, View convertView, ViewGroup parent) {
             AppCompatImageButton imageButton;
             if (convertView == null){
-                imageButton = new AppCompatImageButton(getContext());
+                imageButton = (AppCompatImageButton)inflater.inflate(R.layout.coveprefs_image_list_button, null);
                 imageButton.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, rowHeight));
                 imageButton.setOnClickListener(new ImageButtonClickListener());
                 imageButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
