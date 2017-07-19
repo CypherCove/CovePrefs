@@ -138,9 +138,6 @@ public abstract class BaseInlinePreference<T> extends Preference {
     public final void onBindViewHolder(PreferenceViewHolder holder){
         super.onBindViewHolder(holder);
 
-        ViewGroup iconFrame = (ViewGroup)holder.findViewById(com.cyphercove.coveprefs.R.id.coveprefs_icon_frame);
-        iconFrame.setVisibility(iconFrame.getChildAt(0).getVisibility());
-
         onPreferenceViewCreated(new PreferenceViewHolderWrapper(holder));
     }
 

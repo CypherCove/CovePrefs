@@ -40,25 +40,31 @@
             android:paddingTop="16dp"
             android:paddingBottom="0dp"> <!--Leave 16dp left over on bottom so inner views can use the space for SeekBar touch area.-->
 
-        <com.cyphercove.coveprefs.widgets.PreferenceImageView
-                android:id="@android:id/icon"
+        <LinearLayout
+                android:id="@android:id/icon_frame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="-4dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="20dp"
-                android:layout_gravity="left|center_vertical"
-                android:layout_centerInParent="true"
                 android:minWidth="60dp"
-                android:maxWidth="48dp"
-                android:maxHeight="48dp"
-                tools:src="@drawable/coveprefs_ic_chevron_end"/>
+                android:gravity="left|center_vertical"
+                android:orientation="horizontal"
+                android:paddingRight="12dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="20dp"
+                tools:visibility="gone"><!--Picks up the left over 16dp from parent on the bottom.-->
+
+            <com.cyphercove.coveprefs.widgets.PreferenceImageView
+                    android:id="@android:id/icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="48dp"
+                    android:maxHeight="48dp"/>
+        </LinearLayout>
 
         <TextView
                 android:id="@android:id/title"
-                android:layout_toRightOf="@android:id/icon"
+                android:layout_toRightOf="@+id/coveprefs_icon_frame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -70,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@android:id/title"
-                android:layout_toRightOf="@android:id/icon"
+                android:layout_toRightOf="@+id/coveprefs_icon_frame"
                 android:layout_alignLeft="@android:id/title"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="?android:attr/textColorSecondary"

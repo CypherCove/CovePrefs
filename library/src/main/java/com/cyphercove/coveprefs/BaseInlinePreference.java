@@ -142,9 +142,6 @@ public abstract class BaseInlinePreference<T> extends Preference {
         view.setFocusable(selectable);
         view.setClickable(selectable);
 
-        ViewGroup iconFrame = (ViewGroup)view.findViewById(R.id.coveprefs_icon_frame);
-        iconFrame.setVisibility(iconFrame.getChildAt(0).getVisibility());
-
         onPreferenceViewCreated(new StandardViewHolder(view));
     }
 
