@@ -35,7 +35,7 @@ allprojects {
         libraryName = 'CovePrefs'
         siteUrl = 'https://github.com/cyphercove/coveprefs'
         gitUrl = 'https://github.com/cyphercove/coveprefs.git'
-        libraryVersion = '1.0.1'
+        libraryVersion = '1.0.2'
         developerId = 'cypherdare'
         developerName = 'Darren'
         developerEmail = 'contact@cyphercove.com'
