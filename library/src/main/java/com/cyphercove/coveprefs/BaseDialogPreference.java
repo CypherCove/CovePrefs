@@ -57,7 +57,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
 
     public abstract Class<T> getDataType();
 
-    BaseDialogPreference(Context context, AttributeSet attrs) {
+    protected BaseDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

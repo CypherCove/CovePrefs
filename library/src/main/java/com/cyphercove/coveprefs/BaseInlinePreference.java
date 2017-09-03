@@ -44,7 +44,7 @@ public abstract class BaseInlinePreference<T> extends Preference {
 
     public abstract Class<T> getDataType();
 
-    BaseInlinePreference(Context context, AttributeSet attrs) {
+    protected BaseInlinePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
