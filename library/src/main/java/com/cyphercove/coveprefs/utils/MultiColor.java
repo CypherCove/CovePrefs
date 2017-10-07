@@ -19,6 +19,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.util.Log;
+
+import java.util.Arrays;
 
 /**
  */
@@ -179,13 +182,20 @@ public class MultiColor {
     public void set(String preferenceValue) {
         preferenceValue = preferenceValue.replace("#", ""); // In case of manually typed values with optional hash marks
         String[] elements = preferenceValue.split("\\s+");
-        type = Integer.parseInt(elements[0]);
-        for (int i = 0, count = Math.min(values.length, elements.length - 1); i < count; i++) {
-            if (i >= elements.length)
-                values[i] = Color.BLACK;
-            else {
-                values[i] = (int) Long.parseLong(elements[i + 1], 16);
+        try {
+            type = Integer.parseInt(elements[0]);
+            for (int i = 0, count = Math.min(values.length, elements.length - 1); i < count; i++) {
+                if (i >= elements.length)
+                    values[i] = Color.BLACK;
+                else {
+                    values[i] = (int) Long.parseLong(elements[i + 1], 16);
+                }
             }
+        } catch (NumberFormatException e){
+            Log.e("MultiColor", String.format("Color value \"%1$s\" is invalid. Setting MultiColor to type 0 and all values to gray.", preferenceValue));
+            type = 0;
+            Arrays.fill(values, Color.GRAY);
+            return;
         }
     }
 
