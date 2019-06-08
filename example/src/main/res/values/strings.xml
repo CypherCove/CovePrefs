@@ -17,18 +17,17 @@
     <string name="compat_activity_name">Compat Example</string>
     <string name="about">About CovePrefs Example</string>
     <string name="format_version">CovePrefs Example %s</string>
-    <string name="about_message">© 2017 Cypher Cove LLC
+    <string name="about_message">© 2017-2019 Cypher Cove LLC
         &lt;br>
         &lt;br>
         CovePrefs Example is covered by the &lt;a href=&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;>
         Apache License 2.0&lt;/a>.</string>
     <string name="dismiss">Dismiss</string>
-    <string name="menu_compat">Swap compat</string>
     <string name="menu_theme">Swap theme</string>
 
     <string name="bannerlink">BannerLinkPreference</string>
     <string name="imagelist">ImageListPreference</string>
-    <string name="seekbar">SeekBarPreference</string>
+    <string name="seekbar">SeekBarPlusPreference</string>
     <string name="rotary">RotaryPreference</string>
     <string name="color">ColorPreference</string>
     <string name="color_no_hex">ColorPreference no hex</string>

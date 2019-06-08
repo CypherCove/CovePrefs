@@ -26,7 +26,7 @@
             android:fillViewport="true"
             android:scrollIndicators="top|bottom">
 
-    <android.support.v7.widget.ButtonBarLayout
+    <androidx.appcompat.widget.ButtonBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="bottom"
@@ -46,7 +46,7 @@
                 tools:visibility="visible"
                 tools:text="Neutral"/>
 
-        <android.support.v4.widget.Space
+        <Space
                 android:id="@+id/spacer"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -71,6 +71,6 @@
                 tools:visibility="visible"
                 tools:text="OK"/>
 
-    </android.support.v7.widget.ButtonBarLayout>
+    </androidx.appcompat.widget.ButtonBarLayout>
 
 </ScrollView>

@@ -26,15 +26,13 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.os.Build;
-import android.support.annotation.ArrayRes;
-import android.support.v7.widget.AppCompatImageButton;
+import androidx.annotation.ArrayRes;
+import androidx.appcompat.widget.AppCompatImageButton;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
 import com.cyphercove.coveprefs.utils.ViewUtils;
@@ -54,7 +52,6 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     private PorterDuff.Mode imageTintMode;
     private int buttonElevation, rowHeight, columnWidth;
     private boolean smallWidget;
-    private LayoutInflater inflater;
 
     public ImageListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -63,9 +60,9 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         setWidgetLayoutResource(R.layout.coveprefs_image_list_preference_widget);
 
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_ImageListPreference);
-        int entriesId = a.getResourceId(R.styleable.CovePrefs_ImageListPreference_android_entries, 0);
-        entryValues = a.getTextArray(R.styleable.CovePrefs_ImageListPreference_android_entryValues);
-        imageTintColor = a.getColorStateList(R.styleable.CovePrefs_ImageListPreference_android_tint);
+        int entriesId = a.getResourceId(R.styleable.CovePrefs_ImageListPreference_entries, 0);
+        entryValues = a.getTextArray(R.styleable.CovePrefs_ImageListPreference_entryValues);
+        imageTintColor = a.getColorStateList(R.styleable.CovePrefs_ImageListPreference_tint);
         if (a.hasValue(R.styleable.CovePrefs_ImageListPreference_coveprefs_tintMode)){
             imageTintMode = ViewUtils.parseTintMode(a.getInt(R.styleable.CovePrefs_ImageListPreference_coveprefs_tintMode, -1),
                     PorterDuff.Mode.SRC_IN);
@@ -74,8 +71,6 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         rowHeight = a.getDimensionPixelSize(R.styleable.CovePrefs_ImageListPreference_coveprefs_dialogRowHeight, 0);
         smallWidget = a.getBoolean(R.styleable.CovePrefs_ImageListPreference_coveprefs_smallWidget, false);
         a.recycle();
-
-        inflater = LayoutInflater.from(context);
 
         final Resources res = context.getResources();
         if (columnWidth == 0)
@@ -198,7 +193,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         return 0;
     }
     @Override
-    protected String getDefaultValue() {
+    protected String getBackupDefaultValue() {
         return "";
     }
 
@@ -263,7 +258,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     protected Object onGetDefaultValue(TypedArray a, int index) {
         String defaultValue = a.getString(index);
         if (defaultValue == null)
-            defaultValue = getDefaultValue();
+            defaultValue = getBackupDefaultValue();
         return defaultValue;
     }
 
@@ -288,7 +283,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         public View getView(int position, View convertView, ViewGroup parent) {
             AppCompatImageButton imageButton;
             if (convertView == null){
-                imageButton = (AppCompatImageButton)inflater.inflate(R.layout.coveprefs_image_list_button, null);
+                imageButton = new AppCompatImageButton(getContext());
                 imageButton.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, rowHeight));
                 imageButton.setOnClickListener(new ImageButtonClickListener());
                 imageButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);

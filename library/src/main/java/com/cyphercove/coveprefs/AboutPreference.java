@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
-import static android.text.Html.*;
-
 /**
  * A DialogPreference intended for use to show information about_message the application. The {@code android:dialogTitle}
  * is passed through {@link String#format(Locale, String, Object...)} using the {@code versionName} from the manifest,
@@ -23,7 +21,6 @@ import static android.text.Html.*;
 public class AboutPreference extends BaseDialogPreference<String> {
 
     private static final String KEY = "com.cyphercove.coveprefs.AboutPreferences";
-
 
     @Override
     public Class getDataType() {
@@ -51,11 +48,10 @@ public class AboutPreference extends BaseDialogPreference<String> {
             if (Build.VERSION.SDK_INT < 24)
                 setDialogMessage(Html.fromHtml(getDialogMessage().toString()));
             else
-                setDialogMessage(Html.fromHtml(getDialogMessage().toString(), FROM_HTML_MODE_LEGACY));
+                setDialogMessage(Html.fromHtml(getDialogMessage().toString(), 0));
         }
 
         setNegativeButtonText(null);
-        setPositiveButtonText(null);
     }
 
     @Override
@@ -67,7 +63,8 @@ public class AboutPreference extends BaseDialogPreference<String> {
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
         TextView messageView = (TextView)view.findViewById(android.R.id.message);
-        messageView.setMovementMethod(LinkMovementMethod.getInstance()); // Make HTML links clickable
+        if (messageView != null)
+            messageView.setMovementMethod(LinkMovementMethod.getInstance()); // Make HTML links clickable
     }
 
     @Override
@@ -80,7 +77,7 @@ public class AboutPreference extends BaseDialogPreference<String> {
     }
 
     @Override
-    protected String getDefaultValue() {
+    protected String getBackupDefaultValue() {
         return "";
     }
 }

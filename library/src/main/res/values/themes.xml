@@ -16,7 +16,9 @@
 <resources>
     <!-- These are here for easy selection in the XML layout editor's design tab, which is apparently unable to select
         AppCompat themes directly. -->
-    <style name="CovePrefs.Theme" parent="Theme.AppCompat" />
+    <style name="CovePrefs.Theme" parent="Theme.AppCompat" >
+
+    </style>
     <style name="CovePrefs.Theme.Light" parent="Theme.AppCompat.Light" />
     <style name="CovePrefs.Theme.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar" />
 </resources>

@@ -20,9 +20,5 @@
             android:id="@+id/action_swap_theme"
             android:title="@string/menu_theme"
             app:showAsAction="always" />
-    <item
-            android:id="@+id/action_swap_compat"
-            android:title="@string/menu_compat"
-            app:showAsAction="always" />
 
 </menu>

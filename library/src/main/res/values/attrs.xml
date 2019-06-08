@@ -47,8 +47,8 @@
     </declare-styleable>
 
     <declare-styleable name="CovePrefs_PreferenceImageView">
-        <attr name="android:maxWidth"/>
-        <attr name="android:maxHeight"/>
+        <attr name="maxWidth"/> <!--From appcompat attrs.-->
+        <attr name="maxHeight"/> <!--From appcompat attrs.-->
     </declare-styleable>
 
     <declare-styleable name="CovePrefs_ThemeOptions">
@@ -66,6 +66,10 @@
         <attr name="coveprefs_multiColorDisabledLabel" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="CovePrefs_RotaryPreference">
+        <attr name="useSimpleSummaryProvider"/> <!--From appcompat attrs.-->
+    </declare-styleable>
+
     <declare-styleable name="CovePrefs_BannerLinkPreference">
         <attr name="coveprefs_uri" format="string"/>
         <attr name="coveprefs_banner" format="reference"/>
@@ -73,20 +77,16 @@
         <attr name="coveprefs_summaryColor" format="color"/>
     </declare-styleable>
 
-    <declare-styleable name="CovePrefs_SeekBarPreference">
-        <attr name="coveprefs_min" format="integer" />
-        <attr name="android:max"/>
-        <attr name="coveprefs_seekBarIncrement" format="integer" />
-        <attr name="coveprefs_adjustable" format="boolean"/>
-        <attr name="coveprefs_showSeekBarValue" format="boolean"/>
+    <declare-styleable name="CovePrefs_SeekBarPlusPreference">
+        <attr name="max" format="integer"/>
         <attr name="coveprefs_leftLabel" format="string"/>
         <attr name="coveprefs_rightLabel" format="string"/>
     </declare-styleable>
 
     <declare-styleable name="CovePrefs_ImageListPreference">
-        <attr name="android:entries"/>
-        <attr name="android:entryValues"/>
-        <attr name="android:tint"/>
+        <attr name="entries"/> <!--From appcompat attrs.-->
+        <attr name="entryValues"/> <!--From appcompat attrs.-->
+        <attr name="tint"/> <!--From appcompat attrs.-->
         <attr name="coveprefs_tintMode"/>
         <attr name="coveprefs_dialogColumnWidth" format="dimension"/>
         <attr name="coveprefs_dialogRowHeight" format="dimension"/>

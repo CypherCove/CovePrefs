@@ -17,13 +17,9 @@ package com.cyphercove.coveprefs.utils;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
-import android.os.Build;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.widget.ImageView;
+
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+
 import android.widget.TextView;
 
 /**

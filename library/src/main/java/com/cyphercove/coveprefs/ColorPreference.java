@@ -67,7 +67,7 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
     }
 
     @Override
-    protected Integer getDefaultValue() {
+    protected Integer getBackupDefaultValue() {
         return Color.MAGENTA;
     }
 
@@ -88,7 +88,7 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
 
     @Override
     protected void onDialogViewCreated(View view) {
-        colorPicker = (ColorPicker) view.findViewById(R.id.coveprefs_colorPicker);
+        colorPicker = view.findViewById(R.id.coveprefs_colorPicker);
         colorPicker.setOnColorChangedListener(this);
         colorPicker.setWidgets(widgets);
     }
@@ -114,11 +114,11 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         try {
-            return a.getInteger(index, getDefaultValue());
+            return a.getInteger(index, getBackupDefaultValue());
         } catch (UnsupportedOperationException e){
             String value = a.getString(index);
             if (value == null)
-                return getDefaultValue(); // shouldn't happen
+                return getBackupDefaultValue(); // shouldn't happen
             if (value.contains("color/")){
                 Resources res = getContext().getResources();
                 int colorId = res.getIdentifier(value, "color", getContext().getPackageName());

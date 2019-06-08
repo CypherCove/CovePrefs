@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cyphercove.coveprefs.utils;
+package com.cyphercove.coveprefs;
 
-import androidx.annotation.IdRes;
-import android.view.View;
+import androidx.preference.*;
 
-public class StandardViewHolder implements AbsViewHolder {
-    final View view;
-    public StandardViewHolder(View view){
-        this.view = view;
-    }
-
+/**
+ * Extend this class to support CovePrefs with dialogs. If a different Fragment superclass is needed,
+ * see {@link CovePrefs#onPreferenceDisplayDialog(PreferenceFragmentCompat, Preference)} .
+ */
+public abstract class CovePreferenceFragmentCompat extends PreferenceFragmentCompat {
     @Override
-    public View findViewById(@IdRes int id) {
-        return view.findViewById(id);
-    }
-
-    @Override
-    public View baseView() {
-        return view;
+    public void onDisplayPreferenceDialog(Preference preference) {
+        if (CovePrefs.onPreferenceDisplayDialog(this, preference))
+            return;
+        super.onDisplayPreferenceDialog(preference);
     }
 }

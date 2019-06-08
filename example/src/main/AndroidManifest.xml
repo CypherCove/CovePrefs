@@ -29,10 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".SettingsActivityCompat"
-                android:label="@string/compat_activity_name">
-        </activity>
     </application>
 
 </manifest>

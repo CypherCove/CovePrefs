@@ -23,7 +23,7 @@
             android:layout_width="@dimen/coveprefs_rotary_lead_column_width"
             android:layout_height="match_parent"
             android:textAppearance="@style/CovePrefs.TextAppearance.DialogHeader"
-            android:maxLines="1"
+            android:singleLine="true"
             android:ellipsize="none"
             android:gravity="center"
             android:text="100°"

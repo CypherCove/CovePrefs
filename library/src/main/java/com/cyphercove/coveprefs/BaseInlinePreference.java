@@ -18,14 +18,14 @@ package com.cyphercove.coveprefs;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Parcelable;
-import android.preference.Preference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceViewHolder;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
+
 import com.cyphercove.coveprefs.state.SingleValueSavedState;
+import com.cyphercove.coveprefs.utils.PreferenceViewHolderWrapper;
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
-import com.cyphercove.coveprefs.utils.StandardViewHolder;
 
 /**
  * A Preference intended for preference layouts that have a widget for editing built in. There is no need to override
@@ -135,14 +135,10 @@ public abstract class BaseInlinePreference<T> extends Preference {
 
     /** Use {@link #onPreferenceViewCreated(AbsViewHolder)} for obtaining references to preference layout views. */
     @Override
-    protected final void onBindView(View view) {
-        super.onBindView(view);
+    public final void onBindViewHolder(PreferenceViewHolder holder){
+        super.onBindViewHolder(holder);
 
-        final boolean selectable = isSelectable();
-        view.setFocusable(selectable);
-        view.setClickable(selectable);
-
-        onPreferenceViewCreated(new StandardViewHolder(view));
+        onPreferenceViewCreated(new PreferenceViewHolderWrapper(holder));
     }
 
     /** Called when the preference view has been created. This is a good time for caching references to any custom

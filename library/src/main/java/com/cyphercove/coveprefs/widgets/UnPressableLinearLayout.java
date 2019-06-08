@@ -20,10 +20,10 @@
  */
 package com.cyphercove.coveprefs.widgets;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 import android.content.Context;
-import android.support.annotation.RestrictTo;
+import androidx.annotation.RestrictTo;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
@@ -31,7 +31,6 @@ import android.widget.LinearLayout;
  * Custom LinearLayout that does not propagate the pressed state down to its children.
  * By default, the pressed state is propagated to all the children that are not clickable
  * or long-clickable.
- * @hide
  */
 @RestrictTo(LIBRARY_GROUP)
 public class UnPressableLinearLayout extends LinearLayout {

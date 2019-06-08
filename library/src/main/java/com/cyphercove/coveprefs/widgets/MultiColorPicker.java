@@ -21,9 +21,9 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.AppCompatImageButton;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.AppCompatImageButton;
 import android.text.*;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -102,7 +102,7 @@ public class MultiColorPicker extends FrameLayout {
         inflater.inflate(R.layout.coveprefs_color_picker, this);
 
         findViewById(R.id.coveprefs_multicolor_header).setVisibility(View.VISIBLE);
-        headerViewPager = (ViewPager) findViewById(R.id.coveprefs_pager_swatch);
+        headerViewPager = findViewById(R.id.coveprefs_pager_swatch);
         headerViewPager.setAdapter(headerAdapter);
         headerViewPager.setFocusableInTouchMode(true); // Allow touch to unfocus the hexEditText so keyboard closes
         headerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

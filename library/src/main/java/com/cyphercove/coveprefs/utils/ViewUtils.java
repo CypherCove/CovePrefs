@@ -22,12 +22,12 @@ package com.cyphercove.coveprefs.utils;
 
 import android.graphics.PorterDuff;
 import android.os.Build;
-import android.support.annotation.RestrictTo;
+import androidx.annotation.RestrictTo;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 /**
  */
@@ -37,9 +37,9 @@ public class ViewUtils {
 
     /**
      * Returns the x position of the view in relation to the second view
-     * @param view
-     * @param otherView
-     * @return
+     * @param view The view whose position is to be measured.
+     * @param otherView The view the first view's position is measured from.
+     * @return The relative X position
      */
     public static float getRelativeX (View view, View otherView) {
         view.getLocationOnScreen(OUTPUT);
@@ -51,9 +51,9 @@ public class ViewUtils {
 
     /**
      * Returns the y position of the view in relation to the second view
-     * @param view
-     * @param otherView
-     * @return
+     * @param view The view whose position is to be measured.
+     * @param otherView The view the first view's position is measured from.
+     * @return The relative y position
      */
     public static float getRelativeY (View view, View otherView) {
         view.getLocationOnScreen(OUTPUT);

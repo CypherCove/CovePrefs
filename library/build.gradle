@@ -1,8 +1,10 @@
-apply plugin: 'com.android.library'
-
+plugins {
+    id 'com.android.library'
+    id 'digital.wup.android-maven-publish'
+    id "com.jfrog.bintray" version "1.8.4"
+}
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -17,13 +19,45 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    api "androidx.appcompat:appcompat:${rootProject.ext.appCompatVersion}"
+    api "androidx.preference:preference:${rootProject.ext.preferenceVersion}"
+    api "androidx.annotation:annotation:${rootProject.ext.annotationVersion}"
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
 
-apply from: '../bintray-setup.gradle'
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    pkg {
+        repo = 'maven'
+        name = 'CovePrefs'
+        userOrg = 'cyphercove'
+        version {
+            name = rootProject.getVersion()
+            released  = new Date()
+        }
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/cyphercove/CovePrefs/'
+    }
+    publications = ['mavenPublish']
+}
+
+project.ext {
+    mavSiteUrl = "https://github.com/CypherCove/CovePrefs"
+    mavGitUrl = mavSiteUrl + '.git'
+    mavProjectName = 'CovePrefs'
+    mavLibraryLicenses = ["Apache-2.0":'http://www.apache.org/licenses/LICENSE-2.0.txt']
+    mavLibraryDescription = "A variety of Material preferences for Android, based on androidx.preference and androidx.appcompat"
+    mavVersion = project.version
+    mavPublishToMavenLocal = true
+}
+
+apply from: 'https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle'
+
+androidJavadocs {
+    failOnError = false
+}

@@ -15,21 +15,30 @@
  */
 package com.cyphercove.coveprefs.example;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import com.cyphercove.coveprefs.CovePreferenceFragmentCompat;
+import com.cyphercove.coveprefs.CovePrefs;
 
-/** An example of using CovePrefs with native Android Preferences and PreferenceFragments. AppCompatActivity must still
- * be used because CovePrefs are only designed to work with Theme.AppCompat.
+/** An example of using CovePrefs with AppCompat Preferences. The preference fragment must extend
+ * CovePreferenceFragmentCompat for the CovePref Preferences to show dialogs.
  * <p>
- * Using native Preferences will result in dialogs appearing with Holo styled buttons and titles on devices with API<21.
- * </p>
  */
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback {
+
+
+    @Override
+    public boolean onPreferenceDisplayDialog(@NonNull PreferenceFragmentCompat caller, Preference pref) {
+        return CovePrefs.onPreferenceDisplayDialog(caller, pref);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +46,9 @@ public class SettingsActivity extends AppCompatActivity {
             setTheme(R.style.CustomTheme);
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState == null){ // don't replace existing or screen rotations will kill dialogs
-            getFragmentManager().beginTransaction()
-                    .replace(android.R.id.content, new SettingsFragment())
+        if (savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction()
+                    .replace(android.R.id.content, new SettingsFragmentCompat())
                     .commit();
         }
     }
@@ -57,19 +66,14 @@ public class SettingsActivity extends AppCompatActivity {
             case R.id.action_swap_theme:
                 ThemeSwapper.swapTheme(this);
                 return true;
-            case R.id.action_swap_compat:
-                startActivity(new Intent(this, SettingsActivityCompat.class));
-                finish();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public static class SettingsFragment extends PreferenceFragment {
+    public static class SettingsFragmentCompat extends PreferenceFragmentCompat{
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             addPreferencesFromResource(R.xml.pref_overview);
         }
     }

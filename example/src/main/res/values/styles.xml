@@ -15,7 +15,6 @@
 <resources>
 
     <style name="UnchangedAppCompat" parent="Theme.AppCompat">
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
     <style name="CustomTheme" parent="Theme.AppCompat">
@@ -25,7 +24,6 @@
         <item name="colorControlActivated">@color/colorControlActivated</item>
 
         <item name="android:alertDialogTheme">@style/CustomDialogTheme</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
     <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog.Alert">

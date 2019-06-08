@@ -15,29 +15,34 @@
  */
 package com.cyphercove.coveprefs;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Bundle;
 import android.os.Parcelable;
-import android.preference.DialogPreference;
+import androidx.preference.DialogPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceDialogFragmentCompat;
+import androidx.preference.PreferenceViewHolder;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import com.cyphercove.coveprefs.state.SingleValueSavedState;
+import com.cyphercove.coveprefs.utils.PreferenceViewHolderWrapper;
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
-import com.cyphercove.coveprefs.utils.StandardViewHolder;
 
 /**
  * A DialogPreference set up to restore dialog state on Activity recreation, and automatically persist resources on
- * positive dialog results. There is no need to override {@link #onSetInitialValue(boolean, Object)} or to manually
+ * positive dialog results. There is no need to override {@link #onSetInitialValue(boolean, T)} or to manually
  * persist the new value when the dialog is closed. It is still necessary to override
- * {@link DialogPreference#onGetDefaultValue(TypedArray, int)}.
+ * {@link Preference#onGetDefaultValue(TypedArray, int)}.
  * <p>
  * Capture view references and prepare views from the inflated dialog in {@link #onDialogViewCreated(View)}.
  * <p>
- * It is necessary to call {@link #onValueModifedInDialog(Object)} as the value is changed via the dialog's widget(s).
+ * It is necessary to call {@link #onValueModifedInDialog(T)} as the value is changed via the dialog's widget(s).
  * <p>
- * A neutral button can be set on the dialog by calling {@link #setNeutralButtonText(CharSequence)}. Unlike the positive
+ * A neutral button can be set on the dialog by calling {@link #setNeutralButtonText(CharSequence)} . Unlike the positive
  * and negative buttons, it does not automatically close the dialog. An OnClickListner can be added to it so it can
  * call a method before dismissing the dialog.
  *
@@ -45,17 +50,15 @@ import com.cyphercove.coveprefs.utils.StandardViewHolder;
  */
 public abstract class BaseDialogPreference<T> extends DialogPreference {
 
-    /** Tracks the current value shown in the dialog, before the dialog is closed, or when the dialog is being restored
-     * from an Activity refresh. Subclasses keep it updated with {@link #onValueModifedInDialog(Object)}.*/
     private T newValue;
-    /** Tracks the currently set value, copied from {@link #newValue} and persisted when the dialog closes with a positive result. */
     private T currentValue;
     private boolean valueSet;
     private CharSequence positiveButtonText, negativeButtonText, neutralButtonText;
     private Button neutralButton;
     private boolean usesInternalButtonBar;
+    private DialogFragment dialogFragment;
 
-    public abstract Class<T> getDataType();
+    protected abstract Class<T> getDataType();
 
     protected BaseDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -102,7 +105,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
     @Override
     protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
-        if (newValue == null || newValue == currentValue || getDialog() == null) {
+        if (newValue == null || newValue == currentValue) {
             return superState; // no need to save
         }
 
@@ -119,9 +122,9 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
         }
 
         SingleValueSavedState myState = (SingleValueSavedState) state;
-        newValue = (T)myState.getValue();
         super.onRestoreInstanceState(myState.getSuperState());
 
+        newValue = (T)myState.getValue();
     }
 
     public void setValue (T value){
@@ -146,37 +149,35 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
     /** @return A value suitable for binding to the dialog when it is shown. This is the currently set value, or in
     * the case of a configuration change, it is the last value that was shown on the dialog. */
     protected T getValueForBindingDialog (){
-        return newValue != null ? newValue : (currentValue != null ? currentValue : getDefaultValue());
+        return newValue != null ? newValue : (currentValue != null ? currentValue : getBackupDefaultValue());
     }
 
     /** @return A value suitable for binding to the preference view. This is the currently persisted value. */
     protected T getValueForBindingPreferenceView (){
-        return currentValue != null ? currentValue : getDefaultValue();
+        return currentValue != null ? currentValue : getBackupDefaultValue();
     }
 
     @Override
-    protected final void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        if (restorePersistedValue) {
-            currentValue = this.getPersistedValue(getDefaultValue());
-        } else {
-            currentValue = (T) defaultValue;
-            persistValue(currentValue);
+    protected final void onSetInitialValue(Object defaultValue) {
+        if (defaultValue == null)
+            defaultValue = getBackupDefaultValue();
+        currentValue = this.getPersistedValue((T)defaultValue);
+    }
+
+    /** Dismisses the dialog and calls {@link #onDialogClosed(boolean)}.
+     * @param positiveResult Whether the values that were changed with {@link #onValueModifedInDialog(T)} should
+     * be committed because the dialog wasn't canceled.*/
+    protected void dismissDialog (boolean positiveResult){
+        if (dialogFragment != null){
+            Dialog dialog = dialogFragment.getDialog();
+            if (dialog != null) {
+                dialog.dismiss();
+                onDialogClosed(positiveResult);
+            }
         }
     }
 
-    /** Dismisses the dialog and calls {@link #onDialogClosed(boolean)}. This somewhat trivial method is here
-     * so subclasses can easily be ported to the support library without code changes.
-     * @param positiveResult Whether the values that were changed with {@link #onValueModifedInDialog(Object)} should
-     * be commited because the dialog wasn't canceled.*/
-    protected void dismissDialog (boolean positiveResult){
-        getDialog().dismiss();
-        onDialogClosed(positiveResult);
-    }
-
-    /**
-     * See {@link DialogPreference#onDialogClosed(boolean)}. If subclassed, must call the super method. */
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
+    private void onDialogClosed(boolean positiveResult) {
         if (positiveResult && callChangeListener(newValue)) {
             currentValue = newValue;
             persistValue(newValue);
@@ -185,68 +186,15 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
         newValue = null;
     }
 
+    /**Binds views in the content View of the dialog to data.
+     * @param view The root content view of the dialog.*/
+    protected void onBindDialogView(View view) {
+    }
+
     @Override
-    protected final View onCreateDialogView() {
-        View view = super.onCreateDialogView();
-        handleInternalButtonBar(view);
-        onDialogViewCreated(view);
-        return view;
-    }
-
-    private void handleInternalButtonBar (View layoutView){
-        if (usesInternalButtonBar){
-            boolean shouldHideButtonBar = true;
-            if (positiveButtonText != null){
-                shouldHideButtonBar = false;
-                Button positiveButton = (Button)layoutView.findViewById(R.id.coveprefs_button1);
-                positiveButton.setText(positiveButtonText);
-                positiveButton.setVisibility(View.VISIBLE);
-                positiveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getDialog().dismiss();
-                        onDialogClosed(true);
-                    }
-                });
-            }
-            if (negativeButtonText != null){
-                shouldHideButtonBar = false;
-                Button negativeButton = (Button)layoutView.findViewById(R.id.coveprefs_button2);
-                negativeButton.setText(negativeButtonText);
-                negativeButton.setVisibility(View.VISIBLE);
-                negativeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getDialog().dismiss();
-                        onDialogClosed(false);
-                    }
-                });
-            }
-
-            if (neutralButtonText != null){
-                shouldHideButtonBar = false;
-                Button neutralButton = (Button)layoutView.findViewById(R.id.coveprefs_button3);
-                neutralButton.setText(neutralButtonText);
-                neutralButton.setVisibility(View.VISIBLE);
-            }
-            if (shouldHideButtonBar)
-                layoutView.findViewById(R.id.coveprefs_buttonPanel).setVisibility(View.GONE);
-        }
-    }
-
-    protected void setNeutralButtonText (CharSequence text){
-        neutralButtonText = text;
-    }
-
-    protected Button getNeutralButton (){
-        return neutralButton;
-    }
-
-    /** Use {@link #onPreferenceViewCreated(AbsViewHolder)} for obtaining references to preference layout views. */
-    @Override
-    protected final void onBindView(View view) {
-        super.onBindView(view);
-        onPreferenceViewCreated(new StandardViewHolder(view));
+    public final void onBindViewHolder(PreferenceViewHolder holder){
+        super.onBindViewHolder(holder);
+        onPreferenceViewCreated(new PreferenceViewHolderWrapper(holder));
     }
 
     /** Called when the preference view has been created. This is a good time for caching references to any custom
@@ -279,10 +227,106 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
     protected abstract T getPersistedValue (T defaultReturnValue);
 
     /** @return A backup default value, in case none was provided via XML. Must not return null.*/
-    protected abstract T getDefaultValue();
+    protected abstract T getBackupDefaultValue();
 
     protected void onValueModifedInDialog (T newValue){
         this.newValue = newValue;
+    }
+
+    protected void setNeutralButtonText (CharSequence text){
+        neutralButtonText = text;
+    }
+
+    protected Button getNeutralButton (){
+        return neutralButton;
+    }
+
+    protected final void setDialogFragment (DialogFragment dialogFragment){
+        this.dialogFragment = dialogFragment;
+    }
+
+    public String getDialogFragmentTag (){
+        return getClass().getName() + ":DialogFragment";
+    }
+
+    public static class DialogFragment<T> extends PreferenceDialogFragmentCompat {
+
+        public static DialogFragment newInstance(String key) {
+            final DialogFragment
+                    fragment = new DialogFragment();
+            final Bundle b = new Bundle(1);
+            b.putString(ARG_KEY, key);
+            fragment.setArguments(b);
+            return fragment;
+        }
+
+        private BaseDialogPreference<T> getBasePreference (){
+            return (BaseDialogPreference<T>) getPreference();
+        }
+
+        /** See {@link PreferenceDialogFragmentCompat#onDialogClosed(boolean)}. */
+        @Override
+        public void onDialogClosed(boolean positiveResult) {
+            getBasePreference().onDialogClosed(positiveResult);
+            getBasePreference().setDialogFragment(null);
+        }
+
+        @Override
+        protected View onCreateDialogView(Context context) {
+            View view = super.onCreateDialogView(context);
+            handleInternalButtonBar(view);
+            getBasePreference().setDialogFragment(this);
+            getBasePreference().onDialogViewCreated(view);
+            return view;
+        }
+
+        @Override
+        protected void onBindDialogView(View view) {
+            super.onBindDialogView(view);
+            getBasePreference().onBindDialogView(view);
+        }
+
+        private void handleInternalButtonBar (View layoutView){
+            BaseDialogPreference<?> baseDialogPreference = getBasePreference();
+
+            if (baseDialogPreference.usesInternalButtonBar){
+                boolean shouldHideButtonBar = true;
+                if (baseDialogPreference.positiveButtonText != null){
+                    shouldHideButtonBar = false;
+                    Button positiveButton = (Button)layoutView.findViewById(com.cyphercove.coveprefs.R.id.coveprefs_button1);
+                    positiveButton.setText(baseDialogPreference.positiveButtonText);
+                    positiveButton.setVisibility(View.VISIBLE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getDialog().dismiss();
+                            onDialogClosed(true);
+                        }
+                    });
+                }
+                if (baseDialogPreference.negativeButtonText != null){
+                    shouldHideButtonBar = false;
+                    Button negativeButton = (Button)layoutView.findViewById(com.cyphercove.coveprefs.R.id.coveprefs_button2);
+                    negativeButton.setText(baseDialogPreference.negativeButtonText);
+                    negativeButton.setVisibility(View.VISIBLE);
+                    negativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getDialog().dismiss();
+                            onDialogClosed(false);
+                        }
+                    });
+                }
+                if (baseDialogPreference.neutralButtonText != null){
+                    shouldHideButtonBar = false;
+                    baseDialogPreference.neutralButton = (Button)layoutView.findViewById(com.cyphercove.coveprefs.R.id.coveprefs_button3);
+                    baseDialogPreference.neutralButton.setText(baseDialogPreference.neutralButtonText);
+                    baseDialogPreference.neutralButton.setVisibility(View.VISIBLE);
+                }
+                if (shouldHideButtonBar)
+                    layoutView.findViewById(R.id.coveprefs_buttonPanel).setVisibility(View.GONE);
+            }
+        }
     }
 
 }

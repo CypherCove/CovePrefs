@@ -12,66 +12,57 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.cyphercove.coveprefs.SeekBarPreference
-            android:title="@string/seekbar"
-            android:key="someInteger"
-            android:defaultValue="2"
-            app:coveprefs_min="0"
-            android:max="20"
-            app:coveprefs_leftLabel="Small"
-            app:coveprefs_rightLabel="Big"
-            android:summary="This is a summary."/>
-    <com.cyphercove.coveprefs.SeekBarPreference
-            android:title="@string/seekbar"
-            android:key="someInteger2"
-            android:defaultValue="2"
-            app:coveprefs_min="0"
-            android:max="20"
-            android:summary="This is a summary."/>
-    <com.cyphercove.coveprefs.DividerHider />
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.cyphercove.coveprefs.SeekBarPlusPreference
+        app:title="@string/seekbar"
+        app:key="someInteger"
+        app:defaultValue="9"
+        app:min="0"
+        app:max="10"
+        app:coveprefs_leftLabel="Small"
+        app:coveprefs_rightLabel="Big"
+        app:summary="This is a summary."
+        app:showSeekBarValue="false"/>
     <com.cyphercove.coveprefs.BannerLinkPreference
-            android:title="@string/bannerlink"
-            android:summary="This is a summary."
-            app:coveprefs_uri="https://github.com/cyphercove"
-            app:coveprefs_banner="@drawable/banner"/>
-    <com.cyphercove.coveprefs.DividerHider />
+        app:title="@string/bannerlink"
+        app:summary="This is a summary."
+        app:coveprefs_uri="https://github.com/cyphercove"
+        app:coveprefs_banner="@drawable/banner"/>
     <com.cyphercove.coveprefs.RotaryPreference
-            android:title="@string/rotary"
-            android:key="someAngle"
-            android:defaultValue="15"/>
+        app:title="@string/rotary"
+        app:key="someAngle"
+        app:defaultValue="15"
+        app:useSimpleSummaryProvider="false"/>
     <com.cyphercove.coveprefs.ImageListPreference
-            android:title="@string/imagelist"
-            android:key="someImage"
-            android:defaultValue="Hexagon"
-            android:entries="@array/image_list_preference_entries"
-            android:entryValues="@array/image_list_preference_values"
-            android:tint="@color/colorControlActivated"
-            app:coveprefs_tintMode="multiply"
-            app:coveprefs_dialogRowHeight="80dp"
-            app:coveprefs_smallWidget="true"/>
+        app:title="@string/imagelist"
+        app:key="someImage"
+        app:defaultValue="Hexagon"
+        app:entries="@array/image_list_preference_entries"
+        app:entryValues="@array/image_list_preference_values"
+        app:tint="@color/colorControlActivated"
+        app:coveprefs_tintMode="multiply"/>
     <com.cyphercove.coveprefs.ColorPreference
-            android:title="@string/color"
-            android:key="someColor"
-            android:defaultValue="@color/defaultColorPrefValue"/>
+        app:title="@string/color"
+        app:key="someColor"
+        app:defaultValue="@color/defaultColorPrefValue"/>
     <com.cyphercove.coveprefs.ColorPreference
-            android:title="@string/color_no_hex"
-            android:key="someColor2"
-            android:defaultValue="@color/defaultColorPrefValue"
-            android:dialogMessage="@string/color_suggest"
-            app:coveprefs_colorPickerWidgets="hsv|recent"/>
+        app:title="@string/color_no_hex"
+        app:key="someColor2"
+        app:defaultValue="@color/defaultColorPrefValue"
+        app:dialogMessage="@string/color_suggest"
+        app:coveprefs_colorPickerWidgets="hsv|recent"/>
     <com.cyphercove.coveprefs.MultiColorPreference
-            android:title="@string/multicolor"
-            android:key="someMultiColor2"
-            android:defaultValue="2 #FF0080FF #FFFF8000"
-            android:dialogMessage="@string/color_suggest"
-            app:coveprefs_multiColorDefinition="@array/multicolor_pref_all_options"
-            app:coveprefs_multiColorDisabledLabel="@string/disabled"/>
+        app:title="@string/multicolor"
+        app:key="someMultiColor"
+        app:defaultValue="1 #FF0080FF"
+        app:dialogMessage="@string/color_suggest"
+        app:coveprefs_multiColorDefinition="@array/multicolor_pref_all_options"
+        app:coveprefs_multiColorDisabledLabel="@string/disabled"/>
     <com.cyphercove.coveprefs.AboutPreference
-            android:title="@string/about"
-            android:dialogTitle="@string/format_version"
-            android:dialogMessage="@string/about_message"
-            android:dialogIcon="@mipmap/ic_launcher"/>
+        app:title="@string/about"
+        app:dialogTitle="@string/format_version"
+        app:dialogMessage="@string/about_message"
+        app:dialogIcon="@mipmap/ic_launcher"/>
 
 </PreferenceScreen>

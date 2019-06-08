@@ -18,7 +18,7 @@ package com.cyphercove.coveprefs.widgets;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.support.v7.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -19,6 +19,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.core.content.res.TypedArrayUtils;
+
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
 import com.cyphercove.coveprefs.widgets.RotaryPicker;
 import com.cyphercove.coveprefs.widgets.RotaryPreferenceWidget;
@@ -34,6 +37,13 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
     public RotaryPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_RotaryPreference);
+        if ( TypedArrayUtils.getBoolean(a, R.styleable.CovePrefs_RotaryPreference_useSimpleSummaryProvider,
+                R.styleable.CovePrefs_RotaryPreference_useSimpleSummaryProvider,false)){
+            setSummaryProvider(SimpleSummaryProvider.getInstance());
+        }
+        a.recycle();
+
         setDialogLayoutResource(R.layout.coveprefs_rotary_dialog);
         setWidgetLayoutResource(R.layout.coveprefs_rotary_preference_widget);
 
@@ -44,7 +54,7 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
     }
 
     @Override
-    protected Integer getDefaultValue() {
+    protected Integer getBackupDefaultValue() {
         return 0;
     }
 
@@ -74,6 +84,8 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
     @Override
     protected void onValueChangedAndCommitted() {
         rotaryWidget.setValueAnimated(getValueForBindingPreferenceView());
+        if (getSummaryProvider() != null)
+            notifyChanged(); // This skips the animation so only notify if necessary.
     }
 
     @Override
@@ -88,7 +100,7 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
 
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getInteger(index, getDefaultValue());
+        return a.getInteger(index, getBackupDefaultValue());
     }
 
     @Override
@@ -96,8 +108,29 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
         onValueModifedInDialog(newAngle);
     }
 
-    public CharSequence getSummarizedValue (){
-        return getValue() + "°";
-    }
+    public static final class SimpleSummaryProvider implements SummaryProvider<RotaryPreference> {
 
+        private static SimpleSummaryProvider sSimpleSummaryProvider;
+
+        private SimpleSummaryProvider() {}
+
+        /**
+         * Retrieve a singleton instance of this simple
+         * {@link androidx.preference.Preference.SummaryProvider} implementation.
+         *
+         * @return a singleton instance of this simple
+         * {@link androidx.preference.Preference.SummaryProvider} implementation
+         */
+        public static SimpleSummaryProvider getInstance() {
+            if (sSimpleSummaryProvider == null) {
+                sSimpleSummaryProvider = new SimpleSummaryProvider();
+            }
+            return sSimpleSummaryProvider;
+        }
+
+        @Override
+        public CharSequence provideSummary(RotaryPreference preference) {
+            return preference.getValue() + "°";
+        }
+    }
 }

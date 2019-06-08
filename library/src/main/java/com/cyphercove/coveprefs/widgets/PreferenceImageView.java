@@ -22,7 +22,7 @@ package com.cyphercove.coveprefs.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import com.cyphercove.coveprefs.R;
 
@@ -49,10 +49,10 @@ public class PreferenceImageView extends AppCompatImageView {
                 attrs, R.styleable.CovePrefs_PreferenceImageView, defStyleAttr, 0);
 
         setMaxWidth(a.getDimensionPixelSize(
-                R.styleable.CovePrefs_PreferenceImageView_android_maxWidth, Integer.MAX_VALUE));
+                R.styleable.CovePrefs_PreferenceImageView_maxWidth, Integer.MAX_VALUE));
 
         setMaxHeight(a.getDimensionPixelSize(
-                R.styleable.CovePrefs_PreferenceImageView_android_maxHeight, Integer.MAX_VALUE));
+                R.styleable.CovePrefs_PreferenceImageView_maxHeight, Integer.MAX_VALUE));
 
         a.recycle();
     }

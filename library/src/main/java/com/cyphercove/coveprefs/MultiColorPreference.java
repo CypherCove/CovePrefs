@@ -97,7 +97,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
     }
 
     @Override
-    protected String getDefaultValue() {
+    protected String getBackupDefaultValue() {
         return "0 FF000000";
     }
 
@@ -148,7 +148,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         String value = a.getString(index);
-        return value == null ? getDefaultValue() : value;
+        return value == null ? getBackupDefaultValue() : value;
     }
 
     @Override

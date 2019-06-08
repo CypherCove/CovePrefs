@@ -1,27 +1,32 @@
 # CovePrefs
-A variety of Material preferences for Android. These preferences are based on, and require, the Android `appcompat-v7` Support Library and use of the appcompat theme for the Activity that hosts the preferences.
+A variety of Material preferences for Android. These preferences are based on, and require, the Jetpack androidx `appcompat` and `preference` libraries.
 
-If using Android's own PreferenceActivity, import the base `coveprefs` library:
+### Usage
 
-    compile com.cyphercove.coveprefs:coveprefs:1.0.2
+Import the `coveprefs` library with
+
+    compile com.cyphercove.coveprefs:coveprefs:2.0.0
+
+The AndroidX support library prepares dialogs for dialog preferences separately from the preferences themselves. Therefore, in order to use CovePrefs, you must do one of the following.
+
+It's easiest to make your preference fragment to extend CovePreferenceFragmentCompat. This class takes care of creating the dialog fragments for CovePrefs used in the layout.
+
+However, you might want to extend from some other fragment class, possibly if you are using another library. In this case you can still use CovePrefs by making your host Activity implement `androidx.preference.PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback` and calling through to `CovePrefs.onPreferenceDisplayDialog()` like this:
+
+    public class MySettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback {
     
-If you are using the Android `preference-v14` Support Library, then use the `coveprefs-compat` preference library instead:
+        @Override
+        public boolean onPreferenceDisplayDialog(@NonNull PreferenceFragmentCompat caller, Preference pref) {
+            return CovePrefs.onPreferenceDisplayDialog(caller, pref);
+        }
+        
+    }
 
-    compile com.cyphercove.coveprefs:coveprefs-compat:1.0.2
+If you want to support other custom dialog preferences, you can tack them on like this:
 
-More detailed documentation is forthcoming.
-
-### Project setup
-
-**Modules**
-
- * **library** - The base library code.
- * **support** - The compat library, with versions of the Preferences suitable for use with the Android `preference-v14` Support Library.
- * **portTool** - A simple class used to transfer modified code from the `library` module to the `support` module. 
- * **example** - An example project demonstrating the use of all the custom Preferences.
- 
-**Publishing**
-
-The project is set up to publish to BinTray via `gradlew bintrayUpload`. Configuration parameters are private from the git project. The artifacts are published to both jCenter and Maven Central.
-
-
+        @Override
+        public boolean onPreferenceDisplayDialog(@NonNull PreferenceFragmentCompat caller, Preference pref) {
+            if (CovePrefs.onPreferenceDisplayDialog(caller, pref))
+                return true;
+            // Create dialog fragments for other types of preferences here.
+        }

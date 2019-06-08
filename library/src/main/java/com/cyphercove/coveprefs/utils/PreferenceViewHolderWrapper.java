@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cyphercove.coveprefs.support.utils;
+package com.cyphercove.coveprefs.utils;
 
-import android.support.annotation.IdRes;
-import android.support.v7.preference.PreferenceViewHolder;
+import androidx.annotation.IdRes;
+import androidx.preference.PreferenceViewHolder;
 import android.view.View;
-import com.cyphercove.coveprefs.utils.AbsViewHolder;
 
 public class PreferenceViewHolderWrapper implements AbsViewHolder {
     final PreferenceViewHolder viewHolder;

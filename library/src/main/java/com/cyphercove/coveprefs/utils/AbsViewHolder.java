@@ -15,7 +15,7 @@
  */
 package com.cyphercove.coveprefs.utils;
 
-import android.support.annotation.IdRes;
+import androidx.annotation.IdRes;
 import android.view.View;
 
 /**

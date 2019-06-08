@@ -31,7 +31,7 @@ public class ThemeSwapper {
 
     public static void swapTheme (Activity activity){
         boolean isCustomTheme = isCustomTheme(activity);
-        PreferenceManager.getDefaultSharedPreferences(activity).edit().putBoolean(THEME_KEY, !isCustomTheme).commit();
+        PreferenceManager.getDefaultSharedPreferences(activity).edit().putBoolean(THEME_KEY, !isCustomTheme).apply();
         activity.startActivity(new Intent(activity, activity.getClass()));
         activity.finish();
     }

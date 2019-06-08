@@ -1,1 +1,1 @@
-include ':library', ':example', ':support', ':portTool'
+include ':library', ':example'
