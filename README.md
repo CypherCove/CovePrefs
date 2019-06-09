@@ -37,7 +37,6 @@ If you want to support other custom dialog preferences, you can tack them on lik
 
 AboutPreference is a DialogPreference intended for showing information about the app, such as the version number and libraries used. It uses the same properties as a DialogPreference with some behavior changes.
 
-** XML Properties **
 | Property        | Property type | Description                                                                                                                         |
 |-----------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `key`           | String        | Although no value is stored for this type of preference, a unique key must be set if more than AboutPreference is used in a layout. |
@@ -48,7 +47,6 @@ AboutPreference is a DialogPreference intended for showing information about the
 
 BannerLinkPreference is a generic Preference with a property for setting a background drawable. This can be used for making a preference that stands out and links to something else.
 
-** XML Properties **
 | Property           | Property type | Description                                                                                                             |
 |--------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
 | `key`              | String        | Although no value is stored for this type of preference, a unique key must be set if more than one is used in a layout. |
@@ -59,10 +57,9 @@ BannerLinkPreference is a generic Preference with a property for setting a backg
 
 A preference that shows a color picker. The preference value is saved as an Integer in AARRGGBB format. 
 
-** XML Properties **
 | Property                            | Property type          | Description                                                                                                                                                                                                                                                             |
 |-------------------------------------|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `coveprefs_colorPickerWidgets`      | Flags:`hsv|hex|recent` | Which types of color selection widgets to show. `hsv` is a large HSV color picker. `hex` is a text box for typing in the color with hexadecimal. `recent` shows a scrolling list of recently picked color swatches. Any combination can be used. Defaults to all three. |
+| `coveprefs_colorPickerWidgets`      | Flags:`hsv\|hex\|recent` | Which types of color selection widgets to show. `hsv` is a large HSV color picker. `hex` is a text box for typing in the color with hexadecimal. `recent` shows a scrolling list of recently picked color swatches. Any combination can be used. Defaults to all three. |
 
 ### MultiColorPreference
 
@@ -72,18 +69,16 @@ The possible sets of colors are defined as an array of String arrays. Each Strin
 
 The value of the preference can be interpreted by using the MultiColor and MultiColor.Definition classes.
 
-** XML Properties **
 | Property                            | Property type          | Description                                                                                                                                                                                                                                                             |
 |-------------------------------------|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `coveprefs_colorPickerWidgets`      | Flags:`hsv|hex|recent` | Which types of color selection widgets to show. `hsv` is a large HSV color picker. `hex` is a text box for typing in the color with hexadecimal. `recent` shows a scrolling list of recently picked color swatches. Any combination can be used. Defaults to all three. |
+| `coveprefs_colorPickerWidgets`      | Flags:`hsv\|hex\|recent` | Which types of color selection widgets to show. `hsv` is a large HSV color picker. `hex` is a text box for typing in the color with hexadecimal. `recent` shows a scrolling list of recently picked color swatches. Any combination can be used. Defaults to all three. |
 | `coveprefs_multiColorDefinition`    | Array of String arrays | Each String array in the array defines one set of colors that can be picked. The Strings are the names of the color options. The user can switch between the arrays by tapping arrows in the dialog. If a String array is empty, it is treated as a disabled state.     |
 | `coveprefs_multiColorDisabledLabel` | String                 | If there is an empty String array in the multi-color definition, it will be labeled with this string when selected in the picker.                                                                                                                                       |
 
 ### ImageListPreference
 
-Behaves similarly to a ListPreference, but the user selects from an array of draawables. The value is stored as a String from the entry values array.
+Behaves similarly to a ListPreference, but the user selects from an array of drawables. The value is stored as a String from the entry values array.
 
-** XML Properties **
 | Property             | Property type                   | Description                                                                                                                                              |
 |----------------------|---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `entries`            | Array of Drawables              | The drawables the user must select from.                                                                                                                 |
@@ -95,7 +90,6 @@ Behaves similarly to a ListPreference, but the user selects from an array of dra
 
 Allows user to pick an integer from 0-359 with a dialog that depicts an arrow radiating from the center of a circle. The value is represented in the preference as an arrow pointing in the corresponding direction.
 
-** XML Properties **
 | Property                   | Property type | Description                                                                                                    |
 |----------------------------|---------------|----------------------------------------------------------------------------------------------------------------|
 | `useSimpleSummaryProvider` | boolean       | If true, the value selected with a ° symbol appended is shown as the summary of the preference. Default false. |
@@ -104,7 +98,6 @@ Allows user to pick an integer from 0-359 with a dialog that depicts an arrow ra
 
 A subclass of SeekBarPreference that injects labels on either end of the seek bar. All the properties of a typical SeekBarPreference apply.
 
-** XML Properties **
 | Property               | Property type | Description                                    |
 |------------------------|---------------|------------------------------------------------|
 | `coveprefs_leftLabel`  | String        | Text label placed to the left of the SeekBar.  |
