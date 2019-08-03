@@ -93,4 +93,11 @@
         <attr name="coveprefs_smallWidget" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="CovePrefs_StringPreference">
+        <attr name="coveprefs_editTextHint" format="string"/>
+        <attr name="coveprefs_disallowEmptyString" format="boolean"/>
+        <attr name="useSimpleSummaryProvider"/> <!--From appcompat attrs.-->
+    </declare-styleable>
+
+
 </resources>

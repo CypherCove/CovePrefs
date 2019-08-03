@@ -34,6 +34,15 @@
         app:key="someAngle"
         app:defaultValue="15"
         app:useSimpleSummaryProvider="false"/>
+    <com.cyphercove.coveprefs.StringPreference
+        app:title="@string/string"
+        app:key="someString"
+        app:defaultValue="@string/string_pref_initial_value"
+        app:dialogTitle="@string/string_pref_dialogTitle"
+        app:dialogMessage="@string/string_pref_dialogMessage"
+        app:coveprefs_editTextHint="@string/string_pref_hint"
+        app:coveprefs_disallowEmptyString="true"
+        app:useSimpleSummaryProvider="true"/>
     <com.cyphercove.coveprefs.ImageListPreference
         app:title="@string/imagelist"
         app:key="someImage"

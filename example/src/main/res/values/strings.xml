@@ -29,6 +29,7 @@
     <string name="imagelist">ImageListPreference</string>
     <string name="seekbar">SeekBarPlusPreference</string>
     <string name="rotary">RotaryPreference</string>
+    <string name="string">StringPreference</string>
     <string name="color">ColorPreference</string>
     <string name="color_no_hex">ColorPreference no hex</string>
     <string name="multicolor">MultiColorPreference</string>
@@ -37,6 +38,11 @@
 
     <string name="disabled">Disabled</string>
     <string name="color_suggest">Pale colors recommended</string>
+
+    <string name="string_pref_dialogTitle">StringPreference dialog</string>
+    <string name="string_pref_dialogMessage">Enter a value</string>
+    <string name="string_pref_initial_value">Initial sample value</string>
+    <string name="string_pref_hint">(value)</string>
 
     <!-- Strings related to Settings -->
 

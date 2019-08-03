@@ -54,9 +54,10 @@ project.ext {
     mavLibraryDescription = "A variety of Material preferences for Android, based on androidx.preference and androidx.appcompat"
     mavVersion = project.version
     mavPublishToMavenLocal = true
+    mavPluginVersion = 'master'
 }
 
-apply from: 'https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle'
+apply from: "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/${project.mavPluginVersion}/gradle-mavenizer.gradle"
 
 androidJavadocs {
     failOnError = false

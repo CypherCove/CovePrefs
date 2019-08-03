@@ -241,6 +241,11 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
         return neutralButton;
     }
 
+    protected void setInternalPositiveButtonEnabled (boolean enabled){
+        if (dialogFragment != null && dialogFragment.internalPositiveButton != null)
+            dialogFragment.internalPositiveButton.setEnabled(enabled);
+    }
+
     protected final void setDialogFragment (DialogFragment dialogFragment){
         this.dialogFragment = dialogFragment;
     }
@@ -250,6 +255,8 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
     }
 
     public static class DialogFragment<T> extends PreferenceDialogFragmentCompat {
+
+        Button internalPositiveButton;
 
         public static DialogFragment newInstance(String key) {
             final DialogFragment
@@ -275,6 +282,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
         protected View onCreateDialogView(Context context) {
             View view = super.onCreateDialogView(context);
             handleInternalButtonBar(view);
+
             getBasePreference().setDialogFragment(this);
             getBasePreference().onDialogViewCreated(view);
             return view;
@@ -293,10 +301,10 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
                 boolean shouldHideButtonBar = true;
                 if (baseDialogPreference.positiveButtonText != null){
                     shouldHideButtonBar = false;
-                    Button positiveButton = (Button)layoutView.findViewById(com.cyphercove.coveprefs.R.id.coveprefs_button1);
-                    positiveButton.setText(baseDialogPreference.positiveButtonText);
-                    positiveButton.setVisibility(View.VISIBLE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                    internalPositiveButton = layoutView.findViewById(com.cyphercove.coveprefs.R.id.coveprefs_button1);
+                    internalPositiveButton.setText(baseDialogPreference.positiveButtonText);
+                    internalPositiveButton.setVisibility(View.VISIBLE);
+                    internalPositiveButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             getDialog().dismiss();
@@ -306,10 +314,10 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
                 }
                 if (baseDialogPreference.negativeButtonText != null){
                     shouldHideButtonBar = false;
-                    Button negativeButton = (Button)layoutView.findViewById(com.cyphercove.coveprefs.R.id.coveprefs_button2);
-                    negativeButton.setText(baseDialogPreference.negativeButtonText);
-                    negativeButton.setVisibility(View.VISIBLE);
-                    negativeButton.setOnClickListener(new View.OnClickListener() {
+                    Button internalNegativeButton = layoutView.findViewById(com.cyphercove.coveprefs.R.id.coveprefs_button2);
+                    internalNegativeButton.setText(baseDialogPreference.negativeButtonText);
+                    internalNegativeButton.setVisibility(View.VISIBLE);
+                    internalNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             getDialog().dismiss();
@@ -319,7 +327,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
                 }
                 if (baseDialogPreference.neutralButtonText != null){
                     shouldHideButtonBar = false;
-                    baseDialogPreference.neutralButton = (Button)layoutView.findViewById(com.cyphercove.coveprefs.R.id.coveprefs_button3);
+                    baseDialogPreference.neutralButton = layoutView.findViewById(com.cyphercove.coveprefs.R.id.coveprefs_button3);
                     baseDialogPreference.neutralButton.setText(baseDialogPreference.neutralButtonText);
                     baseDialogPreference.neutralButton.setVisibility(View.VISIBLE);
                 }

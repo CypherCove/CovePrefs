@@ -14,7 +14,7 @@
 -->
 <resources>
 
-    <style name="UnchangedAppCompat" parent="Theme.AppCompat">
+    <style name="UnchangedAppCompat" parent="Theme.AppCompat.Light">
     </style>
 
     <style name="CustomTheme" parent="Theme.AppCompat">
