@@ -98,6 +98,7 @@ public class MultiColor {
         }
 
         /**
+         * @param preferenceValue A String preference value that can be converted to a MultiColor.
          * @return A temporary MultiColor, evaluated for this definition and the given preference value. Do not store
          * the value, because the object is reused for subsequent calls.
          */
@@ -110,6 +111,8 @@ public class MultiColor {
         }
 
         /**
+         * @param type The type of the MultiColor, as defined in the {@linkplain Definition}.
+         * @param values The color values for the type.
          * @return A temporary MultiColor, evaluated for this definition and the type and colors. Do not store
          * the value, because the object is reused for subsequent calls.
          */

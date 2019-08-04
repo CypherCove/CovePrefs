@@ -123,6 +123,8 @@ public class HSVSelectorView extends FrameLayout {
 
     /**
      * Sets the current color, without triggering the listener callback.
+     * @param color The new color.
+     * @param animated Whether to animate the color change.
      */
     public void setColor(int color, boolean animated) {
         boolean wasAnimating = valueAnimator.isRunning();

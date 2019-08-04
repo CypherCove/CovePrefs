@@ -46,7 +46,9 @@ public class ColorCache {
 		return getSharedPreferences(context).edit();
 	}
 
-	/** @return the number of colors currently stored. */
+	/**
+	 * @param context The application context.
+	 * @return The number of colors currently stored. */
 	public static int getCount (Context context){
 		if (count == -1){ // first time access, look it up
 			count = getSharedPreferences(context).getInt(COUNT_KEY, 0);
@@ -85,6 +87,8 @@ public class ColorCache {
 
 	/** Submit colors to the cache. They will be pushed to the front of the cache in reverse order.
 	 *
+	 * @param context The application context.
+	 * @param newColors Colors to add to the cache.
 	 * @param valueCount The number of values to submit from the array. Must be no greater than the array size.
 	 * @return Whether the list was changed.
 	 */

@@ -34,13 +34,13 @@ import com.cyphercove.coveprefs.utils.AbsViewHolder;
 
 /**
  * A DialogPreference set up to restore dialog state on Activity recreation, and automatically persist resources on
- * positive dialog results. There is no need to override {@link #onSetInitialValue(T)} or to manually
+ * positive dialog results. There is no need to override {@link #onSetInitialValue(Object)} or to manually
  * persist the new value when the dialog is closed. It is still necessary to override
  * {@link Preference#onGetDefaultValue(TypedArray, int)}.
  * <p>
  * Capture view references and prepare views from the inflated dialog in {@link #onDialogViewCreated(View)}.
  * <p>
- * It is necessary to call {@link #onValueModifiedInDialog(T)} as the value is changed via the dialog's widget(s).
+ * It is necessary to call {@link #onValueModifiedInDialog(Object)} as the value is changed via the dialog's widget(s).
  * <p>
  * A neutral button can be set on the dialog by calling {@link #setNeutralButtonText(CharSequence)} . Unlike the positive
  * and negative buttons, it does not automatically close the dialog. An OnClickListner can be added to it so it can

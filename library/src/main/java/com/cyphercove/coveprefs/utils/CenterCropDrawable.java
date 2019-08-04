@@ -103,7 +103,9 @@ public class CenterCropDrawable extends Drawable {
         return drawable.getOpacity();
     }
 
-    /** Sets the drawable as the background of a view with center cropping. */
+    /** Sets the drawable as the background of a view with center cropping.
+     * @param view The View to apply the background to.
+     * @param drawable The Drawable to apply as a background.*/
     public static void centerCropDrawableAsBackground (final View view, final Drawable drawable){
         final int drawableWidth = drawable.getIntrinsicWidth();
         final int drawableHeight = drawable.getIntrinsicHeight();

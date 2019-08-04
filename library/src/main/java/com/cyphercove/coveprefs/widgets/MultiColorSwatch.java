@@ -76,6 +76,8 @@ public class MultiColorSwatch extends LinearLayout {
 
     /**
      * Sets the colors with an animation out from the center of each color swatch.
+     * @param colors The new colors to apply.
+     * @param count The number of colors to apply.
      */
     public void setColorsAnimated (int[] colors, int count){
         updateSwatchCount(colors == null ? 0 : count);
@@ -85,7 +87,10 @@ public class MultiColorSwatch extends LinearLayout {
         }
     }
 
-    /** Sets the colors with an animation starting at the coordinates, relative to this view's position. */
+    /** Sets the colors with an animation starting at the coordinates, relative to this view's position.
+     * @param centerX The X coordinate to start the animation from.
+     * @param centerY The Y coordinate to start the animation from.
+     * @param color The new colors to apply.*/
     public void setColorsAnimated (float centerX, float centerY, int...color){
         updateSwatchCount(color == null ? 0 : color.length);
         float swatchWidth = getWidth() / (float)color.length;

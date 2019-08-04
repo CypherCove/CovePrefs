@@ -56,7 +56,8 @@ public class ColorSwatch extends View {
         nextColorPaint.setStyle(Paint.Style.FILL);
     }
 
-    /** Instantly changes the color. Allows animation to finish using the new color if one is running */
+    /** Instantly changes the color. Allows animation to finish using the new color if one is running.
+     * @param color The new color to show. */
     public void setColor (int color){
         if (this.color == nextColor){ // not animating
             this.color = color;
@@ -65,12 +66,16 @@ public class ColorSwatch extends View {
         invalidate();
     }
 
-    /** Sets the color with an animation radiating out from the center of this view. */
+    /** Sets the color with an animation radiating out from the center of this view.
+     * @param color The new color to show. */
     public void setColorAnimated (int color) {
         setColorAnimated(getWidth() / 2, getHeight() / 2, color);
     }
 
-    /** Sets the color with an animation starting at the coordinates, relative to this view's position. */
+    /** Sets the color with an animation starting at the coordinates, relative to this view's position.
+     * @param centerX The X coordinate to start the animation from.
+     * @param centerY The Y coordinate to start the animation from.
+     * @param color The new color to show. */
     public void setColorAnimated (float centerX, float centerY, int color){
         this.color = nextColor; // immediately apply any pending animation
         nextColor = color;

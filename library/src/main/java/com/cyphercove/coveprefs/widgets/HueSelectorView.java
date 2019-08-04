@@ -93,7 +93,8 @@ public class HueSelectorView extends View {
         return currentHue;
     }
 
-    /** Changes the currently selected hue. Does not trigger the listener. */
+    /** Changes the currently selected hue. Does not trigger the listener.
+     * @param hue The hue to set the selector to.*/
     public void setHue (float hue){
         currentHue = hue;
         invalidate();

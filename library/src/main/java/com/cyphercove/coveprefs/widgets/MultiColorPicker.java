@@ -52,7 +52,8 @@ public class MultiColorPicker extends FrameLayout {
     }
     public interface OnActiveIndexChangedListener {
         /**Called when the currently selected color slot for the current MultiColor type has changed. This can be used
-         * to restore the view on a configuration change. */
+         * to restore the view on a configuration change.
+         * @param index The new index for the MultiColor.*/
          void onActiveIndexChanged(int index);
     }
     private HSVSelectorView hsvView;
@@ -215,8 +216,9 @@ public class MultiColorPicker extends FrameLayout {
         hexEditTextWatcherDisabled = false;
     }
 
-    /** Sets the multi color. The passed object is copied.
-     * @param activeIndex The color slot for the MultiColor's current type that should be selected.*/
+    /** Sets the multi color. The passed object is copied and not modified.
+     * @param activeIndex The color slot for the MultiColor's current type that should be selected.
+     * @param multiColor  The MultiColor to set. */
     public void setMultiColorValue(int activeIndex, MultiColor multiColor) {
         this.multiColor = new MultiColor(multiColor);
         int valueCount = multiColor.getValueCount();

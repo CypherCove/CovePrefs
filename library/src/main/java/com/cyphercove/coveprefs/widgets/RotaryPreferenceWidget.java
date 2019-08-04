@@ -72,7 +72,8 @@ public class RotaryPreferenceWidget extends View {
         valueAnimator.addListener(animatorListener);
     }
 
-    /** Instantly changes the angle value.*/
+    /** Instantly changes the angle value.
+     * @param value The new value to change the widget to.*/
     public void setValue (float value){
         if (valueAnimator.isRunning()){
             valueAnimator.cancel();

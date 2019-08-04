@@ -29,7 +29,6 @@ import com.cyphercove.coveprefs.R;
 
 public class SaturationValueSelectorView extends View {
     private static final int MISSING_COLOR = Color.MAGENTA;
-    private static final long ANIMATION_DURATION = 300;
 
     interface OnSaturationValueChangedListener {
         void onSaturationValueChanged(SaturationValueSelectorView view, float newSaturation, float newValue, boolean isFromTouchDown, int localX, int localY);
@@ -39,7 +38,7 @@ public class SaturationValueSelectorView extends View {
 
     private Paint saturationPaint, valuePaint, selectorPaint, disabledPaint;
     private Path roundCornersMask;
-    private int[] saturations= new int[] { 0, 0xFFFFFFFF }; // first index is updated when color is updated
+    private int[] saturations = new int[] { 0, 0xFFFFFFFF }; // first index is updated when color is updated
     private final int[] values= new int[] { 0x00000000, 0xFF000000 };//clear black to opaque black;
 
     private int selectorRadius, cornerRadii, naturalWidth, naturalHeight;
@@ -107,7 +106,11 @@ public class SaturationValueSelectorView extends View {
         saturationPaint.setShader(saturationShader);
     }
 
-    /** Sets the currently visible color and selector position. Does not trigger a callback on the listener. */
+    /** Sets the currently visible color and selector position. Does not trigger a callback on the listener.
+     * @param hue The hue of the color.
+     * @param saturation The saturation of the color.
+     * @param value The brightness value of the color.
+     * */
     public void setColor (float hue, float saturation, float value){
         setHue(hue);
         currentSaturation = saturation;
@@ -115,7 +118,8 @@ public class SaturationValueSelectorView extends View {
         invalidate();
     }
 
-    /** Sets the visible hue. */
+    /** Sets the visible hue.
+     * @param hue The hue to set the selector to.*/
     public void setHue (float hue){
         float[] saturated = {hue,1f,1f};
         saturations[0] = Color.HSVToColor(saturated); //update the opaque saturated color
