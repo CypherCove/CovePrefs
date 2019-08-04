@@ -29,7 +29,7 @@ public final class CovePrefs {
      * call this method.
      * @param caller Passed in from {@link androidx.preference.PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback#onPreferenceDisplayDialog(PreferenceFragmentCompat, Preference)}.
      * @param pref Passed in from {@link androidx.preference.PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback#onPreferenceDisplayDialog(PreferenceFragmentCompat, Preference)}.
-     * @return
+     * @return {@code true} if the dialog creation has been handled
      */
     public static boolean onPreferenceDisplayDialog(@NonNull PreferenceFragmentCompat caller, Preference pref){
         if (!(pref instanceof BaseDialogPreference))

@@ -34,13 +34,13 @@ import com.cyphercove.coveprefs.utils.AbsViewHolder;
 
 /**
  * A DialogPreference set up to restore dialog state on Activity recreation, and automatically persist resources on
- * positive dialog results. There is no need to override {@link #onSetInitialValue(boolean, T)} or to manually
+ * positive dialog results. There is no need to override {@link #onSetInitialValue(T)} or to manually
  * persist the new value when the dialog is closed. It is still necessary to override
  * {@link Preference#onGetDefaultValue(TypedArray, int)}.
  * <p>
  * Capture view references and prepare views from the inflated dialog in {@link #onDialogViewCreated(View)}.
  * <p>
- * It is necessary to call {@link #onValueModifedInDialog(T)} as the value is changed via the dialog's widget(s).
+ * It is necessary to call {@link #onValueModifiedInDialog(T)} as the value is changed via the dialog's widget(s).
  * <p>
  * A neutral button can be set on the dialog by calling {@link #setNeutralButtonText(CharSequence)} . Unlike the positive
  * and negative buttons, it does not automatically close the dialog. An OnClickListner can be added to it so it can
@@ -141,7 +141,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
         }
     }
 
-    /** Returns the current value. */
+    /** @return The current preference value. */
     public T getValue (){
         return currentValue;
     }
@@ -165,7 +165,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
     }
 
     /** Dismisses the dialog and calls {@link #onDialogClosed(boolean)}.
-     * @param positiveResult Whether the values that were changed with {@link #onValueModifedInDialog(T)} should
+     * @param positiveResult Whether the values that were changed with {@link #onValueModifiedInDialog(T)} should
      * be committed because the dialog wasn't canceled.*/
     protected void dismissDialog (boolean positiveResult){
         if (dialogFragment != null){
@@ -229,7 +229,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
     /** @return A backup default value, in case none was provided via XML. Must not return null.*/
     protected abstract T getBackupDefaultValue();
 
-    protected void onValueModifedInDialog (T newValue){
+    protected void onValueModifiedInDialog (T newValue){
         this.newValue = newValue;
     }
 

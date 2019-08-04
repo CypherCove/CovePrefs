@@ -130,7 +130,7 @@ public class MultiColor {
         }
 
         /**
-         * Returns the highest number of values accepted for any type.
+         * @return The highest number of values accepted for any type.
          */
         public int getMaxColors() {
             int maxCount = 0;

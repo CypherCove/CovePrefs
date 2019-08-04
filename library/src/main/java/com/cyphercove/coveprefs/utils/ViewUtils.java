@@ -64,7 +64,9 @@ public class ViewUtils {
     }
 
     /** Sets {@link ViewGroup#setClipChildren(boolean)} and {@link ViewGroup#setClipToPadding(boolean)} to false on all
-     * ancestors of the given view, up to but not including the given ancestor. */
+     * ancestors of the given view, up to but not including the given ancestor.
+     * @param view The view at the bottom of the chain to change.
+     * @param ancestor The final view in the chain to change. */
     public static void clearAncestorOutlineClipping (View view, ViewParent ancestor){
         if (Build.VERSION.SDK_INT < 21)
             return;

@@ -25,10 +25,6 @@ import android.widget.EditText;
 
 import androidx.core.content.res.TypedArrayUtils;
 
-import com.cyphercove.coveprefs.utils.AbsViewHolder;
-import com.cyphercove.coveprefs.widgets.RotaryPicker;
-import com.cyphercove.coveprefs.widgets.RotaryPreferenceWidget;
-
 /**
  * A DialogPreference that allows the user to type in a String.
  */
@@ -112,7 +108,7 @@ public class StringPreference extends BaseDialogPreference<String> implements Te
 
     @Override
     public void onTextChanged (CharSequence s, int start, int before, int count) {
-        onValueModifedInDialog(s.toString());
+        onValueModifiedInDialog(s.toString());
         setInternalPositiveButtonEnabled(s.length() > 0 || !disallowEmptyString);
     }
 

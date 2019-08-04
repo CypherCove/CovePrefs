@@ -153,7 +153,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
 
     @Override
     public void onColorChanged(MultiColor multiColor) {
-        onValueModifedInDialog(multiColor.toPreferenceValue());
+        onValueModifiedInDialog(multiColor.toPreferenceValue());
     }
 
     @Override

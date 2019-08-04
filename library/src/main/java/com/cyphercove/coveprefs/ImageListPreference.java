@@ -88,7 +88,8 @@ public class ImageListPreference extends BaseDialogPreference<String>{
 
     /** Sets the resource Ids of the Drawables that the user will pick from. This will be shown in subsequent dialogs.
      * <p>
-     * Each entry must have a corresponding index in {@link #setEntryValues(CharSequence[])}.*/
+     * Each entry must have a corresponding index in {@link #setEntryValues(CharSequence[])}.
+     * @param entryIds  The IDs of the drawables.*/
     public void setEntryDrawableIds(int[] entryIds) {
         this.entryIds = entryIds;
     }
@@ -305,7 +306,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     private class ImageButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            onValueModifedInDialog(entryValues[(Integer)v.getTag()].toString());
+            onValueModifiedInDialog(entryValues[(Integer)v.getTag()].toString());
             dismissDialog(true);
         }
     }

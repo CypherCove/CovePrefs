@@ -138,7 +138,7 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
 
     @Override
     public void onColorChanged(int newColor) {
-        onValueModifedInDialog(newColor);
+        onValueModifiedInDialog(newColor);
     }
 
 }

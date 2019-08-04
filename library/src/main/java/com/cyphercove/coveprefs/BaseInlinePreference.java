@@ -96,7 +96,7 @@ public abstract class BaseInlinePreference<T> extends Preference {
      */
     protected abstract void onValueChanged (T newValue);
 
-    /** Returns the current value. */
+    /** @return The current preference value. */
     public T getValue (){
         return currentValue;
     }

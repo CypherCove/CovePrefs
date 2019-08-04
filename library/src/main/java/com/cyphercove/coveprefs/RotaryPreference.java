@@ -105,7 +105,7 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
 
     @Override
     public void onAngleChanged(int newAngle) {
-        onValueModifedInDialog(newAngle);
+        onValueModifiedInDialog(newAngle);
     }
 
     public static final class SimpleSummaryProvider implements SummaryProvider<RotaryPreference> {
