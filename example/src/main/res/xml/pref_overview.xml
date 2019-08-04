@@ -41,7 +41,7 @@
         app:dialogTitle="@string/string_pref_dialogTitle"
         app:dialogMessage="@string/string_pref_dialogMessage"
         app:coveprefs_editTextHint="@string/string_pref_hint"
-        app:coveprefs_disallowEmptyString="true"
+        app:coveprefs_allowEmptyString="false"
         app:useSimpleSummaryProvider="true"/>
     <com.cyphercove.coveprefs.ImageListPreference
         app:title="@string/imagelist"

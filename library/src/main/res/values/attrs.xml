@@ -95,7 +95,7 @@
 
     <declare-styleable name="CovePrefs_StringPreference">
         <attr name="coveprefs_editTextHint" format="string"/>
-        <attr name="coveprefs_disallowEmptyString" format="boolean"/>
+        <attr name="coveprefs_allowEmptyString" format="boolean"/>
         <attr name="useSimpleSummaryProvider"/> <!--From appcompat attrs.-->
     </declare-styleable>
 

@@ -42,13 +42,13 @@ public class StringPreference extends BaseDialogPreference<String> implements Te
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_StringPreference);
         if (TypedArrayUtils.getBoolean(a, R.styleable.CovePrefs_StringPreference_useSimpleSummaryProvider,
-                R.styleable.CovePrefs_StringPreference_useSimpleSummaryProvider,false)){
+                R.styleable.CovePrefs_StringPreference_useSimpleSummaryProvider, false)){
             setSummaryProvider(SimpleSummaryProvider.getInstance());
         }
         editTextHint = TypedArrayUtils.getString(a, R.styleable.CovePrefs_StringPreference_coveprefs_editTextHint,
                 R.styleable.CovePrefs_StringPreference_coveprefs_editTextHint);
-        disallowEmptyString = TypedArrayUtils.getBoolean(a, R.styleable.CovePrefs_StringPreference_coveprefs_disallowEmptyString,
-                R.styleable.CovePrefs_StringPreference_coveprefs_disallowEmptyString,false);
+        disallowEmptyString = TypedArrayUtils.getBoolean(a, R.styleable.CovePrefs_StringPreference_coveprefs_allowEmptyString,
+                R.styleable.CovePrefs_StringPreference_coveprefs_allowEmptyString, true);
         a.recycle();
 
         setDialogLayoutResource(R.layout.coveprefs_string_dialog);

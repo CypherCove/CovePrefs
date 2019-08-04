@@ -98,11 +98,11 @@ Allows user to pick an integer from 0-359 with a dialog that depicts an arrow ra
 
 A DialogPreference with an EditText for entering the String value of the preference.
 
-| Property                            | Property type  | Description                                                                                 |
-|-------------------------------------|----------------|---------------------------------------------------------------------------------------------|
-| `coveprefs_editTextHint`            | String         | The hint text for the edit test.                                                            |
-| `coveprefs_disallowEmptyString`     | boolean        | If true, the positive button of the dialog is hidden if the edit text is empty.             |
-| `useSimpleSummaryProvider`          | boolean        | If true, the String value of the preference is automatically set as the Preference summary. |
+| Property                            | Property type  | Description                                                                                      |
+|-------------------------------------|----------------|--------------------------------------------------------------------------------------------------|
+| `coveprefs_editTextHint`            | String         | The hint text for the edit test.                                                                 |
+| `coveprefs_allowEmptyString`        | boolean        | If false, the positive button of the dialog is hidden if the edit text is empty. Default true.   |
+| `useSimpleSummaryProvider`          | boolean        | If true, the String value of the preference is automatically set as the Preference summary.      |
 
 ### SeekBarPlusPreference
 
