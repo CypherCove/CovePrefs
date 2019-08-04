@@ -1,10 +1,12 @@
+### Version 2.0.1
+ * **BREAKING:** Changed `BaseDialogPreference.onValueModifedInDialog` to `onValueModifiedInDialog`
+ * Added StringPreference
+
 ### Version 2.0.0
  * Removed the separate support-based library. The base library now uses the androidx.preference support library due to the deprecation of android.preference.
  * Removed SummaryUpdater utility, since similar functionality is built into the androidx library.
  * Added coveprefs_setSimpleSummaryProvider option to RotaryPreference.
  * Renamed SeekBarPreference to SeekBarPlusPreference to avoid confusion with the androidx component.
- * **BREAKING:** Changed `BaseDialogPreference.onValueModifedInDialog` to `onValueModifiedInDialog`
- * Added StringPreference
 
 ### Version 1.0.2
  * Safety net for MultiColor instantiation / setting.
