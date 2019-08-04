@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation project(':library')
+    implementation project(':coveprefs')
     implementation "androidx.appcompat:appcompat:${rootProject.ext.appCompatVersion}"
     implementation "androidx.preference:preference:${rootProject.ext.preferenceVersion}"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
