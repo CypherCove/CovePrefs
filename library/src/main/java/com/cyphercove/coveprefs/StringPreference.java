@@ -31,7 +31,7 @@ import androidx.core.content.res.TypedArrayUtils;
 public class StringPreference extends BaseDialogPreference<String> implements TextWatcher {
     private EditText editText;
     private String editTextHint;
-    private boolean disallowEmptyString;
+    private boolean allowEmptyString;
 
     public StringPreference (Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,7 +43,7 @@ public class StringPreference extends BaseDialogPreference<String> implements Te
         }
         editTextHint = TypedArrayUtils.getString(a, R.styleable.CovePrefs_StringPreference_coveprefs_editTextHint,
                 R.styleable.CovePrefs_StringPreference_coveprefs_editTextHint);
-        disallowEmptyString = TypedArrayUtils.getBoolean(a, R.styleable.CovePrefs_StringPreference_coveprefs_allowEmptyString,
+        allowEmptyString = TypedArrayUtils.getBoolean(a, R.styleable.CovePrefs_StringPreference_coveprefs_allowEmptyString,
                 R.styleable.CovePrefs_StringPreference_coveprefs_allowEmptyString, true);
         a.recycle();
 
@@ -109,7 +109,7 @@ public class StringPreference extends BaseDialogPreference<String> implements Te
     @Override
     public void onTextChanged (CharSequence s, int start, int before, int count) {
         onValueModifiedInDialog(s.toString());
-        setInternalPositiveButtonEnabled(s.length() > 0 || !disallowEmptyString);
+        setInternalPositiveButtonEnabled(s.length() > 0 || allowEmptyString);
     }
 
     @Override
