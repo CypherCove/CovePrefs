@@ -1,3 +1,6 @@
+### Version 2.0.2
+ * 
+
 ### Version 2.0.1
  * **BREAKING:** Changed `BaseDialogPreference.onValueModifedInDialog` to `onValueModifiedInDialog`
  * Added StringPreference
