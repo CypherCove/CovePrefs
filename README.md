@@ -5,7 +5,7 @@ A variety of Material preferences for Android. These preferences are based on, a
 
 Import the `coveprefs` library with
 
-    compile com.cyphercove.coveprefs:coveprefs:2.0.0
+    compile com.cyphercove.coveprefs:coveprefs:2.0.1
 
 The AndroidX support library prepares dialogs for dialog preferences separately from the preferences themselves. Therefore, in order to use CovePrefs, you must do one of the following.
 
