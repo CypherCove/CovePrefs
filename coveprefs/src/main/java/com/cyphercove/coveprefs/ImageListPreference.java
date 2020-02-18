@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import androidx.annotation.ArrayRes;
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 import android.view.View;
@@ -194,7 +195,8 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         return 0;
     }
     @Override
-    protected String getBackupDefaultValue() {
+    protected @NonNull
+    String getBackupDefaultValue() {
         return "";
     }
 

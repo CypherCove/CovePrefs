@@ -22,6 +22,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+
 import com.cyphercove.coveprefs.utils.ColorCache;
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
 import com.cyphercove.coveprefs.widgets.ColorPicker;
@@ -67,7 +70,8 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
     }
 
     @Override
-    protected Integer getBackupDefaultValue() {
+    protected @NonNull
+    Integer getBackupDefaultValue() {
         return Color.MAGENTA;
     }
 

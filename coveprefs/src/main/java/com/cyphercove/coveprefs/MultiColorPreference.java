@@ -20,6 +20,9 @@ import android.content.res.TypedArray;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+
 import com.cyphercove.coveprefs.state.SingleValueSavedState;
 import com.cyphercove.coveprefs.utils.ColorCache;
 import com.cyphercove.coveprefs.utils.MultiColor;
@@ -97,7 +100,8 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
     }
 
     @Override
-    protected String getBackupDefaultValue() {
+    protected @NonNull
+    String getBackupDefaultValue() {
         return "0 FF000000";
     }
 

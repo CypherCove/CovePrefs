@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.preference.DialogPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceDialogFragmentCompat;
@@ -102,6 +104,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
         setNegativeButtonText(null);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
@@ -114,6 +117,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
         return myState;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (state == null || !SingleValueSavedState.isOfCorrectType(state, getDataType())) {
@@ -157,11 +161,12 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
         return currentValue != null ? currentValue : getBackupDefaultValue();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected final void onSetInitialValue(Object defaultValue) {
         if (defaultValue == null)
             defaultValue = getBackupDefaultValue();
-        currentValue = this.getPersistedValue((T)defaultValue);
+        setValue(getPersistedValue((T)defaultValue));
     }
 
     /** Dismisses the dialog and calls {@link #onDialogClosed(boolean)}.
@@ -226,8 +231,8 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
      * @return The persisted value, or {@code defaultReturnValue} if it doesn't exist. */
     protected abstract T getPersistedValue (T defaultReturnValue);
 
-    /** @return A backup default value, in case none was provided via XML. Must not return null.*/
-    protected abstract T getBackupDefaultValue();
+    /** @return A backup default value, in case none was provided via XML. */
+    protected abstract @NonNull T getBackupDefaultValue();
 
     protected void onValueModifiedInDialog (T newValue){
         this.newValue = newValue;
@@ -267,6 +272,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
             return fragment;
         }
 
+        @SuppressWarnings("unchecked")
         private BaseDialogPreference<T> getBasePreference (){
             return (BaseDialogPreference<T>) getPreference();
         }
@@ -307,7 +313,8 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
                     internalPositiveButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            getDialog().dismiss();
+                            Dialog dialog = getDialog();
+                            if (dialog != null) dialog.dismiss();
                             onDialogClosed(true);
                         }
                     });
@@ -320,7 +327,8 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
                     internalNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            getDialog().dismiss();
+                            Dialog dialog = getDialog();
+                            if (dialog != null) dialog.dismiss();
                             onDialogClosed(false);
                         }
                     });

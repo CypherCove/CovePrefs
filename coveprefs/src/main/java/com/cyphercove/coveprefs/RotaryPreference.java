@@ -20,6 +20,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.TypedArrayUtils;
 
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
@@ -54,7 +55,8 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
     }
 
     @Override
-    protected Integer getBackupDefaultValue() {
+    protected @NonNull
+    Integer getBackupDefaultValue() {
         return 0;
     }
 

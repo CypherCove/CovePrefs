@@ -23,6 +23,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.TypedArrayUtils;
 
 /**
@@ -55,7 +56,8 @@ public class StringPreference extends BaseDialogPreference<String> implements Te
     }
 
     @Override
-    protected String getBackupDefaultValue() {
+    protected @NonNull
+    String getBackupDefaultValue() {
         return "";
     }
 

@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import java.util.Locale;
 
 /**
@@ -77,7 +79,8 @@ public class AboutPreference extends BaseDialogPreference<String> {
     }
 
     @Override
-    protected String getBackupDefaultValue() {
+    protected @NonNull
+    String getBackupDefaultValue() {
         return "";
     }
 }

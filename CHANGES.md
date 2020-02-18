@@ -1,5 +1,5 @@
 ### Version 2.0.2
- * 
+ * Fix default values not being loaded for BaseDialogPreferences.
 
 ### Version 2.0.1
  * **BREAKING:** Changed `BaseDialogPreference.onValueModifedInDialog` to `onValueModifiedInDialog`
