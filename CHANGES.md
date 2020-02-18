@@ -1,3 +1,6 @@
+### Version 2.0.3
+ * 
+
 ### Version 2.0.2
  * Fix default values not being loaded for BaseDialogPreferences.
 
