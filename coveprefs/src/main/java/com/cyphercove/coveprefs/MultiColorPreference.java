@@ -44,7 +44,7 @@ import com.cyphercove.coveprefs.widgets.MultiColorSwatch;
 public class MultiColorPreference extends BaseDialogPreference<String> implements
         MultiColorPicker.OnMultiColorChangedListener, MultiColorPicker.OnActiveIndexChangedListener{
 
-    public static final int WIDGETS_DEFAULT =
+    private static final int WIDGETS_DEFAULT =
             ColorPicker.WIDGET_HSV_PICKER |
             ColorPicker.WIDGET_HEX_TEXT_EDIT |
             ColorPicker.WIDGET_RECENTLY_PICKED;
@@ -64,7 +64,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_ColorPreference);
         widgets = a.getInt(R.styleable.CovePrefs_ColorPreference_coveprefs_colorPickerWidgets, WIDGETS_DEFAULT);
         int definitionArrayId = a.getResourceId(R.styleable.CovePrefs_ColorPreference_coveprefs_multiColorDefinition, 0);
-        String disabledLabel = a.getString(R.styleable.CovePrefs_ColorPreference_coveprefs_multiColorDisabledLabel);
+        int disabledLabel = a.getResourceId(R.styleable.CovePrefs_ColorPreference_coveprefs_multiColorDisabledLabel, 0);
         a.recycle();
 
         if (definitionArrayId == 0)
@@ -82,7 +82,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
     protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
 
-        final SingleValueSavedState myState = SingleValueSavedState.create(superState, Integer.class);
+        final SingleValueSavedState<Integer> myState = SingleValueSavedState.create(superState, Integer.class);
         myState.setValue(currentlySelectedColorIndex);
         return myState;
     }
@@ -90,7 +90,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (state == null) {
-            super.onRestoreInstanceState(state);
+            super.onRestoreInstanceState(null);
             return;
         }
 
@@ -122,7 +122,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
 
     @Override
     protected void onDialogViewCreated(View view) {
-        colorPicker = (MultiColorPicker) view.findViewById(R.id.coveprefs_colorPicker);
+        colorPicker = view.findViewById(R.id.coveprefs_colorPicker);
         colorPicker.setOnMultiColorChangedListener(this);
         colorPicker.setOnActiveIndexChangedListener(this);
         colorPicker.setWidgets(widgets);
@@ -131,20 +131,20 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-        MultiColor multiColor = definition.getTemporaryValue(getValueForBindingDialog());
+        MultiColor multiColor = definition.getValue(getValueForBindingDialog());
         colorPicker.setMultiColorValue(currentlySelectedColorIndex, multiColor);
     }
 
     @Override
     protected void onPreferenceViewCreated (AbsViewHolder view){
         colorWidget = (MultiColorSwatch)view.findViewById(R.id.coveprefs_widget);
-        MultiColor multiColor = definition.getTemporaryValue(getValueForBindingPreferenceView());
+        MultiColor multiColor = definition.getValue(getValueForBindingPreferenceView());
         colorWidget.setColors(multiColor.getValues(), multiColor.getValueCount());
     }
 
     @Override
     protected void onValueChangedAndCommitted() {
-        MultiColor multiColor = definition.getTemporaryValue(getValueForBindingPreferenceView());
+        MultiColor multiColor = definition.getValue(getValueForBindingPreferenceView());
         colorWidget.setColorsAnimated(multiColor.getValues(), multiColor.getValueCount());
         ColorCache.submitColor(getContext(), multiColor.getValues(), multiColor.getValueCount());
     }

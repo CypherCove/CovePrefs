@@ -21,6 +21,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 /**
@@ -67,8 +69,10 @@ public class MultiColorSwatch extends LinearLayout {
     /** Instantly changes the colors. Allows animation to finish using the new color if one is running.
      * @param colors An array of colors to apply.
      * @param count The number of colors from the array to apply. Must not exceed array size.*/
-    public void setColors (int[] colors, int count){
-        updateSwatchCount(colors == null ? 0 : count);
+    public void setColors (@NonNull int[] colors, int count){
+        if (count > colors.length)
+            throw new IllegalArgumentException("Count " + count + " is greater than the colors array length " + colors.length + ".");
+        updateSwatchCount(count);
         for (int i = 0; i < count; i++) {
             swatches.get(i).setColor(colors[i]);
         }
@@ -79,8 +83,10 @@ public class MultiColorSwatch extends LinearLayout {
      * @param colors The new colors to apply.
      * @param count The number of colors to apply.
      */
-    public void setColorsAnimated (int[] colors, int count){
-        updateSwatchCount(colors == null ? 0 : count);
+    public void setColorsAnimated (@NonNull int[] colors, int count){
+        if (count > colors.length)
+            throw new IllegalArgumentException("Count " + count + " is greater than the colors array length.");
+        updateSwatchCount(count);
         float swatchWidth = getWidth() / (float)count; //TODO manual centers necessary since these may have animated widths changing?
         for (int i = 0; i < count; i++) {
             swatches.get(i).setColorAnimated (swatchWidth / 2, getHeight() / 2, colors[i]);
@@ -92,7 +98,9 @@ public class MultiColorSwatch extends LinearLayout {
      * @param centerY The Y coordinate to start the animation from.
      * @param color The new colors to apply.*/
     public void setColorsAnimated (float centerX, float centerY, int...color){
-        updateSwatchCount(color == null ? 0 : color.length);
+        if (color == null)
+            color = new int[0];
+        updateSwatchCount(color.length);
         float swatchWidth = getWidth() / (float)color.length;
         for (int i = 0; i < color.length; i++) {
             swatches.get(i).setColorAnimated(centerX - i * swatchWidth, centerY, color[i]);

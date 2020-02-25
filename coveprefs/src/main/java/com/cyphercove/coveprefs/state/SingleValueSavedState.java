@@ -34,7 +34,7 @@ public abstract class SingleValueSavedState<T> extends Preference.BaseSavedState
         DATA_TYPES_TO_STATES_TYPES.put(String.class, StringSavedState.class);
     }
 
-    public static SingleValueSavedState create (Parcelable superState, Class dataType){
+    public static <T> SingleValueSavedState<T> create (Parcelable superState, Class<T> dataType){
         Class<?> stateType = DATA_TYPES_TO_STATES_TYPES.get(dataType);
         if (stateType == null)
             throw new RuntimeException("Unsupported data type: " + dataType.getName());

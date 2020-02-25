@@ -1,5 +1,8 @@
 ### Version 2.0.3
- * 
+ * **BREAKING:** Refactored MultiColor.Definition to use the resource ID for the disabled label 
+ rather than direct use of a String.
+  * **BREAKING:** `MultiColor.set(String)` now throws IllegalArgumentException if the argument is invalid.
+  * Add nullability annotations for MultiColor and MultiColor.Definition.
 
 ### Version 2.0.2
  * Fix default values not being loaded for BaseDialogPreferences.

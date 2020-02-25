@@ -132,7 +132,7 @@ public class MultiColorPicker extends FrameLayout {
             }
         });
 
-        prevButton = (ImageButton)findViewById(R.id.coveprefs_prev);
+        prevButton = findViewById(R.id.coveprefs_prev);
         if (headerIconColorStateList != null && prevButton instanceof AppCompatImageButton)
             ((AppCompatImageButton)prevButton).setSupportImageTintList(headerIconColorStateList);
         prevButton.setOnClickListener(new OnClickListener() {
@@ -144,7 +144,7 @@ public class MultiColorPicker extends FrameLayout {
             }
         });
 
-        nextButton = (ImageButton)findViewById(R.id.coveprefs_next);
+        nextButton = findViewById(R.id.coveprefs_next);
         if (headerIconColorStateList != null && nextButton instanceof AppCompatImageButton)
             ((AppCompatImageButton)nextButton).setSupportImageTintList(headerIconColorStateList);
         nextButton.setOnClickListener(new OnClickListener() {
@@ -156,13 +156,13 @@ public class MultiColorPicker extends FrameLayout {
             }
         });
 
-        hsvView = (HSVSelectorView)findViewById(R.id.coveprefs_hsv);
+        hsvView = findViewById(R.id.coveprefs_hsv);
         hsvView.setOnColorChangedListener(onHSVColorSelectedListener);
         hsvView.setFocusableInTouchMode(true); // Allow touch to unfocus the hexEditText so keyboard closes
         ViewUtils.clearAncestorOutlineClipping(hsvView, this);
 
         hexHashMark = findViewById(R.id.coveprefs_hex_hashmark);
-        hexEditText = (EditText)findViewById(R.id.coveprefs_hex);
+        hexEditText = findViewById(R.id.coveprefs_hex);
         InputFilter[] inputFilters = {new InputFilter.LengthFilter(6), hexInputFilter, new InputFilter.AllCaps()};
         hexEditText.setFilters(inputFilters);
         hexEditText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | EditorInfo.IME_FLAG_NO_FULLSCREEN);
@@ -185,7 +185,7 @@ public class MultiColorPicker extends FrameLayout {
                     int color = Color.parseColor("#" + s.toString());
                     setWidgetsColor(color, false, false, true, true,
                            getRelativeX(hexEditText, MultiColorPicker.this) + hexEditText.getWidth(),
-                            getRelativeY(hexEditText, MultiColorPicker.this) + hexEditText.getHeight() / 2);
+                            getRelativeY(hexEditText, MultiColorPicker.this) + hexEditText.getHeight() / 2f);
                 }
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
@@ -202,7 +202,7 @@ public class MultiColorPicker extends FrameLayout {
             }
         });
 
-        colorCacheView = (ColorCacheView) findViewById(R.id.coveprefs_colorcache);
+        colorCacheView = findViewById(R.id.coveprefs_colorcache);
         colorCacheView.setOnColorSelectedListener(onColorCacheSelectedListener);
         ViewUtils.clearAncestorOutlineClipping(colorCacheView, this);
 
@@ -437,10 +437,10 @@ public class MultiColorPicker extends FrameLayout {
         private View makeColorItem (String label, int initialColor, boolean clickable, final int type, final int index){
             View view = inflater.inflate(R.layout.coveprefs_multicolor_header_item, null);
             boolean disabled = multiColor.definition.getValueCount(type) == 0;
-            ColorSwatch colorSwatch = (ColorSwatch)view.findViewById(R.id.coveprefs_swatch);
+            ColorSwatch colorSwatch = view.findViewById(R.id.coveprefs_swatch);
             colorSwatch.setColor(initialColor);
             if (!disabled) headerItems[type][index].colorSwatch = colorSwatch;
-            TextView textView = (TextView)view.findViewById(R.id.coveprefs_label);
+            TextView textView = view.findViewById(R.id.coveprefs_label);
             textView.setText(label);
             if (!disabled) {
                 textView.setActivated(index == activeIndex);
