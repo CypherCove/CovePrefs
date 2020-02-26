@@ -96,7 +96,7 @@ Allows user to pick an integer from 0-359 with a dialog that depicts an arrow ra
 
 ### StringPreference
 
-A DialogPreference with an EditText for entering the String value of the preference.
+A DialogPreference with an EditText for entering the String value of the preference. This is similar to the androidx EditTextPreference but has additional customization available.
 
 | Property                            | Property type  | Description                                                                                      |
 |-------------------------------------|----------------|--------------------------------------------------------------------------------------------------|

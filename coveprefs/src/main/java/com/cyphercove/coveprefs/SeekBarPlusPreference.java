@@ -23,6 +23,7 @@ package com.cyphercove.coveprefs;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -39,12 +40,14 @@ import androidx.preference.PreferenceViewHolder;
 import androidx.preference.SeekBarPreference;
 
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
+import com.cyphercove.coveprefs.utils.MultiColor;
 
 /**
  * A {@link SeekBarPreference} with left and right labels next to the SeekBar.
  */
 public class SeekBarPlusPreference extends SeekBarPreference {
 
+    SeekBar seekBar;
     CharSequence leftLabel, rightLabel;
     TextView leftLabelView, rightLabelView;
 
@@ -78,7 +81,7 @@ public class SeekBarPlusPreference extends SeekBarPreference {
     public void onBindViewHolder(PreferenceViewHolder view) {
         super.onBindViewHolder(view);
 
-        SeekBar seekBar = (SeekBar) view.findViewById(androidx.preference.R.id.seekbar);
+        seekBar = (SeekBar) view.findViewById(androidx.preference.R.id.seekbar);
         if (seekBar == null){
             Log.e(TAG, "SeekBar id is missing!");
             return;
@@ -133,4 +136,13 @@ public class SeekBarPlusPreference extends SeekBarPreference {
         if (rightLabelView != null)
             rightLabelView.setText(rightLabel);
     }
+
+    /**
+     * Updates the Preference to show the current value of the underlying shared preference. This is
+     * useful if the preference value has been changed by something other than this Preference.
+     */
+    public void loadPersistedValue() {
+        setValue(getPersistedInt(getValue()));
+    }
+
 }

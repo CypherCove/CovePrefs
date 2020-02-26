@@ -149,6 +149,15 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
         ColorCache.submitColor(getContext(), multiColor.getValues(), multiColor.getValueCount());
     }
 
+    /**
+     * Updates the Preference to show the current value of the underlying shared preference. This is
+     * useful if the preference value has been changed by something other than this Preference.
+     */
+    public void loadPersistedValue() {
+        applyPersistedValue();
+        onValueChangedAndCommitted();
+    }
+
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         String value = a.getString(index);

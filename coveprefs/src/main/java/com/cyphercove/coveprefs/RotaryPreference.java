@@ -90,6 +90,15 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
             notifyChanged(); // This skips the animation so only notify if necessary.
     }
 
+    /**
+     * Updates the Preference to show the current value of the underlying shared preference. This is
+     * useful if the preference value has been changed by something other than this Preference.
+     */
+    public void loadPersistedValue() {
+        applyPersistedValue();
+        onValueChangedAndCommitted();
+    }
+
     @Override
     protected void persistValue(Integer value) {
         persistInt(value);

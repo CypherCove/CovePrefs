@@ -115,6 +115,15 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
         ColorCache.submitColor(getContext(), getValueForBindingPreferenceView());
     }
 
+    /**
+     * Updates the Preference to show the current value of the underlying shared preference. This is
+     * useful if the preference value has been changed by something other than this Preference.
+     */
+    public void loadPersistedValue() {
+        applyPersistedValue();
+        onValueChangedAndCommitted();
+    }
+
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         try {

@@ -3,6 +3,7 @@
  rather than direct use of a String.
   * **BREAKING:** `MultiColor.set(String)` now throws IllegalArgumentException if the argument is invalid.
   * Add nullability annotations for MultiColor and MultiColor.Definition.
+  * Add `loadPersistedValue()` to ColorPreference, MultiColorPreference, RotaryPreference, and SeekBarPlusPreference.
 
 ### Version 2.0.2
  * Fix default values not being loaded for BaseDialogPreferences.

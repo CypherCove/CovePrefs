@@ -231,6 +231,14 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
      * @return The persisted value, or {@code defaultReturnValue} if it doesn't exist. */
     protected abstract T getPersistedValue (T defaultReturnValue);
 
+    /**
+     * Loads the persisted value and sets it as the current value of this preference. Useful if the
+     * value was changed externally. The base method does not update any widgets or summary providers.
+     */
+    protected void applyPersistedValue() {
+        currentValue = getPersistedValue(getValueForBindingPreferenceView());
+    }
+
     /** @return A backup default value, in case none was provided via XML. */
     protected abstract @NonNull T getBackupDefaultValue();
 
