@@ -107,4 +107,10 @@ public class MultiColorSwatch extends LinearLayout {
         }
     }
 
+    @Override
+    public void setEnabled (boolean enabled) {
+        super.setEnabled(enabled);
+        for (ColorSwatch swatch : swatches)
+            swatch.setEnabled(enabled);
+    }
 }

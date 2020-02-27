@@ -105,11 +105,11 @@ public class ColorSwatch extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        colorPaint.setColor(color);
+        colorPaint.setColor(isEnabled() ? color : withDisabledAlpha(color));
         canvas.drawRect(0, 0, getWidth(), getHeight(), colorPaint);
 
         if (nextColor != color){
-            nextColorPaint.setColor(nextColor);
+            nextColorPaint.setColor(isEnabled() ? nextColor : withDisabledAlpha(color));
             canvas.clipRect(0, 0, getWidth(), getHeight());
             canvas.drawCircle(centerX, centerY, radius, nextColorPaint);
         }
@@ -145,4 +145,8 @@ public class ColorSwatch extends View {
 
         }
     };
+
+    private static int withDisabledAlpha(int color) {
+        return (color & 0x00ffffff) | 0x80000000;
+    }
 }
