@@ -166,6 +166,7 @@ public class RotaryView extends View {
 			widthTarget = getSuggestedMinimumWidth();
 			break;
 		case MeasureSpec.AT_MOST:
+			case MeasureSpec.EXACTLY:
 			widthTarget = Math.min(defaultSize, widthTarget);
 			break;
 		}
@@ -178,6 +179,7 @@ public class RotaryView extends View {
 			heightTarget = getSuggestedMinimumHeight();
 			break;
 		case MeasureSpec.AT_MOST:
+			case MeasureSpec.EXACTLY:
 			heightTarget = Math.min(defaultSize, heightTarget);
 			break;
 		}

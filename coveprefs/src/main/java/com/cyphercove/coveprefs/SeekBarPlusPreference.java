@@ -22,11 +22,8 @@ package com.cyphercove.coveprefs;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,21 +32,17 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import androidx.core.view.LayoutInflaterCompat;
 import androidx.preference.PreferenceViewHolder;
 import androidx.preference.SeekBarPreference;
-
-import com.cyphercove.coveprefs.utils.AbsViewHolder;
-import com.cyphercove.coveprefs.utils.MultiColor;
 
 /**
  * A {@link SeekBarPreference} with left and right labels next to the SeekBar.
  */
+@SuppressWarnings("WeakerAccess")
 public class SeekBarPlusPreference extends SeekBarPreference {
 
-    SeekBar seekBar;
-    CharSequence leftLabel, rightLabel;
-    TextView leftLabelView, rightLabelView;
+    private CharSequence leftLabel, rightLabel;
+    private TextView leftLabelView, rightLabelView;
 
     private static final String TAG = "SeekBarPlusPreference";
 
@@ -81,7 +74,7 @@ public class SeekBarPlusPreference extends SeekBarPreference {
     public void onBindViewHolder(PreferenceViewHolder view) {
         super.onBindViewHolder(view);
 
-        seekBar = (SeekBar) view.findViewById(androidx.preference.R.id.seekbar);
+        SeekBar seekBar = (SeekBar) view.findViewById(androidx.preference.R.id.seekbar);
         if (seekBar == null){
             Log.e(TAG, "SeekBar id is missing!");
             return;
@@ -109,9 +102,9 @@ public class SeekBarPlusPreference extends SeekBarPreference {
                         ViewGroup.LayoutParams.MATCH_PARENT, 0);
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        leftLabelView = (TextView) inflater.inflate(R.layout.coveprefs_seekbar_label, null);
+        leftLabelView = (TextView) inflater.inflate(R.layout.coveprefs_seekbar_label, layout);
         leftLabelView.setPadding(0, leftLabelView.getPaddingTop(), leftLabelView.getPaddingRight(), leftLabelView.getPaddingBottom());
-        rightLabelView = (TextView) inflater.inflate(R.layout.coveprefs_seekbar_label, null);
+        rightLabelView = (TextView) inflater.inflate(R.layout.coveprefs_seekbar_label, layout);
         rightLabelView.setPadding(rightLabelView.getPaddingLeft(), rightLabelView.getPaddingTop(), 0, rightLabelView.getPaddingBottom());
 
         layout.removeAllViews();

@@ -21,6 +21,8 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
+
+import androidx.core.widget.ImageViewCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -134,7 +136,7 @@ public class MultiColorPicker extends FrameLayout {
 
         prevButton = findViewById(R.id.coveprefs_prev);
         if (headerIconColorStateList != null && prevButton instanceof AppCompatImageButton)
-            ((AppCompatImageButton)prevButton).setSupportImageTintList(headerIconColorStateList);
+            ImageViewCompat.setImageTintList(prevButton, headerIconColorStateList);
         prevButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +148,7 @@ public class MultiColorPicker extends FrameLayout {
 
         nextButton = findViewById(R.id.coveprefs_next);
         if (headerIconColorStateList != null && nextButton instanceof AppCompatImageButton)
-            ((AppCompatImageButton)nextButton).setSupportImageTintList(headerIconColorStateList);
+            ImageViewCompat.setImageTintList(prevButton, headerIconColorStateList);
         nextButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,12 +159,32 @@ public class MultiColorPicker extends FrameLayout {
         });
 
         hsvView = findViewById(R.id.coveprefs_hsv);
+        HSVSelectorView.OnColorChangedListener onHSVColorSelectedListener = new HSVSelectorView.OnColorChangedListener() {
+            @Override
+            public void onColorChanged (HSVSelectorView view, int newColor, boolean isFromTouchDown, float localX, float localY) {
+                setWidgetsColor(newColor, false, true, false, isFromTouchDown,
+                        getRelativeX(view, MultiColorPicker.this) + localX,
+                        getRelativeY(view, MultiColorPicker.this) + localY);
+            }
+        };
         hsvView.setOnColorChangedListener(onHSVColorSelectedListener);
         hsvView.setFocusableInTouchMode(true); // Allow touch to unfocus the hexEditText so keyboard closes
         ViewUtils.clearAncestorOutlineClipping(hsvView, this);
 
         hexHashMark = findViewById(R.id.coveprefs_hex_hashmark);
         hexEditText = findViewById(R.id.coveprefs_hex);
+        InputFilter hexInputFilter = new InputFilter() {
+            // Rejects changes that insert non-hex digits.
+            @Override
+            public CharSequence filter (CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (Character.digit(source.charAt(i), 16) == -1) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
         InputFilter[] inputFilters = {new InputFilter.LengthFilter(6), hexInputFilter, new InputFilter.AllCaps()};
         hexEditText.setFilters(inputFilters);
         hexEditText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | EditorInfo.IME_FLAG_NO_FULLSCREEN);
@@ -203,6 +225,16 @@ public class MultiColorPicker extends FrameLayout {
         });
 
         colorCacheView = findViewById(R.id.coveprefs_colorcache);
+        // avoid allowing focus jump back to EditText when buttons are pressed
+        ColorCacheView.OnColorSelectedListener onColorCacheSelectedListener = new ColorCacheView.OnColorSelectedListener() {
+            @Override
+            public void onColorChanged (Button view, int newColor, float localX, float localY) {
+                setWidgetsColor(newColor, false, false, false, true,
+                        getRelativeX(view, MultiColorPicker.this) + localX,
+                        getRelativeY(view, MultiColorPicker.this) + localY);
+                hsvView.requestFocus(); // avoid allowing focus jump back to EditText when buttons are pressed
+            }
+        };
         colorCacheView.setOnColorSelectedListener(onColorCacheSelectedListener);
         ViewUtils.clearAncestorOutlineClipping(colorCacheView, this);
 
@@ -358,38 +390,6 @@ public class MultiColorPicker extends FrameLayout {
             indexListener.onActiveIndexChanged(index);
     }
 
-    private HSVSelectorView.OnColorChangedListener onHSVColorSelectedListener = new HSVSelectorView.OnColorChangedListener() {
-        @Override
-        public void onColorChanged(HSVSelectorView view, int newColor, boolean isFromTouchDown, float localX, float localY) {
-            setWidgetsColor(newColor, false, true, false, isFromTouchDown,
-                    getRelativeX(view, MultiColorPicker.this) + localX,
-                    getRelativeY(view, MultiColorPicker.this) + localY);
-        }
-    };
-
-    private ColorCacheView.OnColorSelectedListener onColorCacheSelectedListener = new ColorCacheView.OnColorSelectedListener() {
-        @Override
-        public void onColorChanged(Button view, int newColor, float localX, float localY) {
-            setWidgetsColor(newColor, false, false, false, true,
-                    getRelativeX(view, MultiColorPicker.this) + localX,
-                    getRelativeY(view, MultiColorPicker.this) + localY);
-            hsvView.requestFocus(); // avoid allowing focus jump back to EditText when buttons are pressed
-        }
-    };
-
-    /** Rejects changes that insert non-hex digits. */
-    private InputFilter hexInputFilter = new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            for (int i = start; i < end; i++) {
-                if (Character.digit(source.charAt(i), 16) == -1) {
-                    return "";
-                }
-            }
-            return null;
-        }
-    };
-
     private PagerAdapter headerAdapter = new PagerAdapter() {
         @Override
         public int getCount() {
@@ -406,11 +406,11 @@ public class MultiColorPicker extends FrameLayout {
 
             String[] labels = multiColor.definition.getLabels(position);
             if (labels.length == 0) {
-                View view = makeColorItem(multiColor.definition.getDisabledLabel(), headerDisabledBackgroundColor, false, position, -1);
+                View view = makeColorItem(multiColor.definition.getDisabledLabel(), headerDisabledBackgroundColor, false, position, -1, collection);
                 collection.addView(view);
                 return view;
             } else if (labels.length == 1) {
-                View view = makeColorItem(labels[0], multiColor.getValues()[0], false, position, 0);
+                View view = makeColorItem(labels[0], multiColor.getValues()[0], false, position, 0, collection);
                 collection.addView(view);
                 return view;
             } else {
@@ -425,7 +425,7 @@ public class MultiColorPicker extends FrameLayout {
                     }
                 };
                 for (int i = 0; i < labels.length; i++) {
-                    View view = makeColorItem(labels[i], multiColor.getValues()[i], true, position, i);
+                    View view = makeColorItem(labels[i], multiColor.getValues()[i], true, position, i, swatchLayout);
                     view.setLayoutParams(itemParams);
                     swatchLayout.addView(view);
                 }
@@ -434,8 +434,8 @@ public class MultiColorPicker extends FrameLayout {
             }
         }
 
-        private View makeColorItem (String label, int initialColor, boolean clickable, final int type, final int index){
-            View view = inflater.inflate(R.layout.coveprefs_multicolor_header_item, null);
+        private View makeColorItem (String label, int initialColor, boolean clickable, final int type, final int index, ViewGroup root){
+            View view = inflater.inflate(R.layout.coveprefs_multicolor_header_item, root);
             boolean disabled = multiColor.definition.getValueCount(type) == 0;
             ColorSwatch colorSwatch = view.findViewById(R.id.coveprefs_swatch);
             colorSwatch.setColor(initialColor);

@@ -31,6 +31,7 @@ import com.cyphercove.coveprefs.widgets.RotaryPreferenceWidget;
  * A DialogPreference that allows the user to choose an integer angle from 0 to 359.  The default styling is intended
  * for use with no dialog title or icon.
  */
+@SuppressWarnings("WeakerAccess")
 public class RotaryPreference extends BaseDialogPreference<Integer> implements RotaryPicker.OnAngleChangedListener{
     private RotaryPicker rotaryPicker;
     private RotaryPreferenceWidget rotaryWidget;
@@ -39,8 +40,7 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
         super(context, attrs);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_RotaryPreference);
-        if ( TypedArrayUtils.getBoolean(a, R.styleable.CovePrefs_RotaryPreference_useSimpleSummaryProvider,
-                R.styleable.CovePrefs_RotaryPreference_useSimpleSummaryProvider,false)){
+        if (a.getBoolean(R.styleable.CovePrefs_RotaryPreference_useSimpleSummaryProvider, false)){
             setSummaryProvider(SimpleSummaryProvider.getInstance());
         }
         a.recycle();
@@ -67,7 +67,7 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
 
     @Override
     protected void onDialogViewCreated(View view) {
-        rotaryPicker = (RotaryPicker) view.findViewById(R.id.coveprefs_rotaryPicker);
+        rotaryPicker = view.findViewById(R.id.coveprefs_rotaryPicker);
         rotaryPicker.setOnAngleChangedListener(this);
     }
 

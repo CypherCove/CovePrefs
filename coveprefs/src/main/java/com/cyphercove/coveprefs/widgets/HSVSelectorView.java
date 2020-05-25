@@ -66,6 +66,25 @@ public class HSVSelectorView extends FrameLayout {
         a.recycle();
 
         valueAnimator = new ValueAnimator();
+        // animate SVView's hue in opposite direction, shortest path
+        // animate SVView's hue in opposite direction, shortest path
+        ValueAnimator.AnimatorUpdateListener animatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate (ValueAnimator animation) {
+                float fraction = Curve.slowInSlowOut(valueAnimator.getAnimatedFraction());
+
+                for (int i = 0; i < hsvOld.length; i++) {
+                    hsvAnimationOut[i] = fraction * (hsvSelected[i] - hsvOld[i]) + hsvOld[i];
+                }
+
+                if (hsvSelected[0] - hsvOld[0] > 180f) // animate SVView's hue in opposite direction, shortest path
+                    toViews(hsvAnimationOut, (fraction * (hsvSelected[0] - hsvOld[0] - 360f) + hsvOld[0] + 360f) % 360f);
+                else if (hsvOld[0] - hsvSelected[0] > 180f) // animate SVView's hue in opposite direction, shortest path
+                    toViews(hsvAnimationOut, (fraction * (hsvSelected[0] - hsvOld[0] + 360f) + hsvOld[0]) % 360f);
+                else
+                    toViews(hsvAnimationOut);
+            }
+        };
         valueAnimator.addUpdateListener(animatorUpdateListener);
         valueAnimator.setFloatValues(0, 1); // arbitrary, only using animation fraction
 
@@ -73,9 +92,9 @@ public class HSVSelectorView extends FrameLayout {
                 Context.LAYOUT_INFLATER_SERVICE);
 
         inflater.inflate(R.layout.coveprefs_hsv_selector, this);
-        hueView = (HueSelectorView) findViewById(R.id.coveprefs_hueSelector);
+        hueView = findViewById(R.id.coveprefs_hueSelector);
         hueView.setOnHueChangedListener(onHueChangedListener);
-        svView = (SaturationValueSelectorView) findViewById(R.id.coveprefs_saturationValueSelector);
+        svView = findViewById(R.id.coveprefs_saturationValueSelector);
         svView.setOnSaturationValueChangedListener(onSaturationValueChangedListener);
 
         if (Build.VERSION.SDK_INT > 21) {
@@ -170,24 +189,6 @@ public class HSVSelectorView extends FrameLayout {
     public void setOnColorChangedListener(OnColorChangedListener listener) {
         this.mListener = listener;
     }
-
-    private ValueAnimator.AnimatorUpdateListener animatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            float fraction = Curve.slowInSlowOut(valueAnimator.getAnimatedFraction());
-
-            for (int i = 0; i < hsvOld.length; i++) {
-                hsvAnimationOut[i] = fraction * (hsvSelected[i] - hsvOld[i]) + hsvOld[i];
-            }
-
-            if (hsvSelected[0] - hsvOld[0] > 180f) // animate SVView's hue in opposite direction, shortest path
-                toViews(hsvAnimationOut, (fraction * (hsvSelected[0] - hsvOld[0] - 360f) + hsvOld[0] + 360f) % 360f);
-            else if (hsvOld[0] - hsvSelected[0] > 180f) // animate SVView's hue in opposite direction, shortest path
-                toViews(hsvAnimationOut, (fraction * (hsvSelected[0] - hsvOld[0] + 360f) + hsvOld[0]) % 360f);
-            else
-                toViews(hsvAnimationOut);
-        }
-    };
 
     HueSelectorView.OnHueChangedListener onHueChangedListener = new HueSelectorView.OnHueChangedListener() {
         @Override

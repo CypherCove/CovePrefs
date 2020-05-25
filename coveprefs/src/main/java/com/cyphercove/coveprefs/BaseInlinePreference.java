@@ -37,6 +37,7 @@ import com.cyphercove.coveprefs.utils.AbsViewHolder;
  *
  * @param <T> The data type of the preference.
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class BaseInlinePreference<T> extends Preference {
 
     private T currentValue;
@@ -55,7 +56,7 @@ public abstract class BaseInlinePreference<T> extends Preference {
             return superState; // no need to save
         }
 
-        final SingleValueSavedState myState = SingleValueSavedState.create(superState, getDataType());
+        final SingleValueSavedState<T> myState = SingleValueSavedState.create(superState, getDataType());
         myState.setValue(currentValue);
         return myState;
     }
@@ -67,8 +68,9 @@ public abstract class BaseInlinePreference<T> extends Preference {
             return;
         }
 
-        SingleValueSavedState myState = (SingleValueSavedState) state;
-        currentValue = (T)myState.getValue();
+        @SuppressWarnings("unchecked")
+        SingleValueSavedState<T> myState = (SingleValueSavedState<T>) state;
+        currentValue = myState.getValue();
         super.onRestoreInstanceState(myState.getSuperState());
 
     }
@@ -82,6 +84,7 @@ public abstract class BaseInlinePreference<T> extends Preference {
                 !TextUtils.equals((CharSequence)currentValue, (CharSequence)value) :
                 !value.equals(currentValue);
         if (changed || !valueSet) {
+            valueSet = true;
             currentValue = value;
             persistValue(currentValue);
             onValueChanged(currentValue);

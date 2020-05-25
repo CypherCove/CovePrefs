@@ -29,6 +29,8 @@ import android.os.Build;
 import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.core.widget.ImageViewCompat;
+
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +45,11 @@ import com.cyphercove.coveprefs.widgets.PreferenceImageView;
  * Like a ListPreference, but the user selects from an array of Drawables instead of Strings. The selected image is shown in
  * the widget area of the preference.
  */
+@SuppressWarnings("WeakerAccess")
 public class ImageListPreference extends BaseDialogPreference<String>{
 
     private int[] entryIds;
     private CharSequence[] entryValues;
-    private GridView gridView;
     private PreferenceImageView selectedImageWidget;
     private ColorStateList imageTintColor;
     private PorterDuff.Mode imageTintMode;
@@ -105,6 +107,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         for (int i = 0; i < ids.length; i++) {
             ids[i] = typedArray.getResourceId(i, 0);
         }
+        typedArray.recycle();
         setEntryDrawableIds(ids);
     }
 
@@ -217,7 +220,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
 
     @Override
     protected void onDialogViewCreated(View view) {
-        gridView = (GridView) view.findViewById(R.id.coveprefs_gridview);
+        final GridView gridView = view.findViewById(R.id.coveprefs_gridview);
         gridView.setColumnWidth(columnWidth);
         gridView.setAdapter(new ImageButtonAdapter());
     }
@@ -238,8 +241,8 @@ public class ImageListPreference extends BaseDialogPreference<String>{
             selectedImageWidget.setLayoutParams(layoutParams);
         }
         if (imageTintColor != null) {
-            selectedImageWidget.setSupportImageTintList(imageTintColor);
-            selectedImageWidget.setSupportImageTintMode(imageTintMode);
+            ImageViewCompat.setImageTintList(selectedImageWidget, imageTintColor);
+            ImageViewCompat.setImageTintMode(selectedImageWidget, imageTintMode);
         }
         int selectedImageId = getDrawableForValue();
         if (selectedImageId != 0){
@@ -294,8 +297,8 @@ public class ImageListPreference extends BaseDialogPreference<String>{
                 imageButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 if (Build.VERSION.SDK_INT >= 21) imageButton.setElevation(buttonElevation);
                 if (imageTintColor != null) {
-                    imageButton.setSupportImageTintList(imageTintColor);
-                    imageButton.setSupportImageTintMode(imageTintMode);
+                    ImageViewCompat.setImageTintList(imageButton, imageTintColor);
+                    ImageViewCompat.setImageTintMode(imageButton, imageTintMode);
                 }
             } else {
                 imageButton = (AppCompatImageButton)convertView;

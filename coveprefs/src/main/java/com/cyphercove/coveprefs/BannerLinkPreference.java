@@ -40,9 +40,9 @@ import com.cyphercove.coveprefs.utils.ColorUtils;
  * <p>
  * Setting a custom layout via {@code android:layout} in xml has no effect on BannerLinkPreference.
  */
+@SuppressWarnings("WeakerAccess")
 public class BannerLinkPreference extends Preference {
 
-    private String uri;
     private int bannerId;
 
     public BannerLinkPreference(Context context, AttributeSet attrs) {
@@ -63,7 +63,7 @@ public class BannerLinkPreference extends Preference {
 
     protected void init (Context context, AttributeSet attrs){
         TypedArray a = context.obtainStyledAttributes(attrs, com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference);
-        uri = a.getString(com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference_coveprefs_uri);
+        String uri = a.getString(com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference_coveprefs_uri);
         bannerId = a.getResourceId(com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference_coveprefs_banner, 0);
         a.recycle();
 
@@ -88,9 +88,8 @@ public class BannerLinkPreference extends Preference {
             if (drawable instanceof BitmapDrawable)
                 ((BitmapDrawable)drawable).setGravity(Gravity.CENTER);
 
-            CenterCropDrawable.centerCropDrawableAsBackground(holder.itemView, drawable);
-
-
+            if (drawable != null)
+                CenterCropDrawable.centerCropDrawableAsBackground(holder.itemView, drawable);
 
             float shadowRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f,
                     getContext().getResources().getDisplayMetrics());

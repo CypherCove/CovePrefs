@@ -15,6 +15,7 @@
  */
 package com.cyphercove.coveprefs.widgets;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -40,7 +41,8 @@ public class HueSelectorView extends View {
     private Path roundCornersMask;
     private final int[] hues= new int[] {0xFFFF0000, 0xFFFFFF00, 0xFF00FF00, 0xFF00FFFF, 0xFF0000FF, 0xFFFF00FF, 0xFFFF0000};
 
-    private int selectorStrokeWidth, cornerRadii, naturalHeight;
+    private int cornerRadii;
+    private int naturalHeight;
 
     private float currentHue;
 
@@ -70,7 +72,7 @@ public class HueSelectorView extends View {
 
         final Resources res = getResources();
         naturalHeight = res.getDimensionPixelSize(R.dimen.coveprefs_hsv_natural_height);
-        selectorStrokeWidth = res.getDimensionPixelSize(R.dimen.coveprefs_hsv_selector_stroke_width);
+        int selectorStrokeWidth = res.getDimensionPixelSize(R.dimen.coveprefs_hsv_selector_stroke_width);
 
         huePaint = new Paint(Paint.DITHER_FLAG);
         huePaint.setStyle(Paint.Style.STROKE);
@@ -166,6 +168,7 @@ public class HueSelectorView extends View {
             return;
         }
 
+        @SuppressLint("DrawAllocation")
         Shader hueShader = new LinearGradient(0, 0, 0, getHeight(), hues, null, Shader.TileMode.CLAMP);
         huePaint.setShader(hueShader);
         huePaint.setStrokeWidth(getWidth());

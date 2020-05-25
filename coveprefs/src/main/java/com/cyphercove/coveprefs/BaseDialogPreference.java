@@ -50,6 +50,7 @@ import com.cyphercove.coveprefs.utils.AbsViewHolder;
  *
  * @param <T> The data type of the preference.
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class BaseDialogPreference<T> extends DialogPreference {
 
     private T newValue;

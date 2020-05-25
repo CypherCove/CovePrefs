@@ -68,17 +68,37 @@ public class ColorPicker extends FrameLayout {
 
         inflater.inflate(R.layout.coveprefs_color_picker, this);
 
-        colorSwatch = (ColorSwatch) findViewById(R.id.coveprefs_single_swatch);
+        colorSwatch = findViewById(R.id.coveprefs_single_swatch);
         colorSwatch.setVisibility(View.VISIBLE);
         colorSwatch.setFocusableInTouchMode(true); // Allow touch to unfocus the hexEditText so keyboard closes
 
-        hsvView = (HSVSelectorView)findViewById(R.id.coveprefs_hsv);
+        hsvView = findViewById(R.id.coveprefs_hsv);
+        HSVSelectorView.OnColorChangedListener onHSVColorSelectedListener = new HSVSelectorView.OnColorChangedListener() {
+            @Override
+            public void onColorChanged (HSVSelectorView view, int newColor, boolean isFromTouchDown, float localX, float localY) {
+                setColorInternal(newColor, true, false, isFromTouchDown,
+                        getRelativeX(view, ColorPicker.this) + localX,
+                        getRelativeY(view, ColorPicker.this) + localY);
+            }
+        };
         hsvView.setOnColorChangedListener(onHSVColorSelectedListener);
         hsvView.setFocusableInTouchMode(true); // Allow touch to unfocus the hexEditText so keyboard closes
         ViewUtils.clearAncestorOutlineClipping(hsvView, this);
 
         hexHashMark = findViewById(R.id.coveprefs_hex_hashmark);
-        hexEditText = (EditText)findViewById(R.id.coveprefs_hex);
+        hexEditText = findViewById(R.id.coveprefs_hex);
+        InputFilter hexInputFilter = new InputFilter() {
+            // Rejects changes that insert non-hex digits.
+            @Override
+            public CharSequence filter (CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (Character.digit(source.charAt(i), 16) == -1) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
         InputFilter[] inputFilters = {new InputFilter.LengthFilter(6), hexInputFilter, new InputFilter.AllCaps()};
         hexEditText.setFilters(inputFilters);
         hexEditText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | EditorInfo.IME_FLAG_NO_FULLSCREEN);
@@ -102,7 +122,7 @@ public class ColorPicker extends FrameLayout {
                     int color = Color.parseColor("#" + s.toString());
                     setColorInternal(color, false, true, true,
                            getRelativeX(hexEditText, ColorPicker.this) + hexEditText.getWidth(),
-                            getRelativeY(hexEditText, ColorPicker.this) + hexEditText.getHeight() / 2);
+                            getRelativeY(hexEditText, ColorPicker.this) + (float)(hexEditText.getHeight() / 2));
                 }
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
@@ -119,7 +139,17 @@ public class ColorPicker extends FrameLayout {
             }
         });
 
-        colorCacheView = (ColorCacheView) findViewById(R.id.coveprefs_colorcache);
+        colorCacheView = findViewById(R.id.coveprefs_colorcache);
+        // avoid allowing focus jump back to EditText when buttons are pressed
+        ColorCacheView.OnColorSelectedListener onColorCacheSelectedListener = new ColorCacheView.OnColorSelectedListener() {
+            @Override
+            public void onColorChanged (Button view, int newColor, float localX, float localY) {
+                setColorInternal(newColor, false, false, true,
+                        getRelativeX(view, ColorPicker.this) + localX,
+                        getRelativeY(view, ColorPicker.this) + localY);
+                hsvView.requestFocus(); // avoid allowing focus jump back to EditText when buttons are pressed
+            }
+        };
         colorCacheView.setOnColorSelectedListener(onColorCacheSelectedListener);
         ViewUtils.clearAncestorOutlineClipping(colorCacheView, this);
     }
@@ -177,38 +207,6 @@ public class ColorPicker extends FrameLayout {
     public void setOnColorChangedListener (OnColorChangedListener listener){
         this.listener = listener;
     }
-
-    private HSVSelectorView.OnColorChangedListener onHSVColorSelectedListener = new HSVSelectorView.OnColorChangedListener() {
-        @Override
-        public void onColorChanged(HSVSelectorView view, int newColor, boolean isFromTouchDown, float localX, float localY) {
-            setColorInternal(newColor, true, false, isFromTouchDown,
-                    getRelativeX(view, ColorPicker.this) + localX,
-                    getRelativeY(view, ColorPicker.this) + localY);
-        }
-    };
-
-    private ColorCacheView.OnColorSelectedListener onColorCacheSelectedListener = new ColorCacheView.OnColorSelectedListener() {
-        @Override
-        public void onColorChanged(Button view, int newColor, float localX, float localY) {
-            setColorInternal(newColor, false, false, true,
-                    getRelativeX(view, ColorPicker.this) + localX,
-                    getRelativeY(view, ColorPicker.this) + localY);
-            hsvView.requestFocus(); // avoid allowing focus jump back to EditText when buttons are pressed
-        }
-    };
-
-    /** Rejects changes that insert non-hex digits. */
-    private InputFilter hexInputFilter = new InputFilter() {
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            for (int i = start; i < end; i++) {
-                if (Character.digit(source.charAt(i), 16) == -1) {
-                    return "";
-                }
-            }
-            return null;
-        }
-    };
 
 
 }

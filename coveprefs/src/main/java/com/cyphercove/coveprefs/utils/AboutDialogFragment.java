@@ -1,8 +1,10 @@
 package com.cyphercove.coveprefs.utils;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -10,7 +12,6 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -38,46 +39,49 @@ public class AboutDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        dialogTitle = getArguments().getInt("dialogTitle");
-        dialogMessage = getArguments().getInt("dialogMessage");
-        dialogIcon = getArguments().getInt("dialogIcon");
+        final Context context = requireContext();
+        final Resources res = context.getResources();
+        final Bundle arguments = getArguments();
+        if (arguments != null) {
+            dialogTitle = arguments.getInt("dialogTitle");
+            dialogMessage = arguments.getInt("dialogMessage");
+            dialogIcon = arguments.getInt("dialogIcon");
+        }
 
-        String stringTitle = getContext().getResources().getString(dialogTitle); //default no formatting
+        String stringTitle = res.getString(dialogTitle); //default no formatting
         Locale locale;
         try {
-            locale = getContext().getResources().getConfiguration().locale;
-            String versionName = getContext().getPackageManager().getPackageInfo(
-                    getContext().getPackageName(), 0).versionName;
+            locale = res.getConfiguration().locale;
+            String versionName = context.getPackageManager().getPackageInfo(
+                    context.getPackageName(), 0).versionName;
             stringTitle = String.format(locale, stringTitle, versionName);
         } catch (NullPointerException e){ // occurs in XML editor
         } catch (PackageManager.NameNotFoundException e){ // occurs in XML editor
         }
 
         Spanned message;
-        String stringMessage = getContext().getResources().getString(dialogMessage);
+        String stringMessage = res.getString(dialogMessage);
         if (Build.VERSION.SDK_INT < 24)
             message = Html.fromHtml(stringMessage);
         else
             message = Html.fromHtml(stringMessage, 0);
 
-        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         TextView messageView = (TextView) layoutInflater.inflate(R.layout.coveprefs_about_dialog, null);
         messageView.setText(message);
         Linkify.addLinks(messageView, Linkify.WEB_URLS);
         messageView.setMovementMethod(LinkMovementMethod.getInstance());
 
-        final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+        return new AlertDialog.Builder(context)
                 .setIcon(dialogIcon)
                 .setTitle(stringTitle)
                 .setView(messageView)
                 .setNegativeButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
+                            public void onClick(DialogInterface dialog1, int whichButton) {
                             }
                         }
                 )
                 .create();
-
-        return dialog;
     }
 }

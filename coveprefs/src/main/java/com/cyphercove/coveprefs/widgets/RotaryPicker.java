@@ -62,10 +62,10 @@ public class RotaryPicker extends FrameLayout {
 
         inflater.inflate(R.layout.coveprefs_rotary_picker, this);
 
-        rotaryView = (RotaryView)findViewById(R.id.coveprefs_rotary);
+        rotaryView = findViewById(R.id.coveprefs_rotary);
         rotaryView.setOnValueChangedListener(onValueSelectedListener);
 
-        angleTextView = (TextView)findViewById(R.id.coveprefs_header);
+        angleTextView = findViewById(R.id.coveprefs_header);
         angleTextView.setBackgroundColor(headerBackgroundColor);
         angleTextView.setTextColor(headerTextColor);
 

@@ -24,11 +24,11 @@ import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.TypedArrayUtils;
 
 /**
  * A DialogPreference that allows the user to type in a String.
  */
+@SuppressWarnings("WeakerAccess")
 public class StringPreference extends BaseDialogPreference<String> implements TextWatcher {
     private EditText editText;
     private String editTextHint;
@@ -38,14 +38,11 @@ public class StringPreference extends BaseDialogPreference<String> implements Te
         super(context, attrs);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_StringPreference);
-        if (TypedArrayUtils.getBoolean(a, R.styleable.CovePrefs_StringPreference_useSimpleSummaryProvider,
-                R.styleable.CovePrefs_StringPreference_useSimpleSummaryProvider, false)){
+        if (a.getBoolean(R.styleable.CovePrefs_StringPreference_useSimpleSummaryProvider, false)){
             setSummaryProvider(SimpleSummaryProvider.getInstance());
         }
-        editTextHint = TypedArrayUtils.getString(a, R.styleable.CovePrefs_StringPreference_coveprefs_editTextHint,
-                R.styleable.CovePrefs_StringPreference_coveprefs_editTextHint);
-        allowEmptyString = TypedArrayUtils.getBoolean(a, R.styleable.CovePrefs_StringPreference_coveprefs_allowEmptyString,
-                R.styleable.CovePrefs_StringPreference_coveprefs_allowEmptyString, true);
+        editTextHint = a.getString(R.styleable.CovePrefs_StringPreference_coveprefs_editTextHint);
+        allowEmptyString = a.getBoolean(R.styleable.CovePrefs_StringPreference_coveprefs_allowEmptyString, true);
         a.recycle();
 
         setDialogLayoutResource(R.layout.coveprefs_string_dialog);

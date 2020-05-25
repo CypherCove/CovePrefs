@@ -44,6 +44,7 @@ import android.view.View;
 /** Wraps a Drawable and draws it with center cropping. This allows any view's background to emulate ImageView's image
  * with {@link android.widget.ImageView.ScaleType#CENTER_CROP}.
  */
+@SuppressWarnings("WeakerAccess")
 public class CenterCropDrawable extends Drawable {
 
     private Drawable drawable;

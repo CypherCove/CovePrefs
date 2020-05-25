@@ -17,6 +17,7 @@ package com.cyphercove.coveprefs;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -32,12 +33,15 @@ public final class CovePrefs {
      * @return {@code true} if the dialog creation has been handled
      */
     public static boolean onPreferenceDisplayDialog(@NonNull PreferenceFragmentCompat caller, Preference pref){
+        final FragmentManager fragmentManager = caller.getFragmentManager();
+        if (fragmentManager == null)
+            return false;
         if (!(pref instanceof BaseDialogPreference))
             return false;
 
         final DialogFragment f = BaseDialogPreference.DialogFragment.newInstance(pref.getKey());
         f.setTargetFragment(caller, 0);
-        f.show(caller.getFragmentManager(), ((BaseDialogPreference)pref).getDialogFragmentTag());
+        f.show(fragmentManager, ((BaseDialogPreference)pref).getDialogFragmentTag());
         return true;
     }
 }

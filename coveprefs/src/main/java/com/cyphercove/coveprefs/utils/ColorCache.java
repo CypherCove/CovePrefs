@@ -25,6 +25,7 @@ import java.util.ArrayList;
 /**
  * Stores the most recently picked colors from any color pickers in the application for easy re-selection by user.
  */
+@SuppressWarnings("WeakerAccess")
 public class ColorCache {
 	public static final String PREFS_NAME = "com.cyphercove.coveprefs.utils.ColorCache";
 	

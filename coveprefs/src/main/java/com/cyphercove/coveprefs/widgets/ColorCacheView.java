@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.view.ViewCompat;
+
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +59,7 @@ public class ColorCacheView extends FrameLayout {
                 Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.coveprefs_color_cache_view, this);
 
-        LinearLayout root = (LinearLayout) findViewById(R.id.coveprefs_colorcache_container);
+        LinearLayout root = findViewById(R.id.coveprefs_colorcache_container);
         ViewUtils.clearAncestorOutlineClipping(root, this);
 
         Resources resources = getResources();
@@ -72,11 +74,22 @@ public class ColorCacheView extends FrameLayout {
 
         ArrayList<Integer> colors = ColorCache.getCachedColors(getContext());
         buttonsToColors.clear();
+        final OnClickListener onClickListener = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button button = (Button)v;
+                Integer color = buttonsToColors.get(button);
+                if (listener != null && color != null){
+                    listener.onColorChanged(button, color, (float)(v.getWidth() / 2), (float)(v.getHeight() / 2));
+                }
+            }
+        };
+
         if (colors.size() > 0) {
             for (Integer color : colors){
                 color |= 0xFF000000;
                 AppCompatButton button = new AppCompatButton(getContext(), attrs, android.R.attr.buttonStyle);
-                button.setSupportBackgroundTintList(ColorStateList.valueOf(color));
+                ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(color));
                 button.setLayoutParams(buttonLayoutParams);
                 button.setOnClickListener(onClickListener);
                 button.setFocusable(true);
@@ -94,15 +107,6 @@ public class ColorCacheView extends FrameLayout {
             button.setAlpha(enabled ? 1 : .3f);
         }
     }
-
-    private OnClickListener onClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (listener != null){
-                listener.onColorChanged((Button)v, buttonsToColors.get(v), v.getWidth() / 2, v.getHeight() / 2);
-            }
-        }
-    };
 
     public void setOnColorSelectedListener(OnColorSelectedListener listener) {
         this.listener = listener;

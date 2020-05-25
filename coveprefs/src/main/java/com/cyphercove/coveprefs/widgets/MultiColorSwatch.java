@@ -89,7 +89,7 @@ public class MultiColorSwatch extends LinearLayout {
         updateSwatchCount(count);
         float swatchWidth = getWidth() / (float)count; //TODO manual centers necessary since these may have animated widths changing?
         for (int i = 0; i < count; i++) {
-            swatches.get(i).setColorAnimated (swatchWidth / 2, getHeight() / 2, colors[i]);
+            swatches.get(i).setColorAnimated (swatchWidth / 2, (float)(getHeight() / 2), colors[i]);
         }
     }
 

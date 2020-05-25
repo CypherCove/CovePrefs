@@ -25,7 +25,7 @@ public class AboutPreference extends BaseDialogPreference<String> {
     private static final String KEY = "com.cyphercove.coveprefs.AboutPreferences";
 
     @Override
-    public Class getDataType() {
+    public Class<String> getDataType() {
         return String.class; //Arbitrary
     }
 
@@ -64,7 +64,7 @@ public class AboutPreference extends BaseDialogPreference<String> {
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-        TextView messageView = (TextView)view.findViewById(android.R.id.message);
+        TextView messageView = view.findViewById(android.R.id.message);
         if (messageView != null)
             messageView.setMovementMethod(LinkMovementMethod.getInstance()); // Make HTML links clickable
     }

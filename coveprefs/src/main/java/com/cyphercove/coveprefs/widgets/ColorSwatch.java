@@ -48,6 +48,13 @@ public class ColorSwatch extends View {
         super(context, attrs, defStyleAttr);
 
         valueAnimator = new ValueAnimator();
+        ValueAnimator.AnimatorUpdateListener animatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate (ValueAnimator animation) {
+                radius = (float) valueAnimator.getAnimatedValue();
+                invalidate();
+            }
+        };
         valueAnimator.addUpdateListener(animatorUpdateListener);
         valueAnimator.addListener(animatorListener);
         colorPaint = new Paint();
@@ -69,7 +76,7 @@ public class ColorSwatch extends View {
     /** Sets the color with an animation radiating out from the center of this view.
      * @param color The new color to show. */
     public void setColorAnimated (int color) {
-        setColorAnimated(getWidth() / 2, getHeight() / 2, color);
+        setColorAnimated((float)(getWidth() / 2), (float)(getHeight() / 2), color);
     }
 
     /** Sets the color with an animation starting at the coordinates, relative to this view's position.
@@ -114,14 +121,6 @@ public class ColorSwatch extends View {
             canvas.drawCircle(centerX, centerY, radius, nextColorPaint);
         }
     }
-
-    private ValueAnimator.AnimatorUpdateListener animatorUpdateListener = new ValueAnimator.AnimatorUpdateListener(){
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            radius = (float)valueAnimator.getAnimatedValue();
-            invalidate();
-        }
-    };
 
     Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
         @Override

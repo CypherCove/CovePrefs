@@ -26,6 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
+import java.util.Arrays;
+
 /**
  * A vector of Colors representing multiple color choices corresponding with a {@link MultiColor.Definition}.
  * <p>
@@ -35,6 +37,7 @@ import androidx.annotation.StringRes;
  * When the type is changed to one with a shorter vector, excess values are kept and restored if the
  * type is later changed to a larger vector.
  */
+@SuppressWarnings("WeakerAccess")
 public class MultiColor {
 
     /**
@@ -278,9 +281,7 @@ public class MultiColor {
     public MultiColor (@NonNull Definition definition) {
         this.definition = definition;
         values = new int[definition.getMaxColors()];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = Color.BLACK;
-        }
+        Arrays.fill(values, Color.BLACK);
     }
 
     public MultiColor (@NonNull Definition definition, int type, @Nullable int... values) {

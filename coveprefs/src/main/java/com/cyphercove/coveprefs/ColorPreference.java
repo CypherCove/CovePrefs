@@ -42,6 +42,7 @@ import com.cyphercove.coveprefs.widgets.ColorSwatch;
  * <p>
  * <code>app:coveprefs_colorPickerWidgets="hsv|hex|recent"</code>
  */
+@SuppressWarnings("WeakerAccess")
 public class ColorPreference extends BaseDialogPreference<Integer> implements ColorPicker.OnColorChangedListener{
 
     public static final int WIDGETS_DEFAULT =
@@ -143,10 +144,12 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
                 else
                     return res.getColor(colorId, null);
             }
-            Long longValue = Long.decode(value);
-            if (longValue == null)
-                throw new RuntimeException("Could not decode default integer value of preference.");
-            return 0xff000000 | (int)(long)longValue;
+            try {
+                Long longValue = Long.decode(value);
+                return 0xff000000 | (int) (long) longValue;
+            } catch (NumberFormatException e2) {
+                return getBackupDefaultValue(); // shouldn't happen
+            }
         }
     }
 

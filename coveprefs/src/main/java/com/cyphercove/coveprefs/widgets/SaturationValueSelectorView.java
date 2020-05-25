@@ -15,6 +15,7 @@
  */
 package com.cyphercove.coveprefs.widgets;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -192,6 +193,7 @@ public class SaturationValueSelectorView extends View {
         saturationPaint.setStrokeWidth(getHeight());
         updateSaturationPaintColor();
 
+        @SuppressLint("DrawAllocation")
         Shader valueShader = new LinearGradient(0, 0, 0, getHeight(), values, null, Shader.TileMode.CLAMP);
         valuePaint.setShader(valueShader);
         valuePaint.setStrokeWidth(getWidth());
@@ -222,6 +224,7 @@ public class SaturationValueSelectorView extends View {
                 widthTarget = getSuggestedMinimumWidth();
                 break;
             case MeasureSpec.AT_MOST:
+            case MeasureSpec.EXACTLY:
                 widthTarget = Math.min(naturalWidth, widthTarget);
                 break;
         }
@@ -234,6 +237,7 @@ public class SaturationValueSelectorView extends View {
                 heightTarget = getSuggestedMinimumHeight();
                 break;
             case MeasureSpec.AT_MOST:
+            case MeasureSpec.EXACTLY:
                 heightTarget = Math.min(naturalHeight, heightTarget);
                 break;
         }

@@ -68,6 +68,22 @@ public class RotaryPreferenceWidget extends View {
         paint.setStrokeWidth(strokeWidth);
 
         valueAnimator = new ValueAnimator();
+        // animate SVView's hue in opposite direction, shortest path
+        // animate SVView's hue in opposite direction, shortest path
+        ValueAnimator.AnimatorUpdateListener animatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate (ValueAnimator animation) {
+                float fraction = Curve.slowInSlowOut(valueAnimator.getAnimatedFraction());
+
+                if (nextValue - oldValue > 180f) // animate SVView's hue in opposite direction, shortest path
+                    value = (fraction * (nextValue - oldValue - 360f) + oldValue + 360f) % 360f;
+                else if (oldValue - nextValue > 180f) // animate SVView's hue in opposite direction, shortest path
+                    value = (fraction * (nextValue - oldValue + 360f) + oldValue) % 360f;
+                else
+                    value = fraction * (nextValue - oldValue) + oldValue;
+                invalidate();
+            }
+        };
         valueAnimator.addUpdateListener(animatorUpdateListener);
         valueAnimator.addListener(animatorListener);
     }
@@ -100,8 +116,8 @@ public class RotaryPreferenceWidget extends View {
             return;
         }
 
-        centerX = getWidth() / 2;
-        centerY = getHeight() / 2;
+        centerX = (float)(getWidth() / 2);
+        centerY = (float)(getHeight() / 2);
         radius = Math.min(centerX, centerY);
 
         float arrowWidth = 0.5f * radius / (float)Math.cos(Math.PI * 2 - Math.atan2(arrowRatio, 0.5));
@@ -121,21 +137,6 @@ public class RotaryPreferenceWidget extends View {
         canvas.drawPath(arrowPath, paint);
         canvas.drawLine(0, arrowBottom, 0, radius, paint);
     }
-
-    private ValueAnimator.AnimatorUpdateListener animatorUpdateListener = new ValueAnimator.AnimatorUpdateListener(){
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            float fraction = Curve.slowInSlowOut(valueAnimator.getAnimatedFraction());
-
-            if (nextValue - oldValue > 180f) // animate SVView's hue in opposite direction, shortest path
-                value = (fraction * (nextValue - oldValue - 360f) + oldValue + 360f) % 360f;
-            else if (oldValue - nextValue > 180f) // animate SVView's hue in opposite direction, shortest path
-                value = (fraction * (nextValue - oldValue + 360f) + oldValue) % 360f;
-            else
-                value = fraction * (nextValue - oldValue) + oldValue;
-            invalidate();
-        }
-    };
 
     Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
         @Override

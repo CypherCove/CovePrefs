@@ -22,6 +22,7 @@ package com.cyphercove.coveprefs.utils;
  * <a href="https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/math/Interpolation.java">
  *     LibGDX's Interpolation class.</a>
  */
+@SuppressWarnings("WeakerAccess")
 public class Curve {
 
     public static float smoothStep (float fraction) {

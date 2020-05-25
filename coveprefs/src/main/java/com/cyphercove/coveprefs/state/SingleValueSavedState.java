@@ -34,6 +34,7 @@ public abstract class SingleValueSavedState<T> extends Preference.BaseSavedState
         DATA_TYPES_TO_STATES_TYPES.put(String.class, StringSavedState.class);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> SingleValueSavedState<T> create (Parcelable superState, Class<T> dataType){
         Class<?> stateType = DATA_TYPES_TO_STATES_TYPES.get(dataType);
         if (stateType == null)
@@ -41,7 +42,7 @@ public abstract class SingleValueSavedState<T> extends Preference.BaseSavedState
 
         try {
             Constructor<?> constructor = stateType.getConstructor(Parcelable.class);
-            return (SingleValueSavedState)constructor.newInstance(superState);
+            return (SingleValueSavedState<T>)constructor.newInstance(superState);
         } catch (Exception e ) {
             throw new RuntimeException("Saved state type: " + stateType.getName() +
                     " must have a public constructor that takes a Parcelable.", e);

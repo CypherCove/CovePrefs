@@ -41,6 +41,7 @@ import com.cyphercove.coveprefs.widgets.MultiColorSwatch;
  * <p>
  * <code>app:coveprefs_colorPickerWidgets="hsv|hex|recent"</code>
  */
+@SuppressWarnings("WeakerAccess")
 public class MultiColorPreference extends BaseDialogPreference<String> implements
         MultiColorPicker.OnMultiColorChangedListener, MultiColorPicker.OnActiveIndexChangedListener{
 
