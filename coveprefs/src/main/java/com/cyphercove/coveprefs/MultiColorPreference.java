@@ -145,7 +145,8 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
     @Override
     protected void onValueChangedAndCommitted() {
         MultiColor multiColor = definition.getValue(getValueForBindingPreferenceView());
-        colorWidget.setColorsAnimated(multiColor.getValues(), multiColor.getValueCount());
+        if (colorWidget != null)
+            colorWidget.setColorsAnimated(multiColor.getValues(), multiColor.getValueCount());
         ColorCache.submitColor(getContext(), multiColor.getValues(), multiColor.getValueCount());
     }
 

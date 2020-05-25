@@ -111,7 +111,8 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
 
     @Override
     protected void onValueChangedAndCommitted() {
-        colorWidget.setColorAnimated(getValueForBindingPreferenceView());
+        if (colorWidget != null)
+            colorWidget.setColorAnimated(getValueForBindingPreferenceView());
         ColorCache.submitColor(getContext(), getValueForBindingPreferenceView());
     }
 

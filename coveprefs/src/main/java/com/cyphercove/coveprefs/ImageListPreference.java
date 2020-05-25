@@ -249,11 +249,13 @@ public class ImageListPreference extends BaseDialogPreference<String>{
 
     @Override
     protected void onValueChangedAndCommitted() {
-        int selectedImageId = getDrawableForValue();
-        if (selectedImageId != 0){
-            selectedImageWidget.setImageResource(selectedImageId);
-        } else {
-            selectedImageWidget.setImageDrawable(null);
+        if (selectedImageWidget != null) {
+            int selectedImageId = getDrawableForValue();
+            if (selectedImageId != 0) {
+                selectedImageWidget.setImageResource(selectedImageId);
+            } else {
+                selectedImageWidget.setImageDrawable(null);
+            }
         }
     }
 

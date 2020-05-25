@@ -85,7 +85,8 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
 
     @Override
     protected void onValueChangedAndCommitted() {
-        rotaryWidget.setValueAnimated(getValueForBindingPreferenceView());
+        if (rotaryWidget != null)
+            rotaryWidget.setValueAnimated(getValueForBindingPreferenceView());
         if (getSummaryProvider() != null)
             notifyChanged(); // This skips the animation so only notify if necessary.
     }
