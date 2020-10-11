@@ -18,6 +18,8 @@ package com.cyphercove.coveprefs;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -31,6 +33,8 @@ import android.view.Gravity;
 import android.widget.TextView;
 import com.cyphercove.coveprefs.utils.CenterCropDrawable;
 import com.cyphercove.coveprefs.utils.ColorUtils;
+
+import java.util.List;
 
 /**
  * A Preference that can use a drawable as the background with {@code app:coveprefs_banner}. The drawable is scaled up
@@ -64,13 +68,22 @@ public class BannerLinkPreference extends Preference {
     protected void init (Context context, AttributeSet attrs){
         TypedArray a = context.obtainStyledAttributes(attrs, com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference);
         String uri = a.getString(com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference_coveprefs_uri);
+        String backupUri = a.getString(com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference_coveprefs_backupUri);
         bannerId = a.getResourceId(com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference_coveprefs_banner, 0);
         a.recycle();
 
         if (uri != null){
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(uri));
-            setIntent(intent);
+            List<ResolveInfo> activities = context.getPackageManager().queryIntentActivities(intent,
+                    PackageManager.MATCH_DEFAULT_ONLY);
+            if (activities.isEmpty() && backupUri != null){
+                activities = context.getPackageManager().queryIntentActivities(intent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+            }
+            if (!activities.isEmpty()) {
+                setIntent(intent);
+            }
         }
     }
 

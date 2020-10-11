@@ -1,9 +1,12 @@
 ### Version 2.0.3
+ * Updated Android SDK target to 30, `appcompat` to 1.3.0-alpha02, and `preference` to 1.1.1.
  * **BREAKING:** Refactored MultiColor.Definition to use the resource ID for the disabled label 
  rather than direct use of a String.
-  * **BREAKING:** `MultiColor.set(String)` now throws IllegalArgumentException if the argument is invalid.
-  * Add nullability annotations for MultiColor and MultiColor.Definition.
-  * Add `loadPersistedValue()` to ColorPreference, MultiColorPreference, RotaryPreference, and SeekBarPlusPreference.
+ * **BREAKING:** `MultiColor.set(String)` now throws IllegalArgumentException if the argument is invalid.
+ * Added nullability annotations for MultiColor and MultiColor.Definition.
+ * Added `loadPersistedValue()` to ColorPreference, MultiColorPreference, RotaryPreference, and SeekBarPlusPreference.
+ * Added `coveprefs_backupUri` property for BannerLinkPreference.
+ * BannerLinkPreference will not set its Intent if there is no Activity match for the URI.
 
 ### Version 2.0.2
  * Fix default values not being loaded for BaseDialogPreferences.
