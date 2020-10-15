@@ -73,9 +73,16 @@
     <declare-styleable name="CovePrefs_BannerLinkPreference">
         <attr name="coveprefs_uri" format="string"/>
         <attr name="coveprefs_backupUri" format="string"/>
+        <attr name="coveprefs_uriFormatArg" format="string"/>
         <attr name="coveprefs_banner" format="reference"/>
         <attr name="coveprefs_titleColor" format="color"/>
         <attr name="coveprefs_summaryColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="CovePrefs_RatingRequestPreference">
+        <attr name="coveprefs_uri"/>
+        <attr name="coveprefs_backupUri"/>
+        <attr name="coveprefs_uriFormatArg"/>
     </declare-styleable>
 
     <declare-styleable name="CovePrefs_SeekBarPlusPreference">
