@@ -26,9 +26,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.cyphercove.coveprefs.R;
-import com.cyphercove.coveprefs.utils.ViewUtils;
-
-import static com.cyphercove.coveprefs.utils.ViewUtils.*;
+import com.cyphercove.coveprefs.utils.CovePrefsUtils;
 
 /**
  */
@@ -77,13 +75,13 @@ public class ColorPicker extends FrameLayout {
             @Override
             public void onColorChanged (HSVSelectorView view, int newColor, boolean isFromTouchDown, float localX, float localY) {
                 setColorInternal(newColor, true, false, isFromTouchDown,
-                        getRelativeX(view, ColorPicker.this) + localX,
-                        getRelativeY(view, ColorPicker.this) + localY);
+                        CovePrefsUtils.getRelativeX(view, ColorPicker.this) + localX,
+                        CovePrefsUtils.getRelativeY(view, ColorPicker.this) + localY);
             }
         };
         hsvView.setOnColorChangedListener(onHSVColorSelectedListener);
         hsvView.setFocusableInTouchMode(true); // Allow touch to unfocus the hexEditText so keyboard closes
-        ViewUtils.clearAncestorOutlineClipping(hsvView, this);
+        CovePrefsUtils.clearAncestorOutlineClipping(hsvView, this);
 
         hexHashMark = findViewById(R.id.coveprefs_hex_hashmark);
         hexEditText = findViewById(R.id.coveprefs_hex);
@@ -121,8 +119,8 @@ public class ColorPicker extends FrameLayout {
                 if (s.length() == 6){
                     int color = Color.parseColor("#" + s.toString());
                     setColorInternal(color, false, true, true,
-                           getRelativeX(hexEditText, ColorPicker.this) + hexEditText.getWidth(),
-                            getRelativeY(hexEditText, ColorPicker.this) + (float)(hexEditText.getHeight() / 2));
+                            CovePrefsUtils.getRelativeX(hexEditText, ColorPicker.this) + hexEditText.getWidth(),
+                            CovePrefsUtils.getRelativeY(hexEditText, ColorPicker.this) + (float)(hexEditText.getHeight() / 2));
                 }
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
@@ -145,13 +143,13 @@ public class ColorPicker extends FrameLayout {
             @Override
             public void onColorChanged (Button view, int newColor, float localX, float localY) {
                 setColorInternal(newColor, false, false, true,
-                        getRelativeX(view, ColorPicker.this) + localX,
-                        getRelativeY(view, ColorPicker.this) + localY);
+                        CovePrefsUtils.getRelativeX(view, ColorPicker.this) + localX,
+                        CovePrefsUtils.getRelativeY(view, ColorPicker.this) + localY);
                 hsvView.requestFocus(); // avoid allowing focus jump back to EditText when buttons are pressed
             }
         };
         colorCacheView.setOnColorSelectedListener(onColorCacheSelectedListener);
-        ViewUtils.clearAncestorOutlineClipping(colorCacheView, this);
+        CovePrefsUtils.clearAncestorOutlineClipping(colorCacheView, this);
     }
 
     public void setWidgets (int widgets){
@@ -184,8 +182,8 @@ public class ColorPicker extends FrameLayout {
 
         if (animated)
             colorSwatch.setColorAnimated(
-                    animationCenterX - getRelativeX(colorSwatch, this),
-                    animationCenterY - getRelativeY(colorSwatch, this),
+                    animationCenterX - CovePrefsUtils.getRelativeX(colorSwatch, this),
+                    animationCenterY - CovePrefsUtils.getRelativeY(colorSwatch, this),
                     color | 0xff000000);
         else
             colorSwatch.setColor(color | 0xff000000);

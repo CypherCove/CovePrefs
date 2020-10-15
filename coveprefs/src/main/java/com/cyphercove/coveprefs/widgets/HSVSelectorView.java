@@ -27,8 +27,7 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.FrameLayout;
 import com.cyphercove.coveprefs.R;
-import com.cyphercove.coveprefs.utils.Curve;
-import com.cyphercove.coveprefs.utils.ViewUtils;
+import com.cyphercove.coveprefs.utils.CovePrefsUtils;
 
 public class HSVSelectorView extends FrameLayout {
     private static final long ANIMATION_DURATION = 300;
@@ -71,7 +70,7 @@ public class HSVSelectorView extends FrameLayout {
         ValueAnimator.AnimatorUpdateListener animatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate (ValueAnimator animation) {
-                float fraction = Curve.slowInSlowOut(valueAnimator.getAnimatedFraction());
+                float fraction = CovePrefsUtils.Curve.slowInSlowOut(valueAnimator.getAnimatedFraction());
 
                 for (int i = 0; i < hsvOld.length; i++) {
                     hsvAnimationOut[i] = fraction * (hsvSelected[i] - hsvOld[i]) + hsvOld[i];
@@ -116,8 +115,8 @@ public class HSVSelectorView extends FrameLayout {
         };
         hueView.setOutlineProvider(viewOutlineProvider);
         svView.setOutlineProvider(viewOutlineProvider);
-        ViewUtils.clearAncestorOutlineClipping(hueView, this);
-        ViewUtils.clearAncestorOutlineClipping(svView, this);
+        CovePrefsUtils.clearAncestorOutlineClipping(hueView, this);
+        CovePrefsUtils.clearAncestorOutlineClipping(svView, this);
     }
 
     @Override
@@ -197,8 +196,8 @@ public class HSVSelectorView extends FrameLayout {
             svView.setHue(newHue);
             if (mListener != null)
                 mListener.onColorChanged(HSVSelectorView.this, getColor(), isFromTouchDown,
-                        ViewUtils.getRelativeX(view, HSVSelectorView.this) + localX,
-                        ViewUtils.getRelativeY(view, HSVSelectorView.this) + localY);
+                        CovePrefsUtils.getRelativeX(view, HSVSelectorView.this) + localX,
+                        CovePrefsUtils.getRelativeY(view, HSVSelectorView.this) + localY);
         }
     };
 
@@ -209,8 +208,8 @@ public class HSVSelectorView extends FrameLayout {
             hsvSelected[2] = newValue;
             if (mListener != null)
                 mListener.onColorChanged(HSVSelectorView.this, getColor(), isFromTouchDown,
-                        ViewUtils.getRelativeX(view, HSVSelectorView.this) + localX,
-                        ViewUtils.getRelativeY(view, HSVSelectorView.this) + localY);
+                        CovePrefsUtils.getRelativeX(view, HSVSelectorView.this) + localX,
+                        CovePrefsUtils.getRelativeY(view, HSVSelectorView.this) + localY);
         }
     };
 

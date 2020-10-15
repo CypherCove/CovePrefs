@@ -38,7 +38,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
-import com.cyphercove.coveprefs.utils.ViewUtils;
+import com.cyphercove.coveprefs.utils.CovePrefsUtils;
 import com.cyphercove.coveprefs.widgets.PreferenceImageView;
 
 /**
@@ -67,7 +67,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         entryValues = a.getTextArray(R.styleable.CovePrefs_ImageListPreference_entryValues);
         imageTintColor = a.getColorStateList(R.styleable.CovePrefs_ImageListPreference_tint);
         if (a.hasValue(R.styleable.CovePrefs_ImageListPreference_coveprefs_tintMode)){
-            imageTintMode = ViewUtils.parseTintMode(a.getInt(R.styleable.CovePrefs_ImageListPreference_coveprefs_tintMode, -1),
+            imageTintMode = CovePrefsUtils.parseTintMode(a.getInt(R.styleable.CovePrefs_ImageListPreference_coveprefs_tintMode, -1),
                     PorterDuff.Mode.SRC_IN);
         }
         columnWidth = a.getDimensionPixelSize(R.styleable.CovePrefs_ImageListPreference_coveprefs_dialogColumnWidth, 0);

@@ -26,7 +26,7 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 import com.cyphercove.coveprefs.R;
-import com.cyphercove.coveprefs.utils.Curve;
+import com.cyphercove.coveprefs.utils.CovePrefsUtils;
 
 public class RotaryPreferenceWidget extends View {
 
@@ -73,7 +73,7 @@ public class RotaryPreferenceWidget extends View {
         ValueAnimator.AnimatorUpdateListener animatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate (ValueAnimator animation) {
-                float fraction = Curve.slowInSlowOut(valueAnimator.getAnimatedFraction());
+                float fraction = CovePrefsUtils.Curve.slowInSlowOut(valueAnimator.getAnimatedFraction());
 
                 if (nextValue - oldValue > 180f) // animate SVView's hue in opposite direction, shortest path
                     value = (fraction * (nextValue - oldValue - 360f) + oldValue + 360f) % 360f;

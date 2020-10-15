@@ -7,6 +7,7 @@
  * Added `loadPersistedValue()` to ColorPreference, MultiColorPreference, RotaryPreference, and SeekBarPlusPreference.
  * Added `coveprefs_backupUri` property for BannerLinkPreference.
  * BannerLinkPreference will not set its Intent if there is no Activity match for the URI.
+ * **BREAKING:** Removed ColorUtils, Curve, and ViewUtils to avoid polluting the public API.
 
 ### Version 2.0.2
  * Fix default values not being loaded for BaseDialogPreferences.

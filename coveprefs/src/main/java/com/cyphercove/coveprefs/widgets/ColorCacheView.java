@@ -29,7 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.cyphercove.coveprefs.R;
 import com.cyphercove.coveprefs.utils.ColorCache;
-import com.cyphercove.coveprefs.utils.ViewUtils;
+import com.cyphercove.coveprefs.utils.CovePrefsUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +60,7 @@ public class ColorCacheView extends FrameLayout {
         inflater.inflate(R.layout.coveprefs_color_cache_view, this);
 
         LinearLayout root = findViewById(R.id.coveprefs_colorcache_container);
-        ViewUtils.clearAncestorOutlineClipping(root, this);
+        CovePrefsUtils.clearAncestorOutlineClipping(root, this);
 
         Resources resources = getResources();
         final int buttonWidth = resources.getDimensionPixelSize(R.dimen.coveprefs_recent_color_button_width);
