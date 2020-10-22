@@ -102,10 +102,8 @@ public class SeekBarPlusPreference extends SeekBarPreference {
                         ViewGroup.LayoutParams.MATCH_PARENT, 0);
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.coveprefs_seekbar_label_left, layout);
-        inflater.inflate(R.layout.coveprefs_seekbar_label_right, layout);
-        leftLabelView = (TextView)layout.findViewById(R.id.coveprefs_seekBarPlusLabelLeft);
-        rightLabelView = (TextView)layout.findViewById(R.id.coveprefs_seekBarPlusLabelRight);
+        leftLabelView = (TextView)inflater.inflate(R.layout.coveprefs_seekbar_label_left, layout, false);
+        rightLabelView = (TextView)inflater.inflate(R.layout.coveprefs_seekbar_label_right, layout, false);
 
         layout.removeAllViews();
         layout.addView(leftLabelView, labelLayoutParams);

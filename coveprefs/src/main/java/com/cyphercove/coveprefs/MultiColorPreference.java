@@ -52,8 +52,8 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
 
     private MultiColorPicker colorPicker;
     private MultiColorSwatch colorWidget;
-    private int widgets;
-    private MultiColor.Definition definition;
+    private final int widgets;
+    private final MultiColor.Definition definition;
     private int currentlySelectedColorIndex;
 
     public MultiColorPreference(Context context, AttributeSet attrs) {

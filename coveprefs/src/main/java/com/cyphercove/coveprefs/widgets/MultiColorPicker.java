@@ -431,7 +431,7 @@ public class MultiColorPicker extends FrameLayout {
         }
 
         private View makeColorItem (String label, int initialColor, boolean clickable, final int type, final int index, ViewGroup root){
-            View view = inflater.inflate(R.layout.coveprefs_multicolor_header_item, root);
+            View view = inflater.inflate(R.layout.coveprefs_multicolor_header_item, root, false);
             boolean disabled = multiColor.definition.getValueCount(type) == 0;
             ColorSwatch colorSwatch = view.findViewById(R.id.coveprefs_swatch);
             colorSwatch.setColor(initialColor);
