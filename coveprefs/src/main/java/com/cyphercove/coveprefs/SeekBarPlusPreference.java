@@ -89,12 +89,12 @@ public class SeekBarPlusPreference extends SeekBarPreference {
         ViewGroup.LayoutParams seekBarLayoutParams = seekBar.getLayoutParams();
         View valueLabel = view.findViewById(androidx.preference.R.id.seekbar_value);
         ViewGroup.LayoutParams valueLabelLayoutParams = null;
-        if (valueLabel == null){
-            Log.e(TAG, "Value label id is missing!");
-        } else if (valueLabel.getParent() == layout){
-            valueLabelLayoutParams = valueLabel.getLayoutParams();
-        } else {
-            valueLabel = null;
+        if (valueLabel != null) {
+            if (valueLabel.getParent() == layout) {
+                valueLabelLayoutParams = valueLabel.getLayoutParams();
+            } else {
+                valueLabel = null;
+            }
         }
 
         LinearLayout.LayoutParams labelLayoutParams =
@@ -102,10 +102,10 @@ public class SeekBarPlusPreference extends SeekBarPreference {
                         ViewGroup.LayoutParams.MATCH_PARENT, 0);
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        leftLabelView = (TextView) inflater.inflate(R.layout.coveprefs_seekbar_label, layout);
-        leftLabelView.setPadding(0, leftLabelView.getPaddingTop(), leftLabelView.getPaddingRight(), leftLabelView.getPaddingBottom());
-        rightLabelView = (TextView) inflater.inflate(R.layout.coveprefs_seekbar_label, layout);
-        rightLabelView.setPadding(rightLabelView.getPaddingLeft(), rightLabelView.getPaddingTop(), 0, rightLabelView.getPaddingBottom());
+        inflater.inflate(R.layout.coveprefs_seekbar_label_left, layout);
+        inflater.inflate(R.layout.coveprefs_seekbar_label_right, layout);
+        leftLabelView = (TextView)layout.findViewById(R.id.coveprefs_seekBarPlusLabelLeft);
+        rightLabelView = (TextView)layout.findViewById(R.id.coveprefs_seekBarPlusLabelRight);
 
         layout.removeAllViews();
         layout.addView(leftLabelView, labelLayoutParams);
