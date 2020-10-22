@@ -49,13 +49,17 @@ AboutPreference is a DialogPreference intended for showing information about the
 
 ### BannerLinkPreference
 
-BannerLinkPreference is a generic Preference with a property for setting a background drawable. This can be used for making a preference that stands out and links to something else.
+BannerLinkPreference is a generic Preference with a property for setting a background drawable. This 
+can be used for making a preference that stands out and links to something else. Convenience URI 
+properties are provided for defining the Intent.
 
-| Property           | Property type | Description                                                                                                             |
-|--------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
-| `key`              | String        | Although no value is stored for this type of preference, a unique key must be set if more than one is used in a layout. |
-| `coveprefs_banner` | Drawable      | The image to fill the background of the preference                                                                      |
-| `coveprefs_uri`    | String        | Convenience URI link. If used, the Preference will automatically be given an Action.VIEW Intent with the provided URI.  |
+| Property                 | Property type | Description                                                                                                             |
+|--------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
+| `key`                    | String        | Although no value is stored for this type of preference, a unique key must be set if more than one is used in a layout. |
+| `coveprefs_banner`       | Drawable      | The image to fill the background of the preference                                                                      |
+| `coveprefs_uri`          | String        | Convenience URI link. If used, the Preference will automatically be given an Action.VIEW Intent with the provided URI.  |
+| `coveprefs_backupUri`    | String        | Backup URI used if no Activity can be found that can open `coveprefs_uri`.                                              |
+| `coveprefs_uriFormatArg` | String        | If used, both `coveprefs_uri` and `coveprefs_backupUri` are treated as format Strings, with this as the sole argument.  |
 
 ### ColorPreference
 
@@ -89,6 +93,21 @@ Behaves similarly to a ListPreference, but the user selects from an array of dra
 | `entryValues`        | Array of Strings                | An array of values corresponding to the drawables in `entries`. Must be the same size array as `entries`. The values should not be translated by locale. |
 | `tint`               | Color State List                | Colors used to tint the clickable images in the dialog box.                                                                                              |
 | `coveprefs_tintMode` | `coveprefs_tintmode` enum value | PorterDuff mode used to tint the drawables with the `tint` attribute. One of `src_over`, `src_in`, `src_stop`, `multiply`, `screen`, and `add`.          |
+
+### RatingRequestPreference
+
+RatingRequestPreference is a TwoStatePreference that uses a Boolean value. It does not show a widget
+and automatically disappears when its value is true. Its value becomes true and it disappears when
+clicked. It is intended to be used for prompting the user to leave a review on the store, and so 
+should presumably be forever hidden once the user clicks it. Naturally, an intent should be set. 
+Convenience URI  properties are provided for defining the Intent. To make it appear again, set its 
+value back to false in SharedPreferences.
+
+| Property                 | Property type | Description                                                                                                             |
+|--------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
+| `coveprefs_uri`          | String        | Convenience URI link. If used, the Preference will automatically be given an Action.VIEW Intent with the provided URI.  |
+| `coveprefs_backupUri`    | String        | Backup URI used if no Activity can be found that can open `coveprefs_uri`.                                              |
+| `coveprefs_uriFormatArg` | String        | If used, both `coveprefs_uri` and `coveprefs_backupUri` are treated as format Strings, with this as the sole argument.  |
 
 ### RotaryPreference
 

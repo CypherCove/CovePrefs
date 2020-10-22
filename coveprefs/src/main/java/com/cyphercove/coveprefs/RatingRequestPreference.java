@@ -26,9 +26,9 @@ import androidx.preference.Preference;
 import com.cyphercove.coveprefs.utils.CovePrefsUtils;
 
 /**
- * A TwoStatePreference that does not show a widget, but rather is automatically made invisible when
- * it is set to true. It becomes true and invisible when clicked. It is intended for prompting the
- * user to rate the application, so a store link Intent should be set.
+ * A Boolean-based Preference that does not show a widget, but rather is automatically made invisible
+ * when it is set to true. It becomes true and invisible when clicked. It is intended for prompting
+ * the user to rate the application, so a store link Intent should be set.
  */
 @SuppressWarnings("WeakerAccess")
 public class RatingRequestPreference extends Preference {
@@ -50,7 +50,7 @@ public class RatingRequestPreference extends Preference {
     }
 
     protected void init (Context context, AttributeSet attrs){
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_BannerLinkPreference);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_RatingRequestPreference);
         String uri = a.getString(R.styleable.CovePrefs_RatingRequestPreference_coveprefs_uri);
         String backupUri = a.getString(R.styleable.CovePrefs_RatingRequestPreference_coveprefs_backupUri);
         String uriFormatArg = a.getString(R.styleable.CovePrefs_RatingRequestPreference_coveprefs_uriFormatArg);
@@ -67,6 +67,10 @@ public class RatingRequestPreference extends Preference {
         super.onClick();
         if (callChangeListener(true)) {
             setClicked();
+            Intent intent = getIntent();
+            if (intent != null) {
+                getContext().startActivity(intent);
+            }
         }
     }
 
