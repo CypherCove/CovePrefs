@@ -17,7 +17,8 @@ package com.cyphercove.coveprefs.example;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceManager;
 
 /**
  */
@@ -35,4 +36,5 @@ public class ThemeSwapper {
         activity.startActivity(new Intent(activity, activity.getClass()));
         activity.finish();
     }
+
 }

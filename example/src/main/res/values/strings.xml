@@ -35,6 +35,7 @@
     <string name="multicolor">MultiColorPreference</string>
     <string name="switchP">CoveSwitchPreference</string>
     <string name="editText">CoveEditTextPreference</string>
+    <string name="ratingRequest">RatingRequestPreference</string>
 
     <string name="disabled">Disabled</string>
     <string name="color_suggest">Pale colors recommended</string>

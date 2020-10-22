@@ -68,6 +68,10 @@
         app:dialogMessage="@string/color_suggest"
         app:coveprefs_multiColorDefinition="@array/multicolor_pref_all_options"
         app:coveprefs_multiColorDisabledLabel="@string/disabled"/>
+    <com.cyphercove.coveprefs.RatingRequestPreference
+        app:title="@string/ratingRequest"
+        app:summary="This is a summary."
+        app:key="ratingRequest" />
     <com.cyphercove.coveprefs.AboutPreference
         app:title="@string/about"
         app:dialogTitle="@string/format_version"
