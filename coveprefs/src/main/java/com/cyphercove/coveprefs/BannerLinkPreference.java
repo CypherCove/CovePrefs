@@ -44,7 +44,6 @@ import com.cyphercove.coveprefs.utils.CovePrefsUtils;
 public class BannerLinkPreference extends Preference {
 
     private int bannerId;
-    private boolean isGone;
 
     public BannerLinkPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -68,7 +67,6 @@ public class BannerLinkPreference extends Preference {
         String backupUri = a.getString(com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference_coveprefs_backupUri);
         String uriFormatArg = a.getString(com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference_coveprefs_uriFormatArg);
         bannerId = a.getResourceId(com.cyphercove.coveprefs.R.styleable.CovePrefs_BannerLinkPreference_coveprefs_banner, 0);
-        isGone = a.getBoolean(R.styleable.CovePrefs_BannerLinkPreference_coveprefs_gone, false);
         a.recycle();
 
         Intent intent = CovePrefsUtils.resolveIntent(context, uriFormatArg, uri, backupUri);
@@ -80,11 +78,6 @@ public class BannerLinkPreference extends Preference {
     @Override
     public void onBindViewHolder(PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
-
-        if (isGone) {
-            setVisible(false);
-            return;
-        }
 
         if (bannerId != 0){
             Drawable drawable;

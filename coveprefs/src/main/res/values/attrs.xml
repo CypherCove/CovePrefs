@@ -77,7 +77,6 @@
         <attr name="coveprefs_banner" format="reference"/>
         <attr name="coveprefs_titleColor" format="color"/>
         <attr name="coveprefs_summaryColor" format="color"/>
-        <attr name="coveprefs_gone" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="CovePrefs_RatingRequestPreference">
