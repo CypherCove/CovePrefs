@@ -1,3 +1,6 @@
+### Version 2.0.4
+ *
+
 ### Version 2.0.3
  * Updated Android SDK target to 30, `appcompat` to 1.3.0-alpha02, and `preference` to 1.1.1.
  * **BREAKING:** Refactored MultiColor.Definition to use the resource ID for the disabled label 
@@ -8,6 +11,7 @@
  * Added `coveprefs_backupUri` property for BannerLinkPreference.
  * BannerLinkPreference will not set its Intent if there is no Activity match for the URI.
  * **BREAKING:** Removed ColorUtils, Curve, and ViewUtils to avoid polluting the public API.
+ * Added RatingRequestPrefernce
 
 ### Version 2.0.2
  * Fix default values not being loaded for BaseDialogPreferences.
