@@ -21,7 +21,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
-import androidx.preference.TwoStatePreference;
+import androidx.preference.Preference;
 
 import com.cyphercove.coveprefs.utils.CovePrefsUtils;
 
@@ -31,7 +31,7 @@ import com.cyphercove.coveprefs.utils.CovePrefsUtils;
  * user to rate the application, so a store link Intent should be set.
  */
 @SuppressWarnings("WeakerAccess")
-public class RatingRequestPreference extends TwoStatePreference {
+public class RatingRequestPreference extends Preference {
 
     public RatingRequestPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -63,8 +63,32 @@ public class RatingRequestPreference extends TwoStatePreference {
     }
 
     @Override
-    public void setChecked(boolean checked) {
-        super.setChecked(checked);
-        setVisible(!checked);
+    protected void onClick() {
+        super.onClick();
+        if (callChangeListener(true)) {
+            setClicked();
+        }
+    }
+
+    void setClicked() {
+        persistBoolean(true);
+        setVisible(false);
+        notifyDependencyChange(shouldDisableDependents());
+        notifyChanged();
+    }
+
+    @Override
+    protected Object onGetDefaultValue(TypedArray a, int index) {
+        return a.getBoolean(index, false);
+    }
+
+    @Override
+    protected void onSetInitialValue(Object defaultValue) {
+        if (defaultValue == null) {
+            defaultValue = false;
+        }
+        if (getPersistedBoolean((Boolean) defaultValue)) {
+            setClicked();
+        }
     }
 }
