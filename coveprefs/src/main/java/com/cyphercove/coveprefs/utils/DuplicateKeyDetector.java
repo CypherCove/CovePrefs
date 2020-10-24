@@ -15,7 +15,7 @@ import java.util.Map;
  * to define the predicate for determining whether a String resource is a preference key. By default,
  * the resource name is determined to be a preference key if it starts with "key".
  */
-public class DuplicateKeyDetection {
+public class DuplicateKeyDetector {
 
     /**
      * Finds String resources in the given resource class that appear more than once.
@@ -24,7 +24,7 @@ public class DuplicateKeyDetection {
      * @return A map of String key values that appear more than once to the number of times they
      * appear.
      */
-    public final Map<String, Integer> listDuplicateKeys (Context context, Class<?> stringResources) {
+    public final Map<String, Integer> findDuplicateKeys (Context context, Class<?> stringResources) {
         Resources resources = context.getResources();
         Map<String, Integer> countByKeys = new HashMap<>();
         for (Field field : stringResources.getFields()) {
