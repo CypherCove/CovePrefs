@@ -25,17 +25,17 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
-import android.os.Build;
 import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.widget.ImageViewCompat;
 
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
 import com.cyphercove.coveprefs.utils.CovePrefsUtils;
@@ -259,7 +259,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     protected void onDialogViewCreated(View view) {
         final GridView gridView = view.findViewById(R.id.coveprefs_gridview);
         gridView.setColumnWidth(columnWidth);
-        gridView.setAdapter(new ImageButtonAdapter());
+        gridView.setAdapter(new ImageButtonAdapter(getContext()));
     }
 
     @Override
@@ -312,6 +312,12 @@ public class ImageListPreference extends BaseDialogPreference<String>{
 
     private class ImageButtonAdapter extends BaseAdapter {
 
+        LayoutInflater layoutInflater;
+
+        public ImageButtonAdapter(Context context) {
+            layoutInflater = LayoutInflater.from(context);
+        }
+
         @Override
         public int getCount() {
             return entryIds.length;
@@ -329,19 +335,18 @@ public class ImageListPreference extends BaseDialogPreference<String>{
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            AppCompatImageButton imageButton;
+            ImageButton imageButton;
             if (convertView == null){
-                imageButton = new AppCompatImageButton(getContext());
+                imageButton = (ImageButton) layoutInflater.inflate(R.layout.coveprefs_image_list_button, parent, false);
                 imageButton.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, rowHeight));
                 imageButton.setOnClickListener(new ImageButtonClickListener());
                 imageButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                if (Build.VERSION.SDK_INT >= 21) imageButton.setElevation(buttonElevation);
                 if (imageTintColor != null) {
                     ImageViewCompat.setImageTintList(imageButton, imageTintColor);
                     ImageViewCompat.setImageTintMode(imageButton, imageTintMode);
                 }
             } else {
-                imageButton = (AppCompatImageButton)convertView;
+                imageButton = (ImageButton)convertView;
             }
             imageButton.setTag(position);
             imageButton.setImageResource(entryIds[position]);

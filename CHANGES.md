@@ -1,6 +1,7 @@
 ### Version 2.0.4
  * Added DuplicateKeyDetector class.
  * ImageListPreference image widget is now right-biased.
+ * ImageListPreference dialog ImageButtons now use borderless buttons.
  * Support image content descriptions in ImageListPreference via `coveprefs_entryContentDescriptions`.
 
 ### Version 2.0.3

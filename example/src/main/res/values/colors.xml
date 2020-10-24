@@ -20,4 +20,5 @@
     <color name="colorControlActivated">#ffbc7e</color>
     <color name="defaultColorPrefValue">#56ba71</color>
     <color name="colorBackground">#1a222d</color>
+    <color name="colorDialogBackground">#142959</color>
 </resources>

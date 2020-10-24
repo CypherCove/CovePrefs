@@ -59,7 +59,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
     private CharSequence positiveButtonText, negativeButtonText, neutralButtonText;
     private Button neutralButton;
     private boolean usesInternalButtonBar;
-    private DialogFragment dialogFragment;
+    private DialogFragment<T> dialogFragment;
 
     protected abstract Class<T> getDataType();
 
@@ -113,7 +113,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
             return superState; // no need to save
         }
 
-        final SingleValueSavedState myState = SingleValueSavedState.create(superState, getDataType());
+        final SingleValueSavedState<T> myState = SingleValueSavedState.create(superState, getDataType());
         myState.setValue(newValue);
         return myState;
     }
@@ -126,7 +126,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
             return;
         }
 
-        SingleValueSavedState myState = (SingleValueSavedState) state;
+        SingleValueSavedState<T> myState = (SingleValueSavedState<T>) state;
         super.onRestoreInstanceState(myState.getSuperState());
 
         newValue = (T)myState.getValue();
@@ -260,7 +260,7 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
             dialogFragment.internalPositiveButton.setEnabled(enabled);
     }
 
-    protected final void setDialogFragment (DialogFragment dialogFragment){
+    protected final void setDialogFragment (DialogFragment<T> dialogFragment){
         this.dialogFragment = dialogFragment;
     }
 
