@@ -1,5 +1,5 @@
 # CovePrefs
-A variety of Material preferences for Android. These preferences are based on, and require, the Jetpack androidx `appcompat` and `preference` libraries.
+A variety of Material preferences for Android. These preferences are dependent on the Jetpack `appcompat` and `preference` libraries.
 
 ![version](https://img.shields.io/badge/version-2.0.3-red.svg)
 [![android sdk version](https://img.shields.io/badge/android%20sdk-30-brightgreen)](https://developer.android.com/) 
