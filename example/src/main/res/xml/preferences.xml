@@ -49,6 +49,7 @@
         app:defaultValue="Hexagon"
         app:entries="@array/image_list_preference_entries"
         app:entryValues="@array/image_list_preference_values"
+        app:coveprefs_entryContentDescriptions="@array/image_list_preference_contentDescriptions"
         app:tint="@color/colorControlActivated"
         app:coveprefs_tintMode="multiply"/>
     <com.cyphercove.coveprefs.ColorPreference

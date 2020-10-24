@@ -50,6 +50,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
 
     private int[] entryIds;
     private CharSequence[] entryValues;
+    private CharSequence[] entryContentDescriptions;
     private PreferenceImageView selectedImageWidget;
     private ColorStateList imageTintColor;
     private PorterDuff.Mode imageTintMode;
@@ -65,6 +66,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_ImageListPreference);
         int entriesId = a.getResourceId(R.styleable.CovePrefs_ImageListPreference_entries, 0);
         entryValues = a.getTextArray(R.styleable.CovePrefs_ImageListPreference_entryValues);
+        entryContentDescriptions = a.getTextArray(R.styleable.CovePrefs_ImageListPreference_coveprefs_entryContentDescriptions);
         imageTintColor = a.getColorStateList(R.styleable.CovePrefs_ImageListPreference_tint);
         if (a.hasValue(R.styleable.CovePrefs_ImageListPreference_coveprefs_tintMode)){
             imageTintMode = CovePrefsUtils.parseTintMode(a.getInt(R.styleable.CovePrefs_ImageListPreference_coveprefs_tintMode, -1),
@@ -121,7 +123,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     }
 
     /**
-     * The array to find the value to save for a preference when an entry from
+     * Sets the array to find the value to save for a preference when an entry from
      * entries is selected. If a user clicks on the second item in entries, the
      * second item in this array will be saved to the preference.
      *
@@ -146,6 +148,32 @@ public class ImageListPreference extends BaseDialogPreference<String>{
      */
     public CharSequence[] getEntryValues() {
         return entryValues;
+    }
+
+    /**
+     * Returns the entry content descriptions corresponding with the images.
+     * @return The array of content descriptions or null if none is set.
+     */
+    public CharSequence[] getEntryContentDescriptions() {
+        return entryContentDescriptions;
+    }
+
+    /**
+     * Sets the content descriptions corresponding with the image entries.
+     *
+     * @param entryContentDescriptions The array of content descriptions corresponding with image
+     *                                 entries with the same indices, or null to set none.
+     */
+    public void setEntryContentDescriptions(CharSequence[] entryContentDescriptions) {
+        this.entryContentDescriptions = entryContentDescriptions;
+    }
+
+    /**
+     * @see #setEntryContentDescriptions(CharSequence[])
+     * @param entryContentDescriptionsId The content descriptions array as a resource.
+     */
+    public void setEntryContentDescriptions(@ArrayRes int entryContentDescriptionsId) {
+        setEntryContentDescriptions(getContext().getResources().getTextArray(entryContentDescriptionsId));
     }
 
     /**
@@ -197,6 +225,15 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         }
         return 0;
     }
+
+    private CharSequence getContentDescriptionForValue () {
+        int index = getValueIndex();
+        if (index != -1 && entryContentDescriptions != null){
+            return entryContentDescriptions[index];
+        }
+        return null;
+    }
+
     @Override
     protected @NonNull
     String getBackupDefaultValue() {
@@ -247,6 +284,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         int selectedImageId = getDrawableForValue();
         if (selectedImageId != 0){
             selectedImageWidget.setImageResource(selectedImageId);
+            selectedImageWidget.setContentDescription(getContentDescriptionForValue());
         }
     }
 
@@ -256,8 +294,10 @@ public class ImageListPreference extends BaseDialogPreference<String>{
             int selectedImageId = getDrawableForValue();
             if (selectedImageId != 0) {
                 selectedImageWidget.setImageResource(selectedImageId);
+                selectedImageWidget.setContentDescription(getContentDescriptionForValue());
             } else {
                 selectedImageWidget.setImageDrawable(null);
+                selectedImageWidget.setContentDescription(null);
             }
         }
     }
@@ -305,6 +345,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
             }
             imageButton.setTag(position);
             imageButton.setImageResource(entryIds[position]);
+            imageButton.setContentDescription(entryContentDescriptions == null ? null : entryContentDescriptions[position]);
 
             return imageButton;
         }

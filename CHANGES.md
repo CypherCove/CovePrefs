@@ -1,5 +1,7 @@
 ### Version 2.0.4
  * Added DuplicateKeyDetector class.
+ * ImageListPreference image widget is now right-biased.
+ * Support image content descriptions in ImageListPreference via `coveprefs_entryContentDescriptions`.
 
 ### Version 2.0.3
  * Updated Android SDK target to 30, `appcompat` to 1.3.0-alpha02, and `preference` to 1.1.1.

@@ -25,7 +25,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import com.cyphercove.coveprefs.CovePreferenceFragmentCompat;
+
 import com.cyphercove.coveprefs.CovePrefs;
 
 /** An example of using CovePrefs with AppCompat Preferences. The preference fragment must extend
@@ -74,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     public static class SettingsFragmentCompat extends PreferenceFragmentCompat{
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            addPreferencesFromResource(R.xml.pref_overview);
+            addPreferencesFromResource(R.xml.preferences);
         }
     }
 }

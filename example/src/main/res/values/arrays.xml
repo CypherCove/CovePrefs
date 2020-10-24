@@ -44,6 +44,15 @@
         <item>@drawable/narrow_rect</item>
         <item>@drawable/wide_rect</item>
     </array>
+    <string-array name="image_list_preference_contentDescriptions">
+        <item>star</item>
+        <item>square</item>
+        <item>triangle</item>
+        <item>circle</item>
+        <item>hexagon</item>
+        <item>narrow rectangle</item>
+        <item>wide rectangle</item>
+    </string-array>
 
     <string-array name="image_list_preference_values">
         <item>Star</item>

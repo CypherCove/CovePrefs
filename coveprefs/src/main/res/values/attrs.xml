@@ -99,6 +99,7 @@
         <attr name="coveprefs_dialogColumnWidth" format="dimension"/>
         <attr name="coveprefs_dialogRowHeight" format="dimension"/>
         <attr name="coveprefs_smallWidget" format="boolean"/>
+        <attr name="coveprefs_entryContentDescriptions" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="CovePrefs_StringPreference">
