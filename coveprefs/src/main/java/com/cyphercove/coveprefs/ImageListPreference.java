@@ -265,7 +265,10 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-        //TODO highlight the button for the currently selected value
+        View persistedItemView = view.findViewWithTag((Integer)getValueIndex());
+        if (persistedItemView != null){
+            persistedItemView.requestFocus(); // TODO this isn't working to highlight selected item
+        }
     }
 
     @Override
@@ -320,7 +323,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
 
         @Override
         public int getCount() {
-            return entryIds.length;
+            return entryIds == null ? 0 : entryIds.length;
         }
 
         @Override
