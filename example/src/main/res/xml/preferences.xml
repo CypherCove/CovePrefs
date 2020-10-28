@@ -28,7 +28,8 @@
         app:title="@string/bannerlink"
         app:summary="This is a summary."
         app:coveprefs_uri="https://github.com/cyphercove"
-        app:coveprefs_banner="@drawable/banner"/>
+        app:coveprefs_banner="@drawable/banner"
+        app:layout="@layout/coveprefs_preference_banner_link"/>
     <com.cyphercove.coveprefs.RotaryPreference
         app:title="@string/rotary"
         app:key="someAngle"
@@ -51,7 +52,8 @@
         app:entryValues="@array/image_list_preference_values"
         app:coveprefs_entryContentDescriptions="@array/image_list_preference_contentDescriptions"
         app:tint="@color/colorControlActivated"
-        app:coveprefs_tintMode="multiply"/>
+        app:coveprefs_tintMode="multiply"
+        app:coveprefs_smallWidget="true"/>
     <com.cyphercove.coveprefs.ColorPreference
         app:title="@string/color"
         app:key="someColor"

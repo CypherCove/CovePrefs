@@ -22,12 +22,15 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+
+import androidx.core.content.ContextCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.cyphercove.coveprefs.utils.CenterCropDrawable;
 import com.cyphercove.coveprefs.utils.CovePrefsUtils;
@@ -80,17 +83,19 @@ public class BannerLinkPreference extends Preference {
         super.onBindViewHolder(holder);
 
         if (bannerId != 0){
-            Drawable drawable;
-            if (Build.VERSION.SDK_INT < 21)
-                    drawable = getContext().getResources().getDrawable(bannerId);
-            else
-                drawable = getContext().getDrawable(bannerId);
+            Drawable drawable = ContextCompat.getDrawable(getContext(), bannerId);
 
             if (drawable instanceof BitmapDrawable)
                 ((BitmapDrawable)drawable).setGravity(Gravity.CENTER);
 
-            if (drawable != null)
-                CenterCropDrawable.centerCropDrawableAsBackground(holder.itemView, drawable);
+            if (drawable != null) {
+                ImageView bannerView = holder.itemView.findViewById(R.id.coveprefs_banner);
+                if (bannerView != null) {
+                    bannerView.setImageDrawable(drawable);
+                } else {
+                    CenterCropDrawable.centerCropDrawableAsBackground(holder.itemView, drawable);
+                }
+            }
 
             float shadowRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f,
                     getContext().getResources().getDisplayMetrics());
