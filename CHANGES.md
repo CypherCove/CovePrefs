@@ -4,6 +4,8 @@
  * ImageListPreference dialog ImageButtons now use borderless buttons.
  * Support image content descriptions in ImageListPreference via `coveprefs_entryContentDescriptions`.
  * Added `coveprefs_preference_banner_link` layout that can be used to preserve ripple effects for BannerLinkPreference. Requires ConstraintLayout library.
+ * Allow ImageListPreference images to grow to fill column when no row height is set.
+ * ImageListPreference now has vertical padding around the image widget.
 
 ### Version 2.0.3
  * Updated Android SDK target to 30, `appcompat` to 1.3.0-alpha02, and `preference` to 1.1.1.

@@ -54,7 +54,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     private PreferenceImageView selectedImageWidget;
     private ColorStateList imageTintColor;
     private PorterDuff.Mode imageTintMode;
-    private int buttonElevation, rowHeight, columnWidth;
+    private int rowHeight, columnWidth;
     private boolean smallWidget;
 
     public ImageListPreference(Context context, AttributeSet attrs) {
@@ -80,9 +80,6 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         final Resources res = context.getResources();
         if (columnWidth == 0)
             columnWidth = res.getDimensionPixelSize(R.dimen.coveprefs_image_list_default_column_width);
-        if (rowHeight == 0)
-            rowHeight = res.getDimensionPixelSize(R.dimen.coveprefs_image_list_default_row_height);
-        buttonElevation = res.getDimensionPixelSize(R.dimen.coveprefs_image_list_button_elevation);
 
         if (entriesId != 0)
             setEntries(entriesId);
@@ -341,7 +338,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
             ImageButton imageButton;
             if (convertView == null){
                 imageButton = (ImageButton) layoutInflater.inflate(R.layout.coveprefs_image_list_button, parent, false);
-                imageButton.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, rowHeight));
+                imageButton.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, rowHeight == 0 ? ViewGroup.LayoutParams.WRAP_CONTENT : rowHeight));
                 imageButton.setOnClickListener(new ImageButtonClickListener());
                 imageButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 if (imageTintColor != null) {
