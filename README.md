@@ -1,7 +1,7 @@
 # CovePrefs
 A variety of Material preferences for Android. These preferences are dependent on the Jetpack `appcompat` and `preference` libraries.
 
-![version](https://img.shields.io/badge/version-2.0.3-red.svg)
+![version](https://img.shields.io/badge/version-2.0.4-red.svg)
 [![android sdk version](https://img.shields.io/badge/android%20sdk-30-brightgreen)](https://developer.android.com/) 
 [![androidx appcompat version](https://img.shields.io/badge/androidx.appcompat-1.3.0--alpha02-brightgreen)](https://developer.android.com/jetpack/androidx/releases/appcompat) 
 [![androidx preference version](https://img.shields.io/badge/androidx.preference-1.1.1-brightgreen)](https://developer.android.com/jetpack/androidx/releases/preference) 
@@ -10,7 +10,7 @@ A variety of Material preferences for Android. These preferences are dependent o
 
 Import the `coveprefs` library with
 
-    compile com.cyphercove.coveprefs:coveprefs:2.0.3
+    compile com.cyphercove.coveprefs:coveprefs:2.0.4
 
 The AndroidX support library prepares dialogs for dialog preferences separately from the preferences themselves. Therefore, in order to use CovePrefs, you must do one of the following.
 
@@ -52,7 +52,10 @@ AboutPreference is a DialogPreference intended for showing information about the
 
 BannerLinkPreference is a generic Preference with a property for setting a background drawable. This 
 can be used for making a preference that stands out and links to something else. Convenience URI 
-properties are provided for defining the Intent.
+properties are provided for defining the Intent. The banner image is stretched and cropped to fill
+the background of the preference. By default, it replaces the background drawable of the preference
+so the Material touch ripple will be missing. To avoid losing the ripple, `app:layout="@layout/coveprefs_preference_banner_link"`
+can be set on the preference. It requires the Jetpack ConstraintLayout library.
 
 | Property                 | Property type | Description                                                                                                             |
 |--------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
@@ -78,22 +81,24 @@ The possible sets of colors are defined as an array of String arrays. Each Strin
 
 The value of the preference can be interpreted by using the MultiColor and MultiColor.Definition classes.
 
-| Property                            | Property type          | Description                                                                                                                                                                                                                                                             |
-|-------------------------------------|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Property                            | Property type            | Description                                                                                                                                                                                                                                                             |
+|-------------------------------------|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `coveprefs_colorPickerWidgets`      | Flags:`hsv\|hex\|recent` | Which types of color selection widgets to show. `hsv` is a large HSV color picker. `hex` is a text box for typing in the color with hexadecimal. `recent` shows a scrolling list of recently picked color swatches. Any combination can be used. Defaults to all three. |
-| `coveprefs_multiColorDefinition`    | Array of String arrays | Each String array in the array defines one set of colors that can be picked. The Strings are the names of the color options. The user can switch between the arrays by tapping arrows in the dialog. If a String array is empty, it is treated as a disabled state.     |
-| `coveprefs_multiColorDisabledLabel` | String                 | If there is an empty String array in the multi-color definition, it will be labeled with this string when selected in the picker.                                                                                                                                       |
+| `coveprefs_multiColorDefinition`    | Array of String arrays   | Each String array in the array defines one set of colors that can be picked. The Strings are the names of the color options. The user can switch between the arrays by tapping arrows in the dialog. If a String array is empty, it is treated as a disabled state.     |
+| `coveprefs_multiColorDisabledLabel` | String                   | If there is an empty String array in the multi-color definition, it will be labeled with this string when selected in the picker.                                                                                                                                       |
 
 ### ImageListPreference
 
-Behaves similarly to a ListPreference, but the user selects from an array of drawables. The value is stored as a String from the entry values array.
+Behaves similarly to a ListPreference, but the user selects from an array of drawables. The value is
+stored as a String from the entry values array.
 
-| Property             | Property type                   | Description                                                                                                                                              |
-|----------------------|---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `entries`            | Array of Drawables              | The drawables the user must select from.                                                                                                                 |
-| `entryValues`        | Array of Strings                | An array of values corresponding to the drawables in `entries`. Must be the same size array as `entries`. The values should not be translated by locale. |
-| `tint`               | Color State List                | Colors used to tint the clickable images in the dialog box.                                                                                              |
-| `coveprefs_tintMode` | `coveprefs_tintmode` enum value | PorterDuff mode used to tint the drawables with the `tint` attribute. One of `src_over`, `src_in`, `src_stop`, `multiply`, `screen`, and `add`.          |
+| Property                             | Property type                   | Description                                                                                                                                              |
+|--------------------------------------|---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `entries`                            | Array of Drawables              | The drawables the user must select from.                                                                                                                 |
+| `entryValues`                        | Array of Strings                | An array of values corresponding to the drawables in `entries`. Must be the same size array as `entries`. The values should not be translated by locale. |
+| `tint`                               | Color State List                | Colors used to tint the clickable images in the dialog box.                                                                                              |
+| `coveprefs_tintMode`                 | `coveprefs_tintmode` enum value | PorterDuff mode used to tint the drawables with the `tint` attribute. One of `src_over`, `src_in`, `src_stop`, `multiply`, `screen`, and `add`.          |
+| `coveprefs_entryContentDescriptions` | Array of Strings                | An array of values corresponding with the drawables, used for the accessibility content descriptions.                                                    |
 
 ### RatingRequestPreference
 
