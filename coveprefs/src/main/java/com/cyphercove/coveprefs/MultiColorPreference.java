@@ -53,7 +53,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
     private MultiColorPicker colorPicker;
     private MultiColorSwatch colorWidget;
     private final int widgets;
-    private final MultiColor.Definition definition;
+    private final @NonNull MultiColor.Definition definition;
     private int currentlySelectedColorIndex;
 
     public MultiColorPreference(Context context, AttributeSet attrs) {
@@ -95,8 +95,9 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
             return;
         }
 
-        SingleValueSavedState myState = (SingleValueSavedState) state;
-        currentlySelectedColorIndex = (Integer)myState.getValue();
+        @SuppressWarnings("unchecked")
+        SingleValueSavedState<Integer> myState = (SingleValueSavedState<Integer>) state;
+        currentlySelectedColorIndex = myState.getValue();
         super.onRestoreInstanceState(myState.getSuperState());
     }
 

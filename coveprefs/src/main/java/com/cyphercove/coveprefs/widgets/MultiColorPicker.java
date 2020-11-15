@@ -117,11 +117,10 @@ public class MultiColorPicker extends FrameLayout {
                 setWidgetsEnabled(valueCount != 0);
                 if (valueCount > 0 && valueCount <= activeIndex)
                     setActiveIndex(valueCount - 1);
-                if (listener != null)
+                if (listener != null) {
                     listener.onColorChanged(multiColor);
-                prevButton.setEnabled(position != 0);
-                nextButton.setEnabled(position != headerAdapter.getCount() - 1);
-                updateImageButtonShadows();
+                }
+                updateViewPagerButtons();
             }
 
             @Override
@@ -269,7 +268,7 @@ public class MultiColorPicker extends FrameLayout {
         }
         headerAdapter.notifyDataSetChanged();
         headerViewPager.setCurrentItem(multiColor.getType());
-
+        updateViewPagerButtons();
     }
 
     public void setWidgets (int widgets){
@@ -317,7 +316,6 @@ public class MultiColorPicker extends FrameLayout {
                             if (textView != null) {
                                 CovePrefsUtils.setShadow(textView, Color.BLACK, needTextShadow(color) ? headerShadowRadius : 0);
                             }
-                            updateImageButtonShadows();
                         }
                     }
                 }
@@ -343,17 +341,6 @@ public class MultiColorPicker extends FrameLayout {
 
     private boolean needTextShadow (int color){
         return CovePrefsUtils.calculateGrayScaleValue(color) > 0.9f;
-    }
-
-    private void updateImageButtonShadows (){
-//        int type = multiColor.getType();
-//        boolean disabled = multiColor.definition.getValueCount(type) == 0;
-//        boolean landscape = getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-//        boolean paleFirstColor = ColorUtils.calculateGrayScaleValue(multiColor.getValues()[0]) > 0.9f;
-//        boolean prevNeedShadow = !disabled && paleFirstColor;
-//        boolean nextNeedShadow =  !disabled && (landscape ? paleFirstColor :
-//                ColorUtils.calculateGrayScaleValue(multiColor.getValues()[multiColor.getValueCount() - 1]) > 0.9f);
-        //TODO swap drawable to one with shadow or outline
     }
 
     public int getColor() {
@@ -386,7 +373,7 @@ public class MultiColorPicker extends FrameLayout {
             indexListener.onActiveIndexChanged(index);
     }
 
-    private PagerAdapter headerAdapter = new PagerAdapter() {
+    private final PagerAdapter headerAdapter = new PagerAdapter() {
         @Override
         public int getCount() {
             return multiColor == null ? 0 : multiColor.definition.getTypeCount();
@@ -467,5 +454,10 @@ public class MultiColorPicker extends FrameLayout {
         }
     };
 
+    private void updateViewPagerButtons() {
+        int position = headerViewPager.getCurrentItem();
+        prevButton.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
+        nextButton.setVisibility(position == headerAdapter.getCount() - 1 ? View.GONE : View.VISIBLE);
+    }
 
 }

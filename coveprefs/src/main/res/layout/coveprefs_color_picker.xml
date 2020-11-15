@@ -20,51 +20,55 @@
               android:orientation="vertical">
 
     <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/coveprefs_colorpicker_header_height">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/coveprefs_colorpicker_header_height">
 
         <com.cyphercove.coveprefs.widgets.ColorSwatch
-                android:id="@+id/coveprefs_single_swatch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
+            android:id="@+id/coveprefs_single_swatch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <FrameLayout
-                android:id="@+id/coveprefs_multicolor_header"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone">
+            android:id="@+id/coveprefs_multicolor_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/coveprefs_pager_swatch"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                android:id="@+id/coveprefs_pager_swatch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent">
-                <ImageButton
-                        android:id="@+id/coveprefs_prev"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        app:srcCompat="@drawable/coveprefs_ic_chevron_start"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:nextFocusForward="@+id/next"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:background="@android:color/transparent">
 
                 <ImageButton
-                        android:id="@+id/coveprefs_next"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right|center_vertical"
-                        android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        app:srcCompat="@drawable/coveprefs_ic_chevron_end"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:nextFocusForward="@+id/prev"/>
+                    android:id="@+id/coveprefs_prev"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="null"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:nextFocusForward="@+id/next"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/coveprefs_ic_chevron_start" />
+
+                <ImageButton
+                    android:id="@+id/coveprefs_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="null"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:nextFocusForward="@+id/prev"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/coveprefs_ic_chevron_end" />
             </FrameLayout>
 
         </FrameLayout>
@@ -111,9 +115,10 @@
                     android:text="@string/coveprefs_hashmark"/>
 
             <EditText
-                    android:id="@+id/coveprefs_hex"
-                    android:layout_width="@dimen/coveprefs_hex_textedit_width"
-                    android:layout_height="wrap_content"/>
+                android:id="@+id/coveprefs_hex"
+                android:layout_width="@dimen/coveprefs_hex_textedit_width"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions|textCapCharacters" />
 
             <com.cyphercove.coveprefs.widgets.ColorCacheView
                     android:id="@+id/coveprefs_colorcache"

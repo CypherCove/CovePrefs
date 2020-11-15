@@ -23,16 +23,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlActivated">@color/colorControlActivated</item>
         <item name="colorBackgroundFloating">@color/colorDialogBackground</item>
-        <item name="android:alertDialogTheme">@style/CustomDialogTheme</item>
-    </style>
-
-    <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/colorControlActivated</item>
-        <item name="android:background">@color/colorBackground</item>
-        <item name="colorBackgroundFloating">@color/colorDialogBackground</item>
     </style>
 
 </resources>
