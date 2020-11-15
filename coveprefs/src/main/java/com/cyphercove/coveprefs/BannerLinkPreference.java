@@ -88,12 +88,14 @@ public class BannerLinkPreference extends Preference {
             if (drawable instanceof BitmapDrawable)
                 ((BitmapDrawable)drawable).setGravity(Gravity.CENTER);
 
-            if (drawable != null) {
-                ImageView bannerView = holder.itemView.findViewById(R.id.coveprefs_banner);
-                if (bannerView != null) {
-                    bannerView.setImageDrawable(drawable);
-                } else {
+            ImageView bannerView = holder.itemView.findViewById(R.id.coveprefs_banner);
+            if (bannerView != null) {
+                bannerView.setImageDrawable(drawable);
+            } else {
+                if (drawable != null) {
                     CenterCropDrawable.centerCropDrawableAsBackground(holder.itemView, drawable);
+                } else {
+                    holder.itemView.setBackgroundDrawable(null);
                 }
             }
 
