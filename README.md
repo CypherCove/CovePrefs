@@ -1,12 +1,14 @@
 # CovePrefs
 A variety of Material preferences for Android. These preferences are dependent on the Jetpack `appcompat` and `preference` libraries.
 
-![version](https://img.shields.io/badge/version-2.0.4-red.svg)
+[![JitPack](https://img.shields.io/badge/JitPack-2.0.4-red.svg)](https://jitpack.io/#CypherCove/CovePrefs)
 [![android sdk version](https://img.shields.io/badge/android%20sdk-30-brightgreen)](https://developer.android.com/) 
 [![androidx appcompat version](https://img.shields.io/badge/androidx.appcompat-1.3.0--alpha02-brightgreen)](https://developer.android.com/jetpack/androidx/releases/appcompat) 
 [![androidx preference version](https://img.shields.io/badge/androidx.preference-1.1.1-brightgreen)](https://developer.android.com/jetpack/androidx/releases/preference) 
 
 ## Usage
+
+CovePrefs is available via [Jitpack](https://jitpack.io/#CypherCove/CovePrefs).
 
 Import the `coveprefs` library with
 

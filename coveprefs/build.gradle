@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.library'
-    id "com.jfrog.bintray" version "1.8.4"
+    id 'maven-publish'
 }
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -15,6 +15,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.srcDirs
+        archiveClassifier = 'sources'
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        failOnError = false
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        from javadoc.destinationDir
+        archiveClassifier = 'javadoc'
+    }
 }
 
 dependencies {
@@ -26,39 +41,38 @@ dependencies {
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.1'
 }
 
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    pkg {
-        repo = 'maven'
-        name = 'CovePrefs'
-        userOrg = 'cyphercove'
-        version {
-            name = rootProject.getVersion()
-            released  = new Date()
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                artifactId = artifactId
+                artifact sourcesJar
+                artifact javadocJar
+                pom {
+                    name = 'CovePrefs'
+                    description = 'A variety of Preferences for Android based on androidx.preference.'
+                    url = 'https://github.com/CypherCove/CovePrefs'
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    organization {
+                        name = 'Cypher Cove'
+                        url = 'www.cyphercove.com'
+                    }
+                    scm {
+                        connection = 'scm:git:git@github.com:cyphercove/coveprefs.git'
+                        developerConnection = 'scm:git:git@cyphercove/coveprefs.git'
+                        url = 'https://github.com/cyphercove/CovePrefs/'
+                    }
+                }
+            }
         }
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/cyphercove/CovePrefs/'
     }
-    publications = ['mavenPublish']
-}
-
-project.ext {
-    mavSiteUrl = "https://github.com/CypherCove/CovePrefs"
-    mavGitUrl = mavSiteUrl + '.git'
-    mavProjectName = 'CovePrefs'
-    mavLibraryLicenses = ["Apache-2.0":'http://www.apache.org/licenses/LICENSE-2.0.txt']
-    mavLibraryDescription = "A variety of Material preferences for Android, based on androidx.preference and androidx.appcompat"
-    mavVersion = project.version
-    mavPublishToMavenLocal = true
-    mavPluginVersion = 'master'
-}
-
-apply from: "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/${project.mavPluginVersion}/gradle-mavenizer.gradle"
-
-androidJavadocs {
-    failOnError = false
 }
