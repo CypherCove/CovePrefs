@@ -18,6 +18,8 @@ package com.cyphercove.coveprefs;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Parcelable;
+
+import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 import android.text.TextUtils;
@@ -127,13 +129,9 @@ public abstract class BaseInlinePreference<T> extends Preference {
     protected abstract void onWidgetValueChangeRejected (T restoreValue);
 
     @Override
-    protected final void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        if (restorePersistedValue) {
-            currentValue = this.getPersistedValue(getDefaultValue());
-        } else {
-            currentValue = (T) defaultValue;
-            persistValue(currentValue);
-        }
+    protected void onSetInitialValue(@Nullable Object defaultValue) {
+        //noinspection unchecked
+        setValue(getPersistedValue((T) defaultValue));
     }
 
     /** Use {@link #onPreferenceViewCreated(AbsViewHolder)} for obtaining references to preference layout views. */
