@@ -8,7 +8,7 @@ A variety of Material preferences for Android. These preferences are dependent o
 
 ## Usage
 
-CovePrefs is available via [Jitpack](https://jitpack.io/#CypherCove/CovePrefs).
+CovePrefs is available via [JitPack](https://jitpack.io/#CypherCove/CovePrefs).
 
 Import the `coveprefs` library with
 
