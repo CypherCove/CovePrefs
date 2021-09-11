@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 
 import android.util.AttributeSet;
@@ -40,6 +41,8 @@ import android.widget.ImageView;
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
 import com.cyphercove.coveprefs.utils.CovePrefsUtils;
 import com.cyphercove.coveprefs.widgets.PreferenceImageView;
+
+import java.util.Arrays;
 
 /**
  * Like a ListPreference, but the user selects from an array of Drawables instead of Strings. The selected image is shown in
@@ -57,8 +60,8 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     private int rowHeight, columnWidth;
     private boolean smallWidget;
 
-    public ImageListPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public ImageListPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
 
         setDialogLayoutResource(R.layout.coveprefs_image_list_dialog);
         setWidgetLayoutResource(R.layout.coveprefs_image_list_preference_widget);
@@ -88,12 +91,37 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         setInternalButtonBar();
     }
 
+    public ImageListPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public ImageListPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, androidx.preference.R.attr.preferenceStyle);
+    }
+
+    public ImageListPreference(Context context) {
+        this(context, null);
+    }
+
+    /** Sets the resource Ids of the Drawables that the user will pick from. This will be shown in subsequent dialogs.
+     * <p>
+     * Each entry must have a corresponding index in {@link #setEntryValues(CharSequence[])}.
+     * @param entryIds  The IDs of the drawables.
+     * @deprecated Use {@link #setEntries(int[])}. */
+    @Deprecated
+    public void setEntryDrawableIds(int[] entryIds) {
+        setEntries(entryIds);
+    }
+
     /** Sets the resource Ids of the Drawables that the user will pick from. This will be shown in subsequent dialogs.
      * <p>
      * Each entry must have a corresponding index in {@link #setEntryValues(CharSequence[])}.
      * @param entryIds  The IDs of the drawables.*/
-    public void setEntryDrawableIds(int[] entryIds) {
-        this.entryIds = entryIds;
+    public void setEntries(int[] entryIds) {
+        if (!Arrays.equals(this.entryIds, entryIds)) {
+            this.entryIds = entryIds;
+            notifyChanged();
+        }
     }
 
     /**
@@ -107,7 +135,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
             ids[i] = typedArray.getResourceId(i, 0);
         }
         typedArray.recycle();
-        setEntryDrawableIds(ids);
+        setEntries(ids);
     }
 
     /**
@@ -127,7 +155,10 @@ public class ImageListPreference extends BaseDialogPreference<String>{
      * @param entryValues The array to be used as values to save for the preference.
      */
     public void setEntryValues(CharSequence[] entryValues) {
-        this.entryValues = entryValues;
+        if (!Arrays.equals(this.entryValues, entryValues)) {
+            this.entryValues = entryValues;
+            notifyChanged();
+        }
     }
 
     /**
@@ -136,6 +167,18 @@ public class ImageListPreference extends BaseDialogPreference<String>{
      */
     public void setEntryValues(@ArrayRes int entryValuesResId) {
         setEntryValues(getContext().getResources().getTextArray(entryValuesResId));
+    }
+
+    /**
+     * @see #setEntryValues(CharSequence[])
+     * @param entryValuesResIds An array of String resource IDs.
+     */
+    public void setEntryValues(int[] entryValuesResIds) {
+        CharSequence[] values = new CharSequence[entryValuesResIds.length];
+        for (int i = 0; i < entryValuesResIds.length; i++) {
+            values[i] = getContext().getString(entryValuesResIds[i]);
+        }
+        setEntryValues(values);
     }
 
     /**
@@ -162,7 +205,10 @@ public class ImageListPreference extends BaseDialogPreference<String>{
      *                                 entries with the same indices, or null to set none.
      */
     public void setEntryContentDescriptions(CharSequence[] entryContentDescriptions) {
-        this.entryContentDescriptions = entryContentDescriptions;
+        if (!Arrays.equals(this.entryContentDescriptions, entryContentDescriptions)) {
+            this.entryContentDescriptions = entryContentDescriptions;
+            notifyChanged();
+        }
     }
 
     /**
@@ -171,6 +217,18 @@ public class ImageListPreference extends BaseDialogPreference<String>{
      */
     public void setEntryContentDescriptions(@ArrayRes int entryContentDescriptionsId) {
         setEntryContentDescriptions(getContext().getResources().getTextArray(entryContentDescriptionsId));
+    }
+
+    /**
+     * Sets the content descriptions corresponding with the image entries.
+     * @param entryContentDescriptionIds An array of String resource IDs.
+     */
+    public void setEntryContentDescriptions(int[] entryContentDescriptionIds) {
+        CharSequence[] values = new CharSequence[entryContentDescriptionIds.length];
+        for (int i = 0; i < entryContentDescriptionIds.length; i++) {
+            values[i] = getContext().getString(entryContentDescriptionIds[i]);
+        }
+        setEntryContentDescriptions(values);
     }
 
     /**
@@ -187,7 +245,8 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     /**
      * Returns the entry corresponding to the current value.
      *
-     * @return The entry corresponding to the current value, or null.
+     * @return The entry Drawable resource ID corresponding to the current value, or 0 if it is not
+     * retrievable.
      */
     public int getEntryDrawableResourceId() {
         int index = getValueIndex();

@@ -1,5 +1,15 @@
-### Version 2.0.5
+### Version 3.0.0
+ * **BREAKING:** Increase minSdkVersion to 19
+ * **BREAKING:** BaseDialogPreference and BaseInlinePreference constructors changed to the four-argument
+ constructor.
  * Deprecated DividerHider
+ * **BREAKING:** `useSimpleSummaryProvider` changed to `coveprefs_useSimpleSummaryProvider` due to a build tools
+ change that is preventing the original version from working.
+ * Added missing getters and setters.
+ * Added LinkPreference. Changed hierarchy so BannerLinkPreference and RatingRequestPreference both
+ inherit from LinkPreference.
+ * Added titleColor and summaryColor overrides to BannerLinkPreference.
+ * **BREAKING:** StringPreference no longer implements TextWatcher.
 
 ### Version 2.0.4
  * Added DuplicateKeyDetector class.
@@ -20,7 +30,7 @@
  * Added `coveprefs_backupUri` property for BannerLinkPreference.
  * BannerLinkPreference will not set its Intent if there is no Activity match for the URI.
  * **BREAKING:** Removed ColorUtils, Curve, and ViewUtils to avoid polluting the public API.
- * Added RatingRequestPrefernce
+ * Added RatingRequestPreference
 
 ### Version 2.0.2
  * Fix default values not being loaded for BaseDialogPreferences.

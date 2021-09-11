@@ -52,31 +52,88 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
 
     private MultiColorPicker colorPicker;
     private MultiColorSwatch colorWidget;
-    private final int widgets;
+    private int widgets;
     private final @NonNull MultiColor.Definition definition;
     private int currentlySelectedColorIndex;
 
-    public MultiColorPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    /**
+     * Private constructor to enable optionally programmatically set MultiColor.Definition. If
+     * the definition is non-null, it is assumed that attrs is null.
+     * @param context
+     * @param attrs
+     * @param definition If non-null, overrides anything set by attributes.
+     */
+    private MultiColorPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes, MultiColor.Definition definition) {
+        super(context, attrs, defStyleAttr, defStyleRes);
 
         setDialogLayoutResource(R.layout.coveprefs_multicolor_dialog);
         setWidgetLayoutResource(R.layout.coveprefs_multicolor_preference_widget);
 
-        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_ColorPreference);
-        widgets = a.getInt(R.styleable.CovePrefs_ColorPreference_coveprefs_colorPickerWidgets, WIDGETS_DEFAULT);
-        int definitionArrayId = a.getResourceId(R.styleable.CovePrefs_ColorPreference_coveprefs_multiColorDefinition, 0);
-        int disabledLabel = a.getResourceId(R.styleable.CovePrefs_ColorPreference_coveprefs_multiColorDisabledLabel, 0);
-        a.recycle();
+        if (definition != null)
+            this.definition = definition;
+        else {
+            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_ColorPreference);
+            widgets = a.getInt(R.styleable.CovePrefs_ColorPreference_coveprefs_colorPickerWidgets, WIDGETS_DEFAULT);
+            int definitionArrayId = a.getResourceId(R.styleable.CovePrefs_ColorPreference_coveprefs_multiColorDefinition, 0);
+            int disabledLabel = a.getResourceId(R.styleable.CovePrefs_ColorPreference_coveprefs_multiColorDisabledLabel, 0);
+            a.recycle();
 
-        if (definitionArrayId == 0)
-            definition = MultiColor.Definition.DEFAULT;
-        else
-            definition = new MultiColor.Definition(context, definitionArrayId, disabledLabel);
+            if (definitionArrayId == 0)
+                this.definition = MultiColor.Definition.DEFAULT;
+            else
+                this.definition = new MultiColor.Definition(context, definitionArrayId, disabledLabel);
+        }
 
         hideDialogTitleIfNoneSpecified();
         forcePositiveButton();
         forceNegativeButton();
         setInternalButtonBar();
+    }
+
+    public MultiColorPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        this(context, attrs, defStyleAttr, defStyleRes, null);
+    }
+
+    public MultiColorPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public MultiColorPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, androidx.preference.R.attr.preferenceStyle);
+        // If defStyleAttr default is ever provided, also need to put it in the last constructor
+    }
+
+    public MultiColorPreference(Context context) {
+        this(context, (AttributeSet)null);
+    }
+
+    public MultiColorPreference(Context context, MultiColor.Definition definition) {
+        this(context, null, androidx.preference.R.attr.preferenceStyle, 0, definition);
+    }
+
+    public int getWidgets() {
+        return widgets;
+    }
+
+    /** Set the widgets to be shown in the ColorPicker. This should be a combination of flags
+     * <ul>
+     *     <li>{@link ColorPicker#WIDGET_HSV_PICKER}</li>
+     *     <li>{@link ColorPicker#WIDGET_HEX_TEXT_EDIT}</li>
+     *     <li>{@link ColorPicker#WIDGET_RECENTLY_PICKED}</li>
+     * </ul>
+     *
+     * @param widgets
+     */
+    public void setWidgets(int widgets) {
+        if (widgets != widgets) {
+            this.widgets = widgets;
+            notifyChanged();
+        }
+    }
+
+    @NonNull
+    public MultiColor.Definition getMultiColorDefinition() {
+        return definition;
     }
 
     @Override
@@ -127,7 +184,6 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
         colorPicker = view.findViewById(R.id.coveprefs_colorPicker);
         colorPicker.setOnMultiColorChangedListener(this);
         colorPicker.setOnActiveIndexChangedListener(this);
-        colorPicker.setWidgets(widgets);
     }
 
     @Override
@@ -135,6 +191,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
         super.onBindDialogView(view);
         MultiColor multiColor = definition.getValue(getValueForBindingDialog());
         colorPicker.setMultiColorValue(currentlySelectedColorIndex, multiColor);
+        colorPicker.setWidgets(widgets);
     }
 
     @Override

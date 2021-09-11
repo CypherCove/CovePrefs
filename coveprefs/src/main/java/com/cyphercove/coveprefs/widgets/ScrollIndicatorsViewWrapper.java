@@ -58,7 +58,7 @@ public class ScrollIndicatorsViewWrapper extends FrameLayout {
         init();
     }
 
-    protected void init() {
+    private final void init() {
         if (Build.VERSION.SDK_INT >= 23)
             return;
         int lineHeight =

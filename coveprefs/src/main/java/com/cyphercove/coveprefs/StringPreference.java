@@ -25,23 +25,27 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
+import java.util.Objects;
+
 /**
- * A DialogPreference that allows the user to type in a String.
+ * A DialogPreference that allows the user to type in a String. It is similar to
+ * {@link androidx.preference.EditTextPreference}, but it allows specifying a hint for the EditText
+ * box and disallowing empty strings.
  */
 @SuppressWarnings("WeakerAccess")
-public class StringPreference extends BaseDialogPreference<String> implements TextWatcher {
+public class StringPreference extends BaseDialogPreference<String> {
     private EditText editText;
-    private String editTextHint;
+    private CharSequence editTextHint;
     private boolean allowEmptyString;
 
-    public StringPreference (Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public StringPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_StringPreference);
-        if (a.getBoolean(R.styleable.CovePrefs_StringPreference_useSimpleSummaryProvider, false)){
+        if (a.getBoolean(R.styleable.CovePrefs_StringPreference_coveprefs_useSimpleSummaryProvider, false)) {
             setSummaryProvider(SimpleSummaryProvider.getInstance());
         }
-        editTextHint = a.getString(R.styleable.CovePrefs_StringPreference_coveprefs_editTextHint);
+        editTextHint = a.getText(R.styleable.CovePrefs_StringPreference_coveprefs_editTextHint);
         allowEmptyString = a.getBoolean(R.styleable.CovePrefs_StringPreference_coveprefs_allowEmptyString, true);
         a.recycle();
 
@@ -51,6 +55,36 @@ public class StringPreference extends BaseDialogPreference<String> implements Te
         forceNegativeButton();
         setInternalButtonBar();
     }
+
+    public StringPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public StringPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, androidx.preference.R.attr.preferenceStyle);
+    }
+
+    public StringPreference(Context context) {
+        this(context, null);
+    }
+
+    private final TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            onValueModifiedInDialog(s.toString());
+            setInternalPositiveButtonEnabled(s.length() > 0 || allowEmptyString);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     @Override
     protected @NonNull
@@ -63,11 +97,22 @@ public class StringPreference extends BaseDialogPreference<String> implements Te
         return String.class;
     }
 
+    public CharSequence getEditTextHint() {
+        return editTextHint;
+    }
+
+    public void setEditTextHint(CharSequence editTextHint) {
+        if (!Objects.equals(editTextHint, this.editText)) {
+            this.editTextHint = editTextHint;
+            notifyChanged();
+        }
+    }
+
     @Override
     protected void onDialogViewCreated(View view) {
         editText = view.findViewById(R.id.coveprefs_editText);
-        editText.removeTextChangedListener(this); //ensure not added multiple times
-        editText.addTextChangedListener(this);
+        editText.removeTextChangedListener(textWatcher); //ensure not added multiple times
+        editText.addTextChangedListener(textWatcher);
         if (editTextHint != null)
             editText.setHint(editTextHint);
     }
@@ -100,27 +145,12 @@ public class StringPreference extends BaseDialogPreference<String> implements Te
         return value != null ? value : "";
     }
 
-    @Override
-    public void beforeTextChanged (CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged (CharSequence s, int start, int before, int count) {
-        onValueModifiedInDialog(s.toString());
-        setInternalPositiveButtonEnabled(s.length() > 0 || allowEmptyString);
-    }
-
-    @Override
-    public void afterTextChanged (Editable s) {
-
-    }
-
     public static final class SimpleSummaryProvider implements SummaryProvider<StringPreference> {
 
         private static SimpleSummaryProvider sSimpleSummaryProvider;
 
-        private SimpleSummaryProvider() {}
+        private SimpleSummaryProvider() {
+        }
 
         /**
          * Retrieve a singleton instance of this simple

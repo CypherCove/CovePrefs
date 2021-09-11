@@ -23,43 +23,32 @@ import android.util.AttributeSet;
 
 import androidx.preference.Preference;
 
-import com.cyphercove.coveprefs.utils.CovePrefsUtils;
-
 /**
  * A Boolean-based Preference that does not show a widget, but rather is automatically made invisible
  * when it is set to true. It becomes true and invisible when clicked. It is intended for prompting
- * the user to rate the application, so a store link Intent should be set.
+ * the user to rate the application, so a store link Intent should be set. The preference value can
+ * be manually set back to false to cause this Preference to begin appearing in the layout again.
+ * <p>
+ * It is a {@link BannerLinkPreference} and {@link LinkPreference}, so it can be decorated and
+ * have its Intent set via XML properties.
  */
 @SuppressWarnings("WeakerAccess")
-public class RatingRequestPreference extends Preference {
+public class RatingRequestPreference extends LinkPreference {
 
-    public RatingRequestPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
+    public RatingRequestPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     public RatingRequestPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context, attrs);
+        this(context, attrs, defStyleAttr, 0);
     }
 
-    @TargetApi(21)
-    public RatingRequestPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs);
+    public RatingRequestPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, androidx.preference.R.attr.preferenceStyle);
     }
 
-    protected void init (Context context, AttributeSet attrs){
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_RatingRequestPreference);
-        String uri = a.getString(R.styleable.CovePrefs_RatingRequestPreference_coveprefs_uri);
-        String backupUri = a.getString(R.styleable.CovePrefs_RatingRequestPreference_coveprefs_backupUri);
-        String uriFormatArg = a.getString(R.styleable.CovePrefs_RatingRequestPreference_coveprefs_uriFormatArg);
-        a.recycle();
-
-        Intent intent = CovePrefsUtils.resolveIntent(context, uriFormatArg, uri, backupUri);
-        if (intent != null){
-            setIntent(intent);
-        }
+    public RatingRequestPreference(Context context) {
+        this(context, null);
     }
 
     @Override

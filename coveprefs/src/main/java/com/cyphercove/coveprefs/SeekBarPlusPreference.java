@@ -55,7 +55,6 @@ public class SeekBarPlusPreference extends SeekBarPreference {
         rightLabel = a.getString(R.styleable.CovePrefs_SeekBarPlusPreference_coveprefs_rightLabel);
         setMax(a.getInteger(R.styleable.CovePrefs_SeekBarPlusPreference_max, getMax())); // This is to deal with a resource linking issue
         a.recycle();
-
     }
 
     public SeekBarPlusPreference(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -116,16 +115,32 @@ public class SeekBarPlusPreference extends SeekBarPreference {
         rightLabelView.setText(rightLabel);
     }
 
+    public CharSequence getLeftLabel() {
+        return leftLabel;
+    }
+
     public void setLeftLabel (CharSequence leftLabel){
-        this.leftLabel = leftLabel;
-        if (leftLabelView != null)
-            leftLabelView.setText(leftLabel);
+        if ((leftLabel == null && this.leftLabel != null) || (leftLabel != null && !leftLabel.equals(this.leftLabel))) {
+            this.leftLabel = leftLabel;
+            if (leftLabelView != null) {
+                leftLabelView.setText(leftLabel);
+            }
+            notifyChanged();
+        }
+    }
+
+    public CharSequence getRightLabel() {
+        return rightLabel;
     }
 
     public void setRightLabel (CharSequence rightLabel){
-        this.rightLabel = rightLabel;
-        if (rightLabelView != null)
-            rightLabelView.setText(rightLabel);
+        if ((rightLabel == null && this.rightLabel != null) || (rightLabel != null && !rightLabel.equals(this.rightLabel))) {
+            this.rightLabel = rightLabel;
+            if (rightLabelView != null) {
+                rightLabelView.setText(rightLabel);
+            }
+            notifyChanged();
+        }
     }
 
     /**

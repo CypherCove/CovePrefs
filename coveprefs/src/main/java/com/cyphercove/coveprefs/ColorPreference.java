@@ -54,8 +54,8 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
     private ColorSwatch colorWidget;
     private int widgets;
 
-    public ColorPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public ColorPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
 
         setDialogLayoutResource(R.layout.coveprefs_color_dialog);
         setWidgetLayoutResource(R.layout.coveprefs_color_preference_widget);
@@ -70,9 +70,41 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
         setInternalButtonBar();
     }
 
+    public ColorPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public ColorPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, androidx.preference.R.attr.preferenceStyle);
+    }
+
+    public ColorPreference(Context context) {
+        this(context, null);
+    }
+
+    public int getWidgets() {
+        return widgets;
+    }
+
+    /** Set the widgets to be shown in the ColorPicker. This should be a combination of flags
+     * <ul>
+     *     <li>{@link ColorPicker#WIDGET_HSV_PICKER}</li>
+     *     <li>{@link ColorPicker#WIDGET_HEX_TEXT_EDIT}</li>
+     *     <li>{@link ColorPicker#WIDGET_RECENTLY_PICKED}</li>
+     * </ul>
+     *
+     * @param widgets
+     */
+    public void setWidgets(int widgets) {
+        if (widgets != widgets) {
+            this.widgets = widgets;
+            notifyChanged();
+        }
+    }
+
     @Override
-    protected @NonNull
-    Integer getBackupDefaultValue() {
+    @NonNull
+    protected Integer getBackupDefaultValue() {
         return Color.MAGENTA;
     }
 
@@ -95,13 +127,13 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
     protected void onDialogViewCreated(View view) {
         colorPicker = view.findViewById(R.id.coveprefs_colorPicker);
         colorPicker.setOnColorChangedListener(this);
-        colorPicker.setWidgets(widgets);
     }
 
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
         colorPicker.setColor(getValueForBindingDialog());
+        colorPicker.setWidgets(widgets);
     }
 
     @Override

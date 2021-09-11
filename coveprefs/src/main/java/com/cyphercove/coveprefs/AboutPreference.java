@@ -19,19 +19,12 @@ import java.util.Locale;
  * so it can conveniently show the version string, for example, "MyApp 1.0.1". The {@code android:dialogMessage}
  * is formatted as Html using {@link Html#fromHtml(String)} so it can contain clickable hyperlinks to web sites.
  */
-// Extends BaseDialogPreference so it can easily be ported to the support library without code changes.
 public class AboutPreference extends BaseDialogPreference<String> {
 
     private static final String KEY = "com.cyphercove.coveprefs.AboutPreferences";
 
-    @Override
-    public Class<String> getDataType() {
-        return String.class; //Arbitrary
-    }
-
-    public AboutPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
+    public AboutPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
         setDialogLayoutResource(R.layout.coveprefs_about_dialog);
 
         Locale locale;
@@ -54,6 +47,23 @@ public class AboutPreference extends BaseDialogPreference<String> {
         }
 
         setNegativeButtonText(null);
+    }
+
+    public AboutPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public AboutPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, androidx.preference.R.attr.preferenceStyle);
+    }
+
+    public AboutPreference(Context context) {
+        this(context, null);
+    }
+
+    @Override
+    public Class<String> getDataType() {
+        return String.class; //Arbitrary
     }
 
     @Override

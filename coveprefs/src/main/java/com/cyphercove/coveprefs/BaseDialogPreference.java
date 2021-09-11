@@ -45,7 +45,7 @@ import com.cyphercove.coveprefs.utils.AbsViewHolder;
  * It is necessary to call {@link #onValueModifiedInDialog(Object)} as the value is changed via the dialog's widget(s).
  * <p>
  * A neutral button can be set on the dialog by calling {@link #setNeutralButtonText(CharSequence)} . Unlike the positive
- * and negative buttons, it does not automatically close the dialog. An OnClickListner can be added to it so it can
+ * and negative buttons, it does not automatically close the dialog. An OnClickListener can be added to it so it can
  * call a method before dismissing the dialog.
  *
  * @param <T> The data type of the preference.
@@ -63,8 +63,8 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
 
     protected abstract Class<T> getDataType();
 
-    protected BaseDialogPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    protected BaseDialogPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes){
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     /** Causes the dialog's title to be hidden if none was specified in the preference XML. By default, DialogPreferences
@@ -225,7 +225,8 @@ public abstract class BaseDialogPreference<T> extends DialogPreference {
      */
     protected abstract void onDialogViewCreated (View view);
 
-    /** Persists the value. */
+    /** Persists the value. This method should call through to one of the Preference {@code persist...}
+     * methods for consistent behavior with the Jetpack Preferences. */
     protected abstract void persistValue (T value);
 
     /** @param defaultReturnValue The value to return if the persisted value doesn't exist.

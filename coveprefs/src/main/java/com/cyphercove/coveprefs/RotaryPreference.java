@@ -36,11 +36,11 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
     private RotaryPicker rotaryPicker;
     private RotaryPreferenceWidget rotaryWidget;
 
-    public RotaryPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public RotaryPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_RotaryPreference);
-        if (a.getBoolean(R.styleable.CovePrefs_RotaryPreference_useSimpleSummaryProvider, false)){
+        if (a.getBoolean(R.styleable.CovePrefs_RotaryPreference_coveprefs_useSimpleSummaryProvider, false)){
             setSummaryProvider(SimpleSummaryProvider.getInstance());
         }
         a.recycle();
@@ -52,6 +52,18 @@ public class RotaryPreference extends BaseDialogPreference<Integer> implements R
         forcePositiveButton();
         forceNegativeButton();
         setInternalButtonBar();
+    }
+
+    public RotaryPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public RotaryPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, androidx.preference.R.attr.preferenceStyle);
+    }
+
+    public RotaryPreference(Context context) {
+        this(context, null);
     }
 
     @Override
