@@ -166,14 +166,14 @@ public class BannerLinkPreference extends LinkPreference {
             TextView titleTextView = holder.itemView.findViewById(android.R.id.title);
             if (titleTextView != null) {
                 CovePrefsUtils.setContrastingShadow(titleTextView, shadowRadius);
-                if (titleColor != UNSET_COLOR) {
+                if (titleColor != null) {
                     titleTextView.setTextColor(titleColor);
                 }
             }
             TextView summaryTextView = holder.itemView.findViewById(android.R.id.summary);
             if (summaryTextView != null) {
                 CovePrefsUtils.setContrastingShadow(summaryTextView, shadowRadius);
-                if (summaryColor != UNSET_COLOR) {
+                if (summaryColor != null) {
                     summaryTextView.setTextColor(summaryColor);
                 }
             }
