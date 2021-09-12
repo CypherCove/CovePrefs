@@ -26,8 +26,10 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import androidx.annotation.ArrayRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.widget.ImageViewCompat;
 
 import android.util.AttributeSet;
@@ -43,6 +45,7 @@ import com.cyphercove.coveprefs.utils.CovePrefsUtils;
 import com.cyphercove.coveprefs.widgets.PreferenceImageView;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Like a ListPreference, but the user selects from an array of Drawables instead of Strings. The selected image is shown in
@@ -55,9 +58,10 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     private CharSequence[] entryValues;
     private CharSequence[] entryContentDescriptions;
     private PreferenceImageView selectedImageWidget;
-    private ColorStateList imageTintColor;
-    private PorterDuff.Mode imageTintMode;
-    private int rowHeight, columnWidth;
+    private int tintResource;
+    private ColorStateList tintColorStateList;
+    private PorterDuff.Mode tintMode;
+    private int dialogRowHeight, dialogColumnWidth;
     private boolean smallWidget;
 
     public ImageListPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -70,19 +74,19 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         int entriesId = a.getResourceId(R.styleable.CovePrefs_ImageListPreference_entries, 0);
         entryValues = a.getTextArray(R.styleable.CovePrefs_ImageListPreference_entryValues);
         entryContentDescriptions = a.getTextArray(R.styleable.CovePrefs_ImageListPreference_coveprefs_entryContentDescriptions);
-        imageTintColor = a.getColorStateList(R.styleable.CovePrefs_ImageListPreference_tint);
+        tintColorStateList = a.getColorStateList(R.styleable.CovePrefs_ImageListPreference_tint);
         if (a.hasValue(R.styleable.CovePrefs_ImageListPreference_coveprefs_tintMode)){
-            imageTintMode = CovePrefsUtils.parseTintMode(a.getInt(R.styleable.CovePrefs_ImageListPreference_coveprefs_tintMode, -1),
+            tintMode = CovePrefsUtils.parseTintMode(a.getInt(R.styleable.CovePrefs_ImageListPreference_coveprefs_tintMode, -1),
                     PorterDuff.Mode.SRC_IN);
         }
-        columnWidth = a.getDimensionPixelSize(R.styleable.CovePrefs_ImageListPreference_coveprefs_dialogColumnWidth, 0);
-        rowHeight = a.getDimensionPixelSize(R.styleable.CovePrefs_ImageListPreference_coveprefs_dialogRowHeight, 0);
+        dialogColumnWidth = a.getDimensionPixelSize(R.styleable.CovePrefs_ImageListPreference_coveprefs_dialogColumnWidth, 0);
+        dialogRowHeight = a.getDimensionPixelSize(R.styleable.CovePrefs_ImageListPreference_coveprefs_dialogRowHeight, 0);
         smallWidget = a.getBoolean(R.styleable.CovePrefs_ImageListPreference_coveprefs_smallWidget, false);
         a.recycle();
 
         final Resources res = context.getResources();
-        if (columnWidth == 0)
-            columnWidth = res.getDimensionPixelSize(R.dimen.coveprefs_image_list_default_column_width);
+        if (dialogColumnWidth == 0)
+            dialogColumnWidth = res.getDimensionPixelSize(R.dimen.coveprefs_image_list_default_column_width);
 
         if (entriesId != 0)
             setEntries(entriesId);
@@ -290,9 +294,85 @@ public class ImageListPreference extends BaseDialogPreference<String>{
         return null;
     }
 
+    /**
+     * @return The tint set for the images or null if none is set. Even if a single color was set,
+     * a ColorStateList is returned.
+     */
+    public ColorStateList getTint() {
+        if (tintColorStateList == null && tintResource != 0) {
+            tintColorStateList = AppCompatResources.getColorStateList(getContext(), tintResource);
+        }
+        return tintColorStateList;
+    }
+
+    public void setTint(ColorStateList tint) {
+        if (!Objects.equals(tint, tintColorStateList) || tintResource != 0) {
+            tintResource = 0;
+            tintColorStateList = tint;
+            notifyChanged();
+        }
+    }
+
+    public void setTintResource(@ColorRes int tint) {
+        if (tintResource != tint || tintColorStateList != null) {
+            tintResource = tint;
+            tintColorStateList = null;
+            notifyChanged();
+        }
+    }
+
+    public void setTintColor(@ColorInt int argb) {
+        setTint(ColorStateList.valueOf(argb));
+    }
+
+    @NonNull
+    public PorterDuff.Mode getTintMode() {
+        return tintMode;
+    }
+
+    public void setTintMode(@NonNull PorterDuff.Mode tintMode) {
+        if (this.tintMode != tintMode) {
+            this.tintMode = tintMode;
+            notifyChanged();
+        }
+    }
+
+    public int getDialogRowHeight() {
+        return dialogRowHeight;
+    }
+
+    public void setDialogRowHeight(int dialogRowHeight) {
+        if (this.dialogRowHeight != dialogRowHeight) {
+            this.dialogRowHeight = dialogRowHeight;
+            notifyChanged();
+        }
+    }
+
+    public int getDialogColumnWidth() {
+        return dialogColumnWidth;
+    }
+
+    public void setDialogColumnWidth(int dialogColumnWidth) {
+        if (this.dialogColumnWidth != dialogColumnWidth) {
+            this.dialogColumnWidth = dialogColumnWidth;
+            notifyChanged();
+        }
+    }
+
+    public boolean isSmallWidget() {
+        return smallWidget;
+    }
+
+    public void setSmallWidget(boolean smallWidget) {
+        if (this.smallWidget != smallWidget) {
+            this.smallWidget = smallWidget;
+            notifyChanged();
+        }
+    }
+
     @Override
-    protected @NonNull
-    String getBackupDefaultValue() {
+    @NonNull
+    protected String getBackupDefaultValue() {
         return "";
     }
 
@@ -314,7 +394,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     @Override
     protected void onDialogViewCreated(View view) {
         final GridView gridView = view.findViewById(R.id.coveprefs_gridview);
-        gridView.setColumnWidth(columnWidth);
+        gridView.setColumnWidth(dialogColumnWidth);
         gridView.setAdapter(new ImageButtonAdapter(getContext()));
     }
 
@@ -336,9 +416,9 @@ public class ImageListPreference extends BaseDialogPreference<String>{
             layoutParams.width = layoutParams.height = size;
             selectedImageWidget.setLayoutParams(layoutParams);
         }
-        if (imageTintColor != null) {
-            ImageViewCompat.setImageTintList(selectedImageWidget, imageTintColor);
-            ImageViewCompat.setImageTintMode(selectedImageWidget, imageTintMode);
+        if (getTint() != null) {
+            ImageViewCompat.setImageTintList(selectedImageWidget, getTint());
+            ImageViewCompat.setImageTintMode(selectedImageWidget, tintMode);
         }
         int selectedImageId = getDrawableForValue();
         if (selectedImageId != 0){
@@ -397,12 +477,12 @@ public class ImageListPreference extends BaseDialogPreference<String>{
             ImageButton imageButton;
             if (convertView == null){
                 imageButton = (ImageButton) layoutInflater.inflate(R.layout.coveprefs_image_list_button, parent, false);
-                imageButton.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, rowHeight == 0 ? ViewGroup.LayoutParams.WRAP_CONTENT : rowHeight));
+                imageButton.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, dialogRowHeight == 0 ? ViewGroup.LayoutParams.WRAP_CONTENT : dialogRowHeight));
                 imageButton.setOnClickListener(new ImageButtonClickListener());
                 imageButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                if (imageTintColor != null) {
-                    ImageViewCompat.setImageTintList(imageButton, imageTintColor);
-                    ImageViewCompat.setImageTintMode(imageButton, imageTintMode);
+                if (tintColorStateList != null) {
+                    ImageViewCompat.setImageTintList(imageButton, tintColorStateList);
+                    ImageViewCompat.setImageTintMode(imageButton, tintMode);
                 }
             } else {
                 imageButton = (ImageButton)convertView;
