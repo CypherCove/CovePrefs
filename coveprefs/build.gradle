@@ -33,9 +33,9 @@ android {
 }
 
 dependencies {
-    api "androidx.appcompat:appcompat:${rootProject.ext.appCompatVersion}"
-    api "androidx.preference:preference:${rootProject.ext.preferenceVersion}"
-    api "androidx.annotation:annotation:${rootProject.ext.annotationVersion}"
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.appCompatVersion}"
+    implementation "androidx.preference:preference:${rootProject.ext.preferenceVersion}"
+    implementation "androidx.annotation:annotation:${rootProject.ext.annotationVersion}"
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
 
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
