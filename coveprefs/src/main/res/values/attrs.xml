@@ -82,7 +82,7 @@
         <attr name="coveprefs_summaryColor" format="color"/>
     </declare-styleable>
 
-    <declare-styleable name="CovePrefs_SeekBarPlusPreference">
+    <declare-styleable name="CovePrefs_LabeledSeekBarPreference">
         <attr name="max" format="integer"/>
         <attr name="coveprefs_leftLabel" format="string"/>
         <attr name="coveprefs_rightLabel" format="string"/>

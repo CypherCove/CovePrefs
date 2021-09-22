@@ -12,6 +12,7 @@
  * **BREAKING:** StringPreference no longer implements TextWatcher.
  * **BREAKING:** MultiColor.Definition outputs CharSequence and CharSequence arrays instead of Strings.
  * Added constructors to MultiColor.Definition.
+ * Renamed SeekBarPlusPreference to LabeledSeekBarPreference.
 
 ### Version 2.0.4
  * Added DuplicateKeyDetector class.

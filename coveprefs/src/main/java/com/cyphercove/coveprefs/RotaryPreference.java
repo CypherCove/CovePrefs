@@ -32,7 +32,7 @@ import com.cyphercove.coveprefs.widgets.RotaryPreferenceWidget;
  * for use with no dialog title or icon.
  */
 @SuppressWarnings("WeakerAccess")
-public class RotaryPreference extends BaseDialogPreference<Integer> implements RotaryPicker.OnAngleChangedListener{
+public class RotaryPreference extends BaseDialogPreference<Integer> implements RotaryPicker.OnAngleChangedListener {
     private RotaryPicker rotaryPicker;
     private RotaryPreferenceWidget rotaryWidget;
 
