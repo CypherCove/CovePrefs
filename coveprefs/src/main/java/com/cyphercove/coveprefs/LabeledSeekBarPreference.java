@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.StringRes;
 import androidx.preference.PreferenceViewHolder;
 import androidx.preference.SeekBarPreference;
 
@@ -129,6 +130,10 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
         }
     }
 
+    public void setLeftLabel(@StringRes int leftLabel) {
+        setLeftLabel(getContext().getText(leftLabel));
+    }
+
     public CharSequence getRightLabel() {
         return rightLabel;
     }
@@ -141,6 +146,10 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
             }
             notifyChanged();
         }
+    }
+
+    public void setRightLabel(@StringRes int rightLabel) {
+        setRightLabel(getContext().getText(rightLabel));
     }
 
     /**

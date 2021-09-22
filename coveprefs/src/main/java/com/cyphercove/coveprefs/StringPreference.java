@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 import java.util.Objects;
 
@@ -106,6 +107,10 @@ public class StringPreference extends BaseDialogPreference<String> {
             this.editTextHint = editTextHint;
             notifyChanged();
         }
+    }
+
+    public void setEditTextHint(@StringRes int editTextHint) {
+        setEditTextHint(getContext().getText(editTextHint));
     }
 
     @Override
