@@ -111,6 +111,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
         this(context, null, androidx.preference.R.attr.preferenceStyle, 0, definition);
     }
 
+    @ColorPicker.Widgets
     public int getWidgets() {
         return widgets;
     }
@@ -124,7 +125,7 @@ public class MultiColorPreference extends BaseDialogPreference<String> implement
      *
      * @param widgets
      */
-    public void setWidgets(int widgets) {
+    public void setWidgets(@ColorPicker.Widgets int widgets) {
         if (widgets != widgets) {
             this.widgets = widgets;
             notifyChanged();

@@ -17,6 +17,7 @@ package com.cyphercove.coveprefs.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.SparseIntArray;
@@ -50,43 +51,93 @@ public class MultiColor {
         public static final Definition DEFAULT = new Definition();
 
         private final Context context;
-        private final int resId;
-        private final int disabledLabelResId;
         private final SparseIntArray typeLengths = new SparseIntArray();
         private int typeCount = -1;
         private int maxColors = -1;
         private int disabledStateTypeIndex = -2;
 
-        /**
-         * Legacy, used only for backup.
-         */
-        private final String disabledLabel; // label text shown for types with 0 values
+        private int disabledLabelResId;
+        // Backup values used when resource IDs aren't used.
+        @NonNull
+        private CharSequence disabledLabelLiteral = ""; // label text shown for types with 0 values
+
+        /** 1st choice: Resource ID of an array of String arrays. */
+        private int resId2DArray;
+        /** 2nd choice: Array of resource IDs of String arrays. */
+        private int[] resId1DArrays;
+        /** 3nd choice: 2D array of String resource Ids. */
+        private int[][] resIdIndividualValues;
+        /** 4th choice: 2D array of CharSequences. */
+        private CharSequence[][] literal2DArray;
 
         /**
          * @param context The application context
          * @param resId   A resource ID for an array of String arrays. Each String array represents a multi-color type
          *                (by index) and the length of each array is the number of colors it can hold. The values of
-         *                the String array are used for logging in MultiColor, but they are also used by MultiColorPreference
+         *                the array are used for logging in MultiColor, but they are also used by MultiColorPreference
          *                for labeling the member types.
          */
         public Definition (Context context, @ArrayRes int resId) {
-            this(context, resId, -1);
+            this(context, resId, 0);
         }
 
         /**
          * @param context            The application context
          * @param resId              A resource ID for an array of String arrays. Each String array represents a multi-color type
          *                           (by index) and the length of each array is the number of colors it can hold. The values of
-         *                           the String array are used for logging in MultiColor, but they are also used by MultiColorPreference
+         *                           the array are used for logging in MultiColor, but they are also used by MultiColorPreference
+         *                           for labeling the member types.
+         * @param disabledLabelResId A String resource that is shown for types that have zero values.
+         *                           Optional, a value of 0 may be passed to omit it.
+         */
+        public Definition (Context context, @ArrayRes int resId, @StringRes int disabledLabelResId) {
+            this.context = context;
+            this.resId2DArray = resId;
+            this.disabledLabelResId = disabledLabelResId;
+        }
+
+        /**
+         * @param context            The application context
+         * @param resIds             An array of resource IDs of String arrays. Each String array represents a multi-color type
+         *                           (by index) and the length of each array is the number of colors it can hold. The values of
+         *                           the array are used for logging in MultiColor, but they are also used by MultiColorPreference
          *                           for labeling the member types.
          * @param disabledLabelResId A String resource that is shown for types that have zero values.
          *                           Optional, a negative value may be passed to omit it.
          */
-        public Definition (Context context, @ArrayRes int resId, @StringRes int disabledLabelResId) {
+        public Definition (Context context, @ArrayRes int[] resIds, @StringRes int disabledLabelResId) {
             this.context = context;
-            this.resId = resId;
+            this.resId1DArrays = resIds;
             this.disabledLabelResId = disabledLabelResId;
-            disabledLabel = "";
+        }
+
+        /**
+         * @param context            The application context
+         * @param resIds             A 2D array of String resource IDs. Each inner array represents a multi-color type
+         *                           (by index) and the length of each array is the number of colors it can hold. The values of
+         *                           the array are used for logging in MultiColor, but they are also used by MultiColorPreference
+         *                           for labeling the member types.
+         * @param disabledLabelResId A String resource that is shown for types that have zero values.
+         *                           Optional, a negative value may be passed to omit it.
+         */
+        public Definition (Context context, @ArrayRes int[][] resIds, @StringRes int disabledLabelResId) {
+            this.context = context;
+            this.resIdIndividualValues = resIds;
+            this.disabledLabelResId = disabledLabelResId;
+        }
+
+        /**
+         * @param context       The application context
+         * @param typeLabels    A 2D array of CharSequences. Each inner array represents a multi-color type
+         *                      (by index) and the length of each array is the number of colors it can hold. The values of
+         *                      the array are used for logging in MultiColor, but they are also used by MultiColorPreference
+         *                      for labeling the member types.
+         * @param disabledLabel A CharSequence that is shown for types that have zero values. Optional.
+         */
+        public Definition (Context context, CharSequence[][] typeLabels, @Nullable CharSequence disabledLabel) {
+            this.context = context;
+            this.literal2DArray = typeLabels;
+            this.disabledLabelLiteral = disabledLabel == null ? "" : disabledLabel;
         }
 
         /**
@@ -95,15 +146,14 @@ public class MultiColor {
          *                      (by index) and the length of each array is the number of colors it can hold. The values of
          *                      the String array are used for logging in MultiColor, but they are also used by MultiColorPreference
          *                      for labeling the member types.
-         * @param disabledLabel A String that is shown for types that have zero values. Optional.
-         * @deprecated The disabled label should be specified with a resource identifier in case the
-         * configuration changes. Use {@code Definition(Context, int, int)} instead.
+         * @param disabledLabel A CharSequence that is shown for types that have zero values. Optional.
+         * @deprecated This constructor has an unusual combination of using resources for the types, but not for the disabled label.
          */
-        public Definition (Context context, @ArrayRes int resId, @Nullable String disabledLabel) {
+        @Deprecated
+        public Definition (Context context, @ArrayRes int resId, @Nullable CharSequence disabledLabel) {
             this.context = context;
-            this.resId = resId;
-            this.disabledLabelResId = 0;
-            this.disabledLabel = disabledLabel == null ? "" : disabledLabel;
+            this.resId2DArray = resId;
+            this.disabledLabelLiteral = disabledLabel == null ? "" : disabledLabel;
         }
 
         /**
@@ -111,9 +161,6 @@ public class MultiColor {
          */
         private Definition () {
             this.context = null;
-            this.resId = 0;
-            this.disabledLabelResId = 0;
-            this.disabledLabel = "";
             typeCount = 1;
             maxColors = 0;
         }
@@ -127,20 +174,39 @@ public class MultiColor {
          * @throws IndexOutOfBoundsException if the type is out of range of this definition.
          */
         @NonNull
-        public String[] getLabels (int type) {
-            if (context == null || resId <= 0) {
-                String[] def = new String[1];
-                def[0] = "";
-                return def;
+        public CharSequence[] getLabels (int type) {
+            if (context != null) {
+                Resources resources = context.getResources();
+                if (resId2DArray != 0 || resId1DArrays != null) {
+                    int memberId;
+                    if (resId2DArray != 0) {
+                        TypedArray definitionArray = resources.obtainTypedArray(resId2DArray);
+                        memberId = definitionArray.getResourceId(type, 0);
+                        definitionArray.recycle();
+                    } else {
+                        memberId = resId1DArrays[type];
+                    }
+                    if (memberId == 0)
+                        throw new IndexOutOfBoundsException("The type " + type + " is not in the definition.");
+                    CharSequence[] labels = resources.getTextArray(memberId);
+                    typeLengths.put(type, labels.length);
+                    return labels;
+                }
+                if (resIdIndividualValues != null) {
+                    int[] typeArray = resIdIndividualValues[type];
+                    CharSequence[] outArray = new String[typeArray.length];
+                    for (int i = 0; i < typeArray.length; i++) {
+                        outArray[i] = resources.getText(typeArray[i]);
+                    }
+                    return outArray;
+                }
             }
-            TypedArray definitionArray = context.getResources().obtainTypedArray(resId);
-            int memberId = definitionArray.getResourceId(type, 0);
-            definitionArray.recycle();
-            if (memberId == 0)
-                throw new IndexOutOfBoundsException("The type " + type + " is not in the definition.");
-            String[] labels = context.getResources().getStringArray(memberId);
-            typeLengths.put(type, labels.length);
-            return labels;
+            if (literal2DArray != null) {
+                return literal2DArray[type];
+            }
+            CharSequence[] def = new CharSequence[1];
+            def[0] = "";
+            return def;
         }
 
         /**
@@ -150,9 +216,9 @@ public class MultiColor {
          * @return The label to use for disabled state, or an empty String if there is none.
          */
         @NonNull
-        public String getDisabledLabel () {
+        public CharSequence getDisabledLabel () {
             if (context == null || disabledLabelResId <= 0) {
-                return disabledLabel;
+                return disabledLabelLiteral;
             }
             return context.getString(disabledLabelResId);
         }
@@ -215,11 +281,19 @@ public class MultiColor {
         public int getTypeCount () {
             if (typeCount >= 0)
                 return typeCount;
-            if (context == null || resId <= 0)
+            if (context == null) // Empty definition
                 return 1;
-            TypedArray definitionArray = context.getResources().obtainTypedArray(resId);
-            typeCount = definitionArray.length();
-            definitionArray.recycle();
+            if (resId2DArray != 0) {
+                TypedArray definitionArray = context.getResources().obtainTypedArray(resId2DArray);
+                typeCount = definitionArray.length();
+                definitionArray.recycle();
+            } else if (resId1DArrays != null) {
+                typeCount = resId1DArrays.length;
+            } else if (resIdIndividualValues != null) {
+                typeCount = resIdIndividualValues.length;
+            } else if (literal2DArray != null) {
+                typeCount = literal2DArray.length;
+            }
             return typeCount;
         }
 
@@ -233,6 +307,12 @@ public class MultiColor {
             int knownCount = typeLengths.get(type, -1);
             if (knownCount >= 0)
                 return knownCount;
+            if (resIdIndividualValues != null) {
+                return resIdIndividualValues[type].length;
+            }
+            if (literal2DArray != null) {
+                return literal2DArray[type].length;
+            }
             return getLabels(type).length;
         }
 

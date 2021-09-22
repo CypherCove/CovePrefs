@@ -10,6 +10,8 @@
  inherit from LinkPreference.
  * Added titleColor and summaryColor overrides to BannerLinkPreference.
  * **BREAKING:** StringPreference no longer implements TextWatcher.
+ * **BREAKING:** MultiColor.Definition outputs CharSequence and CharSequence arrays instead of Strings.
+ * Added constructors to MultiColor.Definition.
 
 ### Version 2.0.4
  * Added DuplicateKeyDetector class.

@@ -64,6 +64,7 @@ public class MultiColorPicker extends FrameLayout {
     private OnMultiColorChangedListener listener;
     private OnActiveIndexChangedListener indexListener;
     private int currentWidgetsColor;
+    private int widgets = ColorPicker.WIDGET_HSV_PICKER | ColorPicker.WIDGET_HEX_TEXT_EDIT | ColorPicker.WIDGET_RECENTLY_PICKED;
     private float headerShadowRadius;
 
     private MultiColor multiColor;
@@ -271,7 +272,13 @@ public class MultiColorPicker extends FrameLayout {
         updateViewPagerButtons();
     }
 
-    public void setWidgets (int widgets){
+    @ColorPicker.Widgets
+    public int getWidgets() {
+        return widgets;
+    }
+
+    public void setWidgets (@ColorPicker.Widgets int widgets){
+        this.widgets = widgets;
         boolean hsv = (widgets & ColorPicker.WIDGET_HSV_PICKER) != 0;
         boolean hex = (widgets & ColorPicker.WIDGET_HEX_TEXT_EDIT) != 0;
         boolean recent = (widgets & ColorPicker.WIDGET_RECENTLY_PICKED) != 0;
@@ -387,7 +394,7 @@ public class MultiColorPicker extends FrameLayout {
         @Override
         public Object instantiateItem(ViewGroup collection, int position) {
 
-            String[] labels = multiColor.definition.getLabels(position);
+            CharSequence[] labels = multiColor.definition.getLabels(position);
             if (labels.length == 0) {
                 View view = makeColorItem(multiColor.definition.getDisabledLabel(), headerDisabledBackgroundColor, false, position, -1, collection);
                 collection.addView(view);
@@ -417,7 +424,7 @@ public class MultiColorPicker extends FrameLayout {
             }
         }
 
-        private View makeColorItem (String label, int initialColor, boolean clickable, final int type, final int index, ViewGroup root){
+        private View makeColorItem (CharSequence label, int initialColor, boolean clickable, final int type, final int index, ViewGroup root){
             View view = inflater.inflate(R.layout.coveprefs_multicolor_header_item, root, false);
             boolean disabled = multiColor.definition.getValueCount(type) == 0;
             ColorSwatch colorSwatch = view.findViewById(R.id.coveprefs_swatch);

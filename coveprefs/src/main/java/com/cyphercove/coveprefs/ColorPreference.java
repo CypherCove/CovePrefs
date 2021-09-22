@@ -82,6 +82,7 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
         this(context, null);
     }
 
+    @ColorPicker.Widgets
     public int getWidgets() {
         return widgets;
     }
@@ -95,7 +96,7 @@ public class ColorPreference extends BaseDialogPreference<Integer> implements Co
      *
      * @param widgets
      */
-    public void setWidgets(int widgets) {
+    public void setWidgets(@ColorPicker.Widgets int widgets) {
         if (widgets != widgets) {
             this.widgets = widgets;
             notifyChanged();

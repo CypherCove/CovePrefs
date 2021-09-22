@@ -25,8 +25,14 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+
+import androidx.annotation.IntDef;
+
 import com.cyphercove.coveprefs.R;
 import com.cyphercove.coveprefs.utils.CovePrefsUtils;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  */
@@ -34,9 +40,17 @@ public class ColorPicker extends FrameLayout {
 
     // Make sure these are in sync with attrs.xml:
     // <attr name="coveprefs_colorPickerWidgets">
-    public static final int WIDGET_HSV_PICKER = 0x01;
-    public static final int WIDGET_HEX_TEXT_EDIT = 0x02;
-    public static final int WIDGET_RECENTLY_PICKED = 0x04;
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(
+            value = {WIDGET_HSV_PICKER, WIDGET_HEX_TEXT_EDIT, WIDGET_RECENTLY_PICKED},
+            flag = true
+    )
+    public @interface Widgets {
+    }
+
+    public static final int WIDGET_HSV_PICKER = 1;
+    public static final int WIDGET_HEX_TEXT_EDIT = 1 << 1;
+    public static final int WIDGET_RECENTLY_PICKED = 1 << 2;
 
     public interface OnColorChangedListener {
         void onColorChanged(int newColor);
@@ -49,6 +63,7 @@ public class ColorPicker extends FrameLayout {
     private ColorCacheView colorCacheView;
     private OnColorChangedListener listener;
     private int currentColor;
+    private int widgets = WIDGET_HSV_PICKER | WIDGET_HEX_TEXT_EDIT | WIDGET_RECENTLY_PICKED;
 
     public ColorPicker(Context context) {
         this(context, null);
@@ -152,7 +167,13 @@ public class ColorPicker extends FrameLayout {
         CovePrefsUtils.clearAncestorOutlineClipping(colorCacheView, this);
     }
 
-    public void setWidgets (int widgets){
+    @Widgets
+    public int getWidgets() {
+        return widgets;
+    }
+
+    public void setWidgets (@Widgets int widgets){
+        this.widgets = widgets;
         boolean hsv = (widgets & WIDGET_HSV_PICKER) != 0;
         boolean hex = (widgets & WIDGET_HEX_TEXT_EDIT) != 0;
         boolean recent = (widgets & WIDGET_RECENTLY_PICKED) != 0;
