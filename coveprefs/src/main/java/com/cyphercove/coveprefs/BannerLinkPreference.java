@@ -15,12 +15,12 @@
  */
 package com.cyphercove.coveprefs;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -123,6 +123,11 @@ public class BannerLinkPreference extends LinkPreference {
             this.titleColor = titleColor;
             notifyChanged();
         }
+    }
+
+    public void setTitleColorResource(@ColorRes int id) {
+        int color = getContext().getResources().getColor(id);
+        setTitleColor(color);
     }
 
     /**
