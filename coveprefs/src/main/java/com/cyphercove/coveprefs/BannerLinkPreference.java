@@ -16,13 +16,16 @@
 package com.cyphercove.coveprefs;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceViewHolder;
 import android.util.AttributeSet;
@@ -46,27 +49,18 @@ import java.util.Objects;
  */
 @SuppressWarnings("WeakerAccess")
 public class BannerLinkPreference extends LinkPreference {
-    /** Used as default retrieved color from XML to determine if the associated color resource has
-     * not been set in XML. It is an extremely unlikely color to have been specified. */
-    private static final int UNSET_COLOR = 0x01000100;
 
     private Drawable banner;
     private int bannerId;
-    private Integer titleColor;
-    private Integer summaryColor;
+    private ColorStateList titleColor;
+    private ColorStateList summaryColor;
 
     public BannerLinkPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CovePrefs_BannerLinkPreference, 0, defStyleRes);
         bannerId = a.getResourceId(R.styleable.CovePrefs_BannerLinkPreference_coveprefs_banner, 0);
-        int retrievedTitleColor = a.getColor(R.styleable.CovePrefs_BannerLinkPreference_coveprefs_titleColor, UNSET_COLOR);
-        if (retrievedTitleColor != UNSET_COLOR) {
-            titleColor = retrievedTitleColor;
-        }
-        int retrievedSummaryColor = a.getColor(R.styleable.CovePrefs_BannerLinkPreference_coveprefs_summaryColor, UNSET_COLOR);
-        if (retrievedSummaryColor != UNSET_COLOR) {
-            summaryColor = UNSET_COLOR;
-        }
+        titleColor = a.getColorStateList(R.styleable.CovePrefs_BannerLinkPreference_coveprefs_titleColor);
+        summaryColor = a.getColorStateList(R.styleable.CovePrefs_BannerLinkPreference_coveprefs_summaryColor);
         a.recycle();
     }
 
@@ -106,48 +100,82 @@ public class BannerLinkPreference extends LinkPreference {
     }
 
     /**
-     * The color to override the title's layout color with.
+     * The ColorStateList to override the title's layout color with.
      * @return The color, or null if none is set.
      */
     @Nullable
-    public Integer getTitleColor() {
+    public ColorStateList getTitleColor() {
         return titleColor;
     }
 
     /**
-     * Sets a color to be used for the title text instead of whatever is specified in the layout.
+     * Sets a ColorStateList to be used for the title text instead of whatever is specified in the
+     * layout.
      * @param titleColor The color to use for the title, or null to use the layout's color.
      */
-    public void setTitleColor(@Nullable Integer titleColor) {
+    public void setTitleColor(@Nullable ColorStateList titleColor) {
         if (!Objects.equals(titleColor, this.titleColor)) {
             this.titleColor = titleColor;
             notifyChanged();
         }
     }
 
-    public void setTitleColorResource(@ColorRes int id) {
-        int color = getContext().getResources().getColor(id);
-        setTitleColor(color);
+    /**
+     * Sets a color RGBA integer to be used for the title text instead of whatever is specified in
+     * the layout.
+     * @param titleColor The color to use for the title.
+     */
+    public void setTitleColor(@ColorInt int titleColor) {
+        ColorStateList colorStateList = ColorStateList.valueOf(titleColor);
+        setTitleColor(colorStateList);
     }
 
     /**
-     * The color to override the summary's layout color with.
+     * Sets a color or ColorStateList to override the layout's title color.
+     * @param id The ID of a color resource to set.
+     */
+    public void setTitleColorResource(@ColorRes int id) {
+        ColorStateList colorStateList = AppCompatResources.getColorStateList(getContext(), id);
+        setTitleColor(colorStateList);
+    }
+
+    /**
+     * The ColorStateList to override the summary's layout color with.
      * @return The color, or null if none is set.
      */
     @Nullable
-    public Integer getSummaryColor() {
+    public ColorStateList getSummaryColor() {
         return summaryColor;
     }
 
     /**
-     * Sets a color to be used for the summary text instead of whatever is specified in the layout.
+     * Sets a ColorStateList to be used for the summary text instead of whatever is specified in the
+     * layout.
      * @param summaryColor The color to use for the summary, or null to use the layout's color.
      */
-    public void setSummaryColor(@Nullable Integer summaryColor) {
+    public void setSummaryColor(@Nullable ColorStateList summaryColor) {
         if (!Objects.equals(summaryColor, this.summaryColor)) {
             this.summaryColor = summaryColor;
             notifyChanged();
         }
+    }
+    /**
+     * Sets a color RGBA integer to be used for the summary text instead of whatever is specified in
+     * the layout.
+     * @param summaryColor The color to use for the summary.
+     */
+    public void setSummaryColor(@ColorInt int summaryColor) {
+        ColorStateList colorStateList = ColorStateList.valueOf(summaryColor);
+        setSummaryColor(colorStateList);
+    }
+
+    /**
+     * Sets a color or ColorStateList to override the layout's summary color.
+     * @param id The ID of a color resource to set.
+     */
+    public void setSummaryColorResource(@ColorRes int id) {
+        ColorStateList colorStateList = AppCompatResources.getColorStateList(getContext(), id);
+        setSummaryColor(colorStateList);
     }
 
     @Override
@@ -188,7 +216,7 @@ public class BannerLinkPreference extends LinkPreference {
             if (bannerView != null) {
                 bannerView.setImageDrawable(null);
             } else {
-                holder.itemView.setBackgroundDrawable(null);
+                holder.itemView.setBackground(null);
             }
         }
     }
