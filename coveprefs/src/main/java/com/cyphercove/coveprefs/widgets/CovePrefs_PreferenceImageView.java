@@ -29,20 +29,20 @@ import com.cyphercove.coveprefs.R;
 /**
  * Extension of AppCompatImageView that correctly applies maxWidth and maxHeight.
  */
-public class PreferenceImageView extends AppCompatImageView {
+public class CovePrefs_PreferenceImageView extends AppCompatImageView {
 
     private int mMaxWidth = Integer.MAX_VALUE;
     private int mMaxHeight = Integer.MAX_VALUE;
 
-    public PreferenceImageView(Context context) {
+    public CovePrefs_PreferenceImageView(Context context) {
         this(context, null);
     }
 
-    public PreferenceImageView(Context context, AttributeSet attrs) {
+    public CovePrefs_PreferenceImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PreferenceImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CovePrefs_PreferenceImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         final TypedArray a = context.obtainStyledAttributes(

@@ -42,7 +42,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.cyphercove.coveprefs.utils.AbsViewHolder;
 import com.cyphercove.coveprefs.utils.CovePrefsUtils;
-import com.cyphercove.coveprefs.widgets.PreferenceImageView;
+import com.cyphercove.coveprefs.widgets.CovePrefs_PreferenceImageView;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -57,7 +57,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
     private int[] entryIds;
     private CharSequence[] entryValues;
     private CharSequence[] entryContentDescriptions;
-    private PreferenceImageView selectedImageWidget;
+    private CovePrefs_PreferenceImageView selectedImageWidget;
     private int tintResource;
     private ColorStateList tintColorStateList;
     private PorterDuff.Mode tintMode;
@@ -409,7 +409,7 @@ public class ImageListPreference extends BaseDialogPreference<String>{
 
     @Override
     protected void onPreferenceViewCreated (AbsViewHolder view){
-        selectedImageWidget = (PreferenceImageView)view.findViewById(R.id.coveprefs_widget);
+        selectedImageWidget = (CovePrefs_PreferenceImageView)view.findViewById(R.id.coveprefs_widget);
         if (smallWidget){
             ViewGroup.LayoutParams layoutParams = selectedImageWidget.getLayoutParams();
             int size = getContext().getResources().getDimensionPixelSize(R.dimen.coveprefs_preference_widget_small);

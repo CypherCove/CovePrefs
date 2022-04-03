@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 /**
- * Use {@link LabeledSeekBarPreference instead. }
+ * @deprecated Use {@link LabeledSeekBarPreference instead. }
  */
 @Deprecated
 public class SeekBarPlusPreference extends LabeledSeekBarPreference {
