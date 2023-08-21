@@ -1,4 +1,5 @@
 ### Version 3.0.0
+ * Updated Android SDK target to 33, `appcompat` to 1.6.1, and `preference` to 1.2.1.
  * **BREAKING:** Increase minSdkVersion to 19
  * **BREAKING:** BaseDialogPreference and BaseInlinePreference constructors changed to the four-argument
  constructor.
@@ -13,7 +14,7 @@
  * **BREAKING:** MultiColor.Definition outputs CharSequence and CharSequence arrays instead of Strings.
  * Added constructors to MultiColor.Definition.
  * Renamed SeekBarPlusPreference to LabeledSeekBarPreference.
- * **BREAKING:** Renamed PreferenceImageView to CovePrefs_PreferenceImageView. *
+ * **BREAKING:** Renamed PreferenceImageView to CovePrefs_PreferenceImageView. 
 
 ### Version 2.0.4
  * Added DuplicateKeyDetector class.

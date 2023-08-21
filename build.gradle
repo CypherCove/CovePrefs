@@ -1,30 +1,17 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
-    }
+plugins {
+    id 'com.android.library' version '8.1.0' apply false
 }
 
 ext {
-    compileSdkVersion = 31
+    compileSdkVersion = 33
     minSdkVersion = 19
-    targetSdkVersion = 31
+    targetSdkVersion = 33
 }
 
 allprojects {
-    repositories {
-        mavenLocal()
-        google()
-        mavenCentral()
-    }
-
-    version '3.0.0-SNAPSHOT'
+    version '3.0.0'
     group 'com.cyphercove.coveprefs'
 }
-
 
 task clean(type: Delete) {
     delete rootProject.buildDir

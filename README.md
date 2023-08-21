@@ -1,18 +1,18 @@
 # CovePrefs
 A variety of Material preferences for Android. These preferences are dependent on the Jetpack `appcompat` and `preference` libraries.
 
-[![JitPack](https://img.shields.io/badge/JitPack-2.0.4-red.svg)](https://jitpack.io/#CypherCove/CovePrefs)
-[![android sdk version](https://img.shields.io/badge/android%20sdk-30-brightgreen)](https://developer.android.com/) 
-[![androidx appcompat version](https://img.shields.io/badge/androidx.appcompat-1.3.0--alpha02-brightgreen)](https://developer.android.com/jetpack/androidx/releases/appcompat) 
-[![androidx preference version](https://img.shields.io/badge/androidx.preference-1.1.1-brightgreen)](https://developer.android.com/jetpack/androidx/releases/preference) 
+![Maven Central](https://img.shields.io/maven-central/v/com.cyphercove.coveprefs/coveprefs?color=6d7ac5)
+![target SDK version](https://img.shields.io/badge/target_sdk_version-33-3DDC84?logo=android&logoColor=3DDC84&link=https%3A%2F%2Fdeveloper.android.com)
+![appcompat version](https://img.shields.io/badge/androidx_appcompat_version-1.6.1-3DDC84?logo=android&logoColor=3DDC84&link=https%3A%2F%2Fdeveloper.android.com%2Fjetpack%2Fandroidx%2Freleases%2Fappcompat)
+![preference version](https://img.shields.io/badge/androidx_preference_version-1.2.1-3DDC84?logo=android&logoColor=3DDC84&link=https%3A%2F%2Fdeveloper.android.com%2Fjetpack%2Fandroidx%2Freleases%2Fpreference)
 
 ## Usage
 
-CovePrefs is available via [JitPack](https://jitpack.io/#CypherCove/CovePrefs).
+CovePrefs is available via Maven Central.
 
 Import the `coveprefs` library with
 
-    compile com.cyphercove.coveprefs:coveprefs:2.0.4
+    compile com.cyphercove.coveprefs:coveprefs:3.0.0
 
 The AndroidX support library prepares dialogs for dialog preferences separately from the preferences themselves. Therefore, in order to use CovePrefs, you must do one of the following.
 
